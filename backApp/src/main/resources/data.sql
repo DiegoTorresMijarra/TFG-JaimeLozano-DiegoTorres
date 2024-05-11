@@ -1,5 +1,5 @@
 -- Insertar la tabla products
-INSERT INTO "products" ("id", "nombre", "precio", "stock", "gluten", "createdAt", "updatedAt")
+INSERT INTO "products" ("id", "nombre", "precio", "stock", "gluten", "created_at", "updated_at")
 VALUES (1, 'Producto1', 10.50, 100, true, '2023-01-01', '2023-01-01'),
        (2, 'Producto2', 15.75, 50, false,  '2023-01-02', '2023-01-02'),
        (3, 'Producto3', 20.00, 75, true,  '2023-01-03', '2023-01-03'),
