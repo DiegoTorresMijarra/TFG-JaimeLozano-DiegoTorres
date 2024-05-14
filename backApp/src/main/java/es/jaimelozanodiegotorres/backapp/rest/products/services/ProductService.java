@@ -20,11 +20,11 @@ public interface ProductService {
      * @param precioMax Precio máximo del producto
      * @param precioMin Precio mínimo del producto
      * @param gluten indica si el producto tiene gluten
-     * @param is_deleted indica si el producto está eliminado
+     * @param deletedAt indica si el producto está eliminado
      * @param pageable Información de la paginación
      * @return Página de productos que cumplan con los parámetros de búsqueda
      */
-    Page<Product> findAll(Optional<String> nombre, Optional<Integer> stockMax, Optional<Integer> stockMin, Optional<Double> precioMax, Optional<Double> precioMin , Optional<Boolean> gluten, Optional<Boolean> is_deleted, Pageable pageable);
+    Page<Product> findAll(Optional<String> nombre, Optional<Integer> stockMax, Optional<Integer> stockMin, Optional<Double> precioMax, Optional<Double> precioMin , Optional<Boolean> gluten, Optional<Boolean> deletedAt, Pageable pageable);
 
     /**
      * Método que devuelve un producto dado su ID.

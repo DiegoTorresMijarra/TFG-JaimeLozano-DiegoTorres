@@ -46,7 +46,7 @@ public class Product {
     @Schema(description = "Fecha de actualización del producto", example = "2022-01-01")
     @Column(nullable = false, name = "updated_at")
     LocalDate updatedAt;
-    @Column()
-    @Schema(description = "Es un producto de Lacteos", example = "true")
+    @Column(name = "deleted_at")
+    @Schema(description = "The date when the entity is deleted", example = "null")
     private LocalDate deletedAt;
 }

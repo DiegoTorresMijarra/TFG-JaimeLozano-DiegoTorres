@@ -3,6 +3,8 @@ package es.jaimelozanodiegotorres.backapp.rest.products.controller;
 import es.jaimelozanodiegotorres.backapp.pagination.PageResponse;
 import es.jaimelozanodiegotorres.backapp.rest.products.models.Product;
 import es.jaimelozanodiegotorres.backapp.rest.products.services.ProductService;
+import es.jaimelozanodiegotorres.backapp.rest.products.services.ProductServiceImp;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -22,8 +25,9 @@ import java.util.Optional;
  * Anotación @RestController para indicar que es un controlador
  */
 @RestController
+@Slf4j
 public class ProductController {
-    ProductService service;
+    ProductServiceImp service;
 
     /**
      * Constructor de la clase
@@ -31,8 +35,14 @@ public class ProductController {
      * @param service Servicio de productos
      */
     @Autowired
-    public ProductController(ProductService service) {
+    public ProductController(ProductServiceImp service) {
         this.service = service;
+    }
+
+    @GetMapping("listAllProducts")
+    List<Product>listAllProducts(){
+        log.info("Buscando todos los productos");
+        return service.listAll();
     }
 
     /**
@@ -44,7 +54,7 @@ public class ProductController {
      * @param precioMax  Precio máximo del producto
      * @param precioMin  Precio mínimo del producto
      * @param gluten     indica si el producto tiene gluten
-     * @param is_deleted indica si el producto está eliminado
+     * @param deletedAt indica si el producto está eliminado
      * @param page       Número de página
      * @param size       Tamaño de la página
      * @param sortBy     Campo de ordenación
@@ -59,14 +69,14 @@ public class ProductController {
             @RequestParam(required = false) Optional<Double> precioMax,
             @RequestParam(required = false) Optional<Double> precioMin,
             @RequestParam(required = false) Optional<Boolean> gluten,
-            @RequestParam(required = false, defaultValue = "false") Optional<Boolean> is_deleted,
+            @RequestParam(required = false, defaultValue = "false") Optional<Boolean> deletedAt,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "id") String sortBy,
             @RequestParam(defaultValue = "asc") String direction
     ) {
         Sort sort = direction.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
-        Page<Product> pageResult = service.findAll(nombre, stockMax, stockMin, precioMax, precioMin, gluten, is_deleted, PageRequest.of(page, size, sort));
+        Page<Product> pageResult = service.findAll(nombre, stockMax, stockMin, precioMax, precioMin, gluten, deletedAt, PageRequest.of(page, size, sort));
         return ResponseEntity.ok()
                 .body(PageResponse.of(pageResult, sortBy, direction));
     }

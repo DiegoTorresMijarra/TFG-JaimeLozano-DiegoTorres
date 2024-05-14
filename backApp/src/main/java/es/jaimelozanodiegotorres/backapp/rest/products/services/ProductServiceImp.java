@@ -6,6 +6,7 @@ import es.jaimelozanodiegotorres.backapp.rest.products.exceptions.ProductNotFoun
 import es.jaimelozanodiegotorres.backapp.rest.products.mapper.ProductMapper;
 import es.jaimelozanodiegotorres.backapp.rest.products.models.Product;
 import es.jaimelozanodiegotorres.backapp.rest.products.repository.ProductRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
@@ -17,6 +18,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -26,6 +28,7 @@ import java.util.Optional;
  */
 @Service
 @CacheConfig(cacheNames = {"productos"})
+@Slf4j
 public class ProductServiceImp implements ProductService{
     ProductRepository repository;
     ProductMapper mapper= new ProductMapper();
@@ -47,12 +50,12 @@ public class ProductServiceImp implements ProductService{
      * @param precioMax Precio máximo del producto
      * @param precioMin Precio mínimo del producto
      * @param gluten indica si el producto tiene gluten
-     * @param is_deleted indica si el producto está eliminado
+     * @param deletedAt indica si el producto está eliminado
      * @param pageable Información de la paginación
      * @return Página de productos que cumplan con los parámetros de búsqueda
      */
     @Override
-    public Page<Product> findAll(Optional<String> nombre, Optional<Integer> stockMax, Optional<Integer> stockMin, Optional<Double> precioMax, Optional<Double> precioMin, Optional<Boolean> gluten, Optional<Boolean> is_deleted, Pageable pageable) {
+    public Page<Product> findAll(Optional<String> nombre, Optional<Integer> stockMax, Optional<Integer> stockMin, Optional<Double> precioMax, Optional<Double> precioMin, Optional<Boolean> gluten, Optional<Boolean> deletedAt, Pageable pageable) {
         Specification<Product> specNombre = (root, query, criteriaBuilder) ->
                 nombre.map(m -> criteriaBuilder.equal(root.get("nombre"), m))
                         .orElseGet(() -> criteriaBuilder.isTrue(criteriaBuilder.literal(true)));
@@ -68,9 +71,11 @@ public class ProductServiceImp implements ProductService{
         Specification<Product> specPrecioMin = (root, query, criteriaBuilder) ->
                 precioMin.map(p -> criteriaBuilder.greaterThanOrEqualTo(root.get("precio"), p))
                         .orElseGet(() -> criteriaBuilder.isTrue(criteriaBuilder.literal(true)));
-        Specification<Product> specIs_Deleted = (root, query, criteriaBuilder) ->
-                is_deleted.map(d -> criteriaBuilder.equal(root.get("is_deleted"), d))
+
+        Specification<Product> specDeletedAt = (root, query, criteriaBuilder) ->
+                deletedAt.map(d -> criteriaBuilder.equal(root.get("deletedAt").isNull(), d)) //TODO: revisar isNull() o isNotNull()
                         .orElseGet(() -> criteriaBuilder.isTrue(criteriaBuilder.literal(true)));
+
         Specification<Product> specGluten = (root, query, criteriaBuilder) ->
                 gluten.map(d -> criteriaBuilder.equal(root.get("gluten"), d))
                         .orElseGet(() -> criteriaBuilder.isTrue(criteriaBuilder.literal(true)));
@@ -79,9 +84,14 @@ public class ProductServiceImp implements ProductService{
                 .and(specStockMin)
                 .and(specPrecioMax)
                 .and(specPrecioMin)
-                .and(specIs_Deleted)
+                .and(specDeletedAt)
                 .and(specGluten);
         return repository.findAll(criterio, pageable);
+    }
+
+    public List<Product> listAll(){
+        log.info("Buscando todos los Productos");
+        return repository.findAll();
     }
 
     /**
@@ -93,6 +103,7 @@ public class ProductServiceImp implements ProductService{
     @Override
     @Cacheable
     public Product findById(Long id) {
+        log.info("Listando todos productos");
         return repository.findById(id).orElseThrow(() -> new ProductNotFound(id));
     }
 

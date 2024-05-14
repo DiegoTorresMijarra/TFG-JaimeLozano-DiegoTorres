@@ -32,5 +32,5 @@ public class ProductdtoUpdate {
     private boolean gluten = true;
     @Builder.Default
     @Schema(description = "¿Esta eliminado?" , example = "true")
-    private boolean is_deleted = false;
+    private boolean deletedAt = false;
 }
