@@ -1,15 +1,17 @@
 package es.jaimelozanodiegotorres.backapp.rest.products.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import es.jaimelozanodiegotorres.backapp.rest.evaluation.models.Evaluation;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
-import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * Clase que representa el modelo de datos de un producto
@@ -61,4 +63,9 @@ public class Product {
     @Column(name = "deleted_at")
     @Schema(description = "The date when the entity is deleted", example = "null")
     private LocalDate deletedAt;
+
+    @OneToMany(mappedBy = "valoraciones")
+    @JsonBackReference
+    @Schema(description = "Lista de valoraciones")
+    private List<Evaluation> valoraciones;
 }
