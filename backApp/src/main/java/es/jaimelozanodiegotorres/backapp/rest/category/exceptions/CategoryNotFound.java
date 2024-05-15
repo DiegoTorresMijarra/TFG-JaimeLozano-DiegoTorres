@@ -8,4 +8,7 @@ public class CategoryNotFound extends CategoryException {
     public CategoryNotFound(Long id){
         super("No se puede encontrar la Categoria con el id" + id);
     }
+    public CategoryNotFound(String name){
+        super("No se puede encontrar la Categoria con el nombre" + name);
+    }
 }

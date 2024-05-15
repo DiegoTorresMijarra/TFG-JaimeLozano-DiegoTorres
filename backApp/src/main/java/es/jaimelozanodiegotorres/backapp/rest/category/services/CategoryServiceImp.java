@@ -38,7 +38,7 @@ public class CategoryServiceImp implements CategoryService{
         log.info("Buscando todas las Categorias");
         //Criterio por nombre
         Specification<Category> specName=(root, query, criteriaBuilder)->
-                name.map(d->criteriaBuilder.equal(root.get("nombre"),d))
+                name.map(d->criteriaBuilder.equal(root.get("name"),d))
                         .orElseGet(() -> criteriaBuilder.isTrue(criteriaBuilder.literal(true)));
         Specification<Category> specification=Specification.where(specName);
         return categoryCrudRepository.findAll(specification,pageable);
@@ -49,6 +49,13 @@ public class CategoryServiceImp implements CategoryService{
     public Category findById(Long id) {
         log.info("Buscando la Categoria con el id: " + id);
         return categoryCrudRepository.findById(id).orElseThrow(() -> new CategoryNotFound(id));
+    }
+
+    @Override
+    @Cacheable(key="#name")
+    public Category findByName(String name) {
+        log.info("Buscando la Categoria con el nombre: " + name);
+        return categoryCrudRepository.findByName(name).orElseThrow(() -> new CategoryNotFound(name));
     }
 
     @Override
@@ -72,6 +79,6 @@ public class CategoryServiceImp implements CategoryService{
         log.info("Eliminando la Categoria con el id: " + id);
         Category original = findById(id);
         original.setDeletedAt(LocalDateTime.now());
-        categoryCrudRepository.delete(original);
+        categoryCrudRepository.save(original);
     }
 }

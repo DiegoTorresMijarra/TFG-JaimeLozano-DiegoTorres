@@ -35,7 +35,7 @@ public class Category {
     private Long id;
 
     @NotBlank(message = "El nombre no puede estar vacío")
-    @Column(name = "nombre")
+    @Column()
     @Schema(description = "Nombre de la categoria", example = "MANAGER")
     private String name;
 

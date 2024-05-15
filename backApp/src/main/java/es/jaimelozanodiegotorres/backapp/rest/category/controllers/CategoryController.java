@@ -34,7 +34,7 @@ import java.util.Optional;
 @Slf4j
 //@PreAuthorize("hasRole('USER')")
 @RequestMapping(value = "/categorias")
-@Tag(name = "Puestos", description = "Endpoint de Puestos de nuestra tienda")
+@Tag(name = "Categorias", description = "Endpoint de Categorias de nuestros productos")
 public class CategoryController {
     private final CategoryServiceImp categoryService;
 
@@ -96,6 +96,12 @@ public class CategoryController {
     public ResponseEntity<Category> findById(@PathVariable Long id){
         log.info("Buscando Categoria con id: " + id);
         return ResponseEntity.ok(categoryService.findById(id));
+    }
+
+    @GetMapping("/{name}")
+    public ResponseEntity<Category> findByName(@PathVariable String name){
+        log.info("Buscando Categoria con nombre: " + name);
+        return ResponseEntity.ok(categoryService.findByName(name));
     }
 
     /**

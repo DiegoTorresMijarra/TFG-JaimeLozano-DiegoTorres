@@ -24,6 +24,8 @@ public interface CategoryService {
      */
     Category findById(Long id);
 
+    Category findByName(String name);
+
     /**
      * Guarda una posición
      * @param category posición a guardar

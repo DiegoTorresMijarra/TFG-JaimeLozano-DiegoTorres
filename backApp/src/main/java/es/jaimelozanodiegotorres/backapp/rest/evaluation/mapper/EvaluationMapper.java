@@ -27,11 +27,11 @@ public class EvaluationMapper {
      * @param product       posición del trabajador
      * @return entidad actualizada con los datos del dto
      */
-    public static Evaluation toModel(Evaluation evaluationOriginal, EvaluationUpdateDto evaluationUpdateDto, Product product) {
+    public static Evaluation toModel(Evaluation evaluationOriginal, EvaluationUpdateDto evaluationUpdateDto) {
         return Evaluation.builder()
                 .id(evaluationOriginal.getId())
                 .valoracion(evaluationUpdateDto.getValoracion())
-                .product(product)
+                .product(evaluationOriginal.getProduct())
                 .createdAt(evaluationOriginal.getCreatedAt())
                 .build();
     }
@@ -41,7 +41,7 @@ public class EvaluationMapper {
      * @param evaluation entidad con los datos del trabajador
      * @return dto con los datos de la entidad
      */
-    public static EvaluationResponseDto toWorkersResponseDto(Evaluation evaluation){
+    public static EvaluationResponseDto toEvaluationResponseDto(Evaluation evaluation){
         return EvaluationResponseDto.builder()
                 .id(evaluation.getId())
                 .valoracion(evaluation.getValoracion())
