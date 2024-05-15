@@ -2,7 +2,6 @@ package es.jaimelozanodiegotorres.backapp.rest.products.controller;
 
 import es.jaimelozanodiegotorres.backapp.pagination.PageResponse;
 import es.jaimelozanodiegotorres.backapp.rest.products.models.Product;
-import es.jaimelozanodiegotorres.backapp.rest.products.services.ProductService;
 import es.jaimelozanodiegotorres.backapp.rest.products.services.ProductServiceImp;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,6 +90,12 @@ public class ProductController {
     public ResponseEntity<Product> getProduct(@PathVariable Long id) {
         return ResponseEntity.ok(service.findById(id));
     }
+
+//    @PutMapping("softDeleted/{id}")
+//    public boolean softDeleted(@PathVariable Long id){
+//        log.info("Borrando el Producto con id: "+id);
+//        return service.softDeleteById(id);
+//    }
 
     /**
      * Manejador de excepciones para los errores de validación

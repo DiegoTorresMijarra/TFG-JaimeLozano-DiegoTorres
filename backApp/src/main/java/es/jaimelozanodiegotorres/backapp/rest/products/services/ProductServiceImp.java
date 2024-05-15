@@ -91,8 +91,15 @@ public class ProductServiceImp implements ProductService{
 
     public List<Product> listAll(){
         log.info("Buscando todos los Productos");
-        return repository.findAll();
+
+        return repository.findByDeletedAtIsNull();
     }
+
+//    public boolean softDeleteById(Long id){
+//        log.info("Borrando el Producto con id: "+id);
+//        repository.softDeleted(id);
+//        return true;
+//    }
 
     /**
      * Método que devuelve un producto dado su ID.

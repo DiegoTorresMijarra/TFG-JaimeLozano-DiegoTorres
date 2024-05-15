@@ -6,7 +6,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * Repositorio de productos que extiende de JpaRepository y JpaSpecificationExecutor
@@ -14,6 +17,5 @@ import org.springframework.stereotype.Repository;
  * También se utiliza la anotación @Repository para indicar que es un repositorio de Spring.
  */
 @Repository
-public interface ProductRepository extends JpaRepository<Product, Long>, JpaSpecificationExecutor<Product> {
-
+public interface ProductRepository extends CommonRepository<Product,Long>, JpaSpecificationExecutor<Product> {
 }
