@@ -58,7 +58,7 @@ public class Category {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "deleted_at")
     @Schema(description = "The date when the entity is deleted", example = "2022-01-01 00:00:00")
-    private LocalDate deletedAt;
+    private LocalDateTime deletedAt;
 
     @OneToMany(mappedBy = "productos")
     @JsonBackReference

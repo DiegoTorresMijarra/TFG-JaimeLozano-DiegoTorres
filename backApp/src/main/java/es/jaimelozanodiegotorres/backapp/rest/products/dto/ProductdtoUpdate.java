@@ -30,7 +30,4 @@ public class ProductdtoUpdate {
     @Builder.Default
     @Schema(description = "¿Es Gluten Free?" , example = "true")
     private boolean gluten = true;
-    @Builder.Default
-    @Schema(description = "¿Esta eliminado?" , example = "true")
-    private boolean deletedAt = false;
 }
