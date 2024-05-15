@@ -1,6 +1,7 @@
 package es.jaimelozanodiegotorres.backapp.rest.products.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import es.jaimelozanodiegotorres.backapp.rest.category.models.Category;
 import es.jaimelozanodiegotorres.backapp.rest.evaluation.models.Evaluation;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
@@ -63,6 +64,12 @@ public class Product {
     @Column(name = "deleted_at")
     @Schema(description = "The date when the entity is deleted", example = "null")
     private LocalDate deletedAt;
+
+    @Schema(description = "Categoria del Producto", example = "1")
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    @NotNull(message = "La categoria no puede estar vacía")
+    private Category category;
 
     @OneToMany(mappedBy = "valoraciones")
     @JsonBackReference

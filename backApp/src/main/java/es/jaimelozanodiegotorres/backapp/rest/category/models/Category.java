@@ -21,7 +21,7 @@ import java.util.List;
 @NoArgsConstructor(force = true)
 @Builder
 @Entity
-@Table
+@Table(name = "CATEGORIES")
 @EntityListeners(AuditingEntityListener.class)
 
 public class Category {
