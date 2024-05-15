@@ -4,8 +4,12 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * Clase que representa el modelo de datos de un producto
@@ -40,12 +44,20 @@ public class Product {
     @Builder.Default
     @Schema(description = "Es un producto de Glutens", example = "true")
     private boolean gluten = true;
-    @Column(nullable = false, name = "created_at")
-    @Schema(description = "Fecha de creación del producto", example = "2022-01-01")
-    LocalDate createdAt;
-    @Schema(description = "Fecha de actualización del producto", example = "2022-01-01")
-    @Column(nullable = false, name = "updated_at")
-    LocalDate updatedAt;
+    @CreatedDate
+    @Temporal(TemporalType.TIMESTAMP)
+    @Builder.Default
+    @Column ( name="created_at")
+    @Schema(description = "Fecha de creación de la categoria", example = "2022-01-01 00:00:00")
+    private LocalDateTime createdAt = LocalDateTime.now();
+    @LastModifiedDate
+    @Temporal(TemporalType.TIMESTAMP)
+    @Builder.Default
+    @Column (name = "updated_at")
+    @Schema(description = "Fecha de actualización de la categoria", example = "2022-01-01 00:00:00")
+    private LocalDateTime updatedAt = LocalDateTime.now();
+
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "deleted_at")
     @Schema(description = "The date when the entity is deleted", example = "null")
     private LocalDate deletedAt;
