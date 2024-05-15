@@ -1,6 +1,7 @@
 package es.jaimelozanodiegotorres.backapp.rest.products.repository;
 
 
+import es.jaimelozanodiegotorres.backapp.rest.commons.repository.CommonRepository;
 import es.jaimelozanodiegotorres.backapp.rest.products.models.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -17,5 +18,5 @@ import java.util.List;
  * También se utiliza la anotación @Repository para indicar que es un repositorio de Spring.
  */
 @Repository
-public interface ProductRepository extends CommonRepository<Product,Long>, JpaSpecificationExecutor<Product> {
+public interface ProductRepository extends CommonRepository<Product,Long> {
 }

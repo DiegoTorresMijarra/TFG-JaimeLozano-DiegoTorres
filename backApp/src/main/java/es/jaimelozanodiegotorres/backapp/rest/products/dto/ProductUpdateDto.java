@@ -17,19 +17,24 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProductdtoUpdate {
+public class ProductUpdateDto {
+
     @NotBlank(message = "El nombre no puede estar vacío")
     private String nombre;
+
     @Positive(message = "El precio no puede ser negativo")
     @NotNull(message = "El precio no puede estar vacío")
     private double precio;
+
     @Schema(description = "Stock del producto" , example = "10")
     @PositiveOrZero(message = "El stock no puede ser negativo")
     @NotNull(message = "El stock no puede estar vacío")
     private Integer stock;
+
     @Builder.Default
     @Schema(description = "¿Es Gluten Free?" , example = "true")
     private boolean gluten = true;
+
     @Builder.Default
     @Schema(description = "¿Esta eliminado?" , example = "true")
     private boolean deletedAt = false;
