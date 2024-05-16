@@ -1,5 +1,6 @@
 package es.jaimelozanodiegotorres.backapp.rest.evaluation.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import es.jaimelozanodiegotorres.backapp.rest.products.models.Product;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
@@ -14,6 +15,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -48,7 +50,8 @@ public class Evaluation {
     @Column (name = "updated_at")
     @Schema(description = "Fecha de actualización de la valoracion", example = "2022-01-01 00:00:00")
     private LocalDateTime updatedAt = LocalDateTime.now();
-    @Temporal(TemporalType.TIMESTAMP)
+
+    //@Temporal(TemporalType.TIMESTAMP)
     @Column(name = "deleted_at")
     @Schema(description = "The date when the entity is deleted", example = "Null")
     private LocalDateTime deletedAt;
@@ -56,6 +59,7 @@ public class Evaluation {
     @Schema(description = "Producto al que hace refencia la valoracion", example = "1")
     @ManyToOne
     @JoinColumn(name = "product_id")
+    @JsonManagedReference
     @NotNull(message = "El producto no puede estar vacío")
     private Product product;
 }

@@ -1,8 +1,7 @@
 package es.jaimelozanodiegotorres.backapp.rest.products.models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import es.jaimelozanodiegotorres.backapp.rest.category.models.Category;
-import es.jaimelozanodiegotorres.backapp.rest.evaluation.models.Evaluation;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
@@ -12,7 +11,6 @@ import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 
 /**
  * Clase que representa el modelo de datos de un producto
@@ -60,19 +58,20 @@ public class Product {
     @Schema(description = "Fecha de actualización de la categoria", example = "2022-01-01 00:00:00")
     private LocalDateTime updatedAt = LocalDateTime.now();
 
-    @Temporal(TemporalType.TIMESTAMP)
+    //@Temporal(TemporalType.TIMESTAMP)
     @Column(name = "deleted_at")
     @Schema(description = "The date when the entity is deleted", example = "null")
-    private LocalDate deletedAt;
+    private LocalDateTime deletedAt;
 
     @Schema(description = "Categoria del Producto", example = "1")
     @ManyToOne
     @JoinColumn(name = "category_id")
+    @JsonManagedReference
     @NotNull(message = "La categoria no puede estar vacía")
     private Category category;
 
-    @OneToMany(mappedBy = "valoraciones")
-    @JsonBackReference
-    @Schema(description = "Lista de valoraciones")
-    private List<Evaluation> valoraciones;
+    //@OneToMany(mappedBy = "valoraciones")
+    //@JsonBackReference
+    //@Schema(description = "Lista de valoraciones")
+    //private List<Evaluation> valoraciones;
 }

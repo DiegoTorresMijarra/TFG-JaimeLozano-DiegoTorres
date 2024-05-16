@@ -13,6 +13,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -51,12 +52,12 @@ public class Category {
     @Column (name = "updated_at")
     @Schema(description = "Fecha de actualización de la categoria", example = "2022-01-01 00:00:00")
     private LocalDateTime updatedAt = LocalDateTime.now();
-    @Temporal(TemporalType.TIMESTAMP)
+    //@Temporal(TemporalType.TIMESTAMP)
     @Column(name = "deleted_at")
     @Schema(description = "The date when the entity is deleted", example = "Null")
     private LocalDateTime deletedAt;
-    @OneToMany(mappedBy = "productos")
-    @JsonBackReference
-    @Schema(description = "Lista de productos")
-    private List<Product> products;
+    //@OneToMany(mappedBy = "productos")
+    //@JsonBackReference
+    //@Schema(description = "Lista de productos")
+    //private List<Product> products;
 }
