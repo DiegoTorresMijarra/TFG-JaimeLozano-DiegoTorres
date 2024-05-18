@@ -13,7 +13,7 @@ public abstract class CommonFilters {
     @Max(value = 100, message = "Page size should not exceed 100")
     private int size = 10;
 
-    @Pattern(regexp = "^(id|name|number)$", message = "Sort field should be 'id', 'name', or 'number'")
+//    @Pattern(regexp = "^(id|name|number)$", message = "Sort field should be 'id', 'name', or 'number'")
     private String sort = "id";
 
     @Pattern(regexp = "^(asc|desc)$", message = "Direction should be 'asc' or 'desc'")

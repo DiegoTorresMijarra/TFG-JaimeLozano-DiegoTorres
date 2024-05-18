@@ -15,13 +15,13 @@ public class ExceptionService {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public RuntimeException notFoundException(String id){
         String message = BASE_MESSAGE + "La entidad " + entityName + " con id "+ id + " No se ha encontrado";
-        return new RuntimeException(message);
+        throw new RuntimeException(message);
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public RuntimeException badRequestException(String msg) {
         String message = BASE_MESSAGE + "Bad Request durante la peticion. Message: " + msg;
-        return new RuntimeException(message);
+        throw new RuntimeException(message);
     }
 
 }

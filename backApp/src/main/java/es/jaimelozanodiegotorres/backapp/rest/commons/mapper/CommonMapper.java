@@ -13,13 +13,15 @@ package es.jaimelozanodiegotorres.backapp.rest.commons.mapper;
  */
 public interface CommonMapper<M, S, U> {
 
+    //GenericMapper INSTANCE = Mappers.getMapper( GenericMapper.class );
+
     /**
      * Convierte un DTO de guardado a un modelo de entidad.
      *
      * @param saveDto el DTO de guardado.
      * @return el modelo de entidad.
      */
-    abstract M saveToModel(S saveDto);
+    M saveToModel(S saveDto);
 
     /**
      * Convierte un DTO de actualización a un modelo de entidad.
@@ -27,5 +29,5 @@ public interface CommonMapper<M, S, U> {
      * @param updateDto el DTO de actualización.
      * @return el modelo de entidad.
      */
-    abstract M updateToModel(M original, U updateDto);
+    M updateToModel(M original, U updateDto);
 }
