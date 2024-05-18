@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProductdtoNew {
+public class ProductSaveDto {
     @Schema(description = "Nombre del producto", example = "Coca Cola")
     @NotBlank(message = "El nombre no puede estar vacío")
     private String nombre;

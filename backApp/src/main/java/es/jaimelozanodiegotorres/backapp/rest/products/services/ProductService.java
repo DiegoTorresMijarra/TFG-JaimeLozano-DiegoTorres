@@ -1,7 +1,7 @@
 package es.jaimelozanodiegotorres.backapp.rest.products.services;
 
-import es.jaimelozanodiegotorres.backapp.rest.products.dto.ProductdtoNew;
-import es.jaimelozanodiegotorres.backapp.rest.products.dto.ProductdtoUpdate;
+import es.jaimelozanodiegotorres.backapp.rest.products.dto.ProductSaveDto;
+import es.jaimelozanodiegotorres.backapp.rest.products.dto.ProductUpdateDto;
 import es.jaimelozanodiegotorres.backapp.rest.products.models.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -35,18 +35,18 @@ public interface ProductService {
 
     /**
      * Método que guarda un producto en la base de datos.
-     * @param productdtoNew dto de Producto a guardar
+     * @param productSaveDto dto de Producto a guardar
      * @return Producto guardado
      */
-   Product save(ProductdtoNew productdtoNew);
+   Product save(ProductSaveDto productSaveDto);
 
     /**
      * Método que actualiza un producto dado su ID.
      * @param id ID del producto a actualizar
-     * @param productdtoUpdate dto de Producto con la información a actualizar
+     * @param productUpdateDto dto de Producto con la información a actualizar
      * @return Producto actualizado
      */
-   Product update (Long id, ProductdtoUpdate productdtoUpdate);
+   Product update (Long id, ProductUpdateDto productUpdateDto);
    /**
      * Método que elimina un producto dado su ID.
      * @param id ID del producto a eliminar

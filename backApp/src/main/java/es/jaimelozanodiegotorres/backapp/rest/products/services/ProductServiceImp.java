@@ -1,7 +1,7 @@
 package es.jaimelozanodiegotorres.backapp.rest.products.services;
 
-import es.jaimelozanodiegotorres.backapp.rest.products.dto.ProductdtoNew;
-import es.jaimelozanodiegotorres.backapp.rest.products.dto.ProductdtoUpdate;
+import es.jaimelozanodiegotorres.backapp.rest.products.dto.ProductSaveDto;
+import es.jaimelozanodiegotorres.backapp.rest.products.dto.ProductUpdateDto;
 import es.jaimelozanodiegotorres.backapp.rest.products.exceptions.ProductNotFound;
 import es.jaimelozanodiegotorres.backapp.rest.products.mapper.ProductMapper;
 import es.jaimelozanodiegotorres.backapp.rest.products.models.Product;
@@ -9,14 +9,11 @@ import es.jaimelozanodiegotorres.backapp.rest.products.repository.ProductReposit
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -115,12 +112,12 @@ public class ProductServiceImp implements ProductService{
     }
 
     @Override
-    public Product save(ProductdtoNew productdtoNew) {
+    public Product save(ProductSaveDto productSaveDto) {
         return null;
     }
 
     @Override
-    public Product update(Long id, ProductdtoUpdate productdtoUpdate) {
+    public Product update(Long id, ProductUpdateDto productUpdateDto) {
         return null;
     }
 
