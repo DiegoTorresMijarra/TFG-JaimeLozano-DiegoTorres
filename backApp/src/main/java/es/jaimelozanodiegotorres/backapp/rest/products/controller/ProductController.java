@@ -51,7 +51,7 @@ public class ProductController extends CommonController<Product, Long, ProductSa
     @Override
     @GetMapping("{id}")
     public ResponseEntity<Product> findById(@PathVariable Long id) {
-        log.info("Buscando prroducto con id: {}", id);
+        log.info("Buscando producto con id: {}", id);
         return ResponseEntity.ok(service.findById(id));
     }
 

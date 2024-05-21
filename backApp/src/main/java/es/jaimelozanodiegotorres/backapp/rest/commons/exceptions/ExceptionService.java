@@ -16,6 +16,10 @@ public class ExceptionService {
         String message = BASE_MESSAGE + "La entidad " + entityName + " con id "+ id + " No se ha encontrado";
         return new EntityNotFoundException(message);
     }
+    public EntityNotFoundException notFoundExceptionName(String name){
+        String message = BASE_MESSAGE + "La entidad " + entityName + " con nombre "+ name + " No se ha encontrado";
+        return new EntityNotFoundException(message);
+    }
 
     public EntityBadRequestException badRequestException(String msg) {
         String message = BASE_MESSAGE + "Bad Request durante la peticion. Message: " + msg;
