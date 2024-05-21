@@ -79,5 +79,5 @@ public class ProductController extends CommonController<Product, Long, ProductSa
         return ResponseEntity.ok(service.deleteById(id));
     }
 
-    
+
 }
