@@ -14,19 +14,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public abstract class CommonController <M, ID extends Serializable, S, U> {
+public abstract class CommonController <M, ID extends Serializable, D> {
 
-    abstract List<M> listAll();
+    public abstract List<M> listAll();
 
-    abstract ResponseEntity<PageResponse<M>> pageAll(CommonFilters requestBody);
+  //  public abstract ResponseEntity<PageResponse<M>> pageAll(CommonFilters<M> filters);
 
-    abstract ResponseEntity<M> findById(ID id);
+    public abstract ResponseEntity<M> findById(ID id);
 
-    abstract ResponseEntity<M> save(S dto);
+    public abstract ResponseEntity<M> save(D dto);
 
-    abstract ResponseEntity<M> update(ID id, U dto);
+    public abstract ResponseEntity<M> update(ID id, D dto);
 
-    abstract ResponseEntity<Void> deleteById(ID id);
+    public abstract ResponseEntity<Boolean> deleteById(ID id);
 
 
     /**

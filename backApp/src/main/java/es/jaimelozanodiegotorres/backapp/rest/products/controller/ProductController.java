@@ -1,31 +1,29 @@
 package es.jaimelozanodiegotorres.backapp.rest.products.controller;
 
 import es.jaimelozanodiegotorres.backapp.pagination.PageResponse;
+import es.jaimelozanodiegotorres.backapp.rest.commons.controller.CommonController;
+import es.jaimelozanodiegotorres.backapp.rest.commons.filters.CommonFilters;
+import es.jaimelozanodiegotorres.backapp.rest.products.dto.ProductSaveDto;
+import es.jaimelozanodiegotorres.backapp.rest.products.filters.ProductFilters;
 import es.jaimelozanodiegotorres.backapp.rest.products.models.Product;
 import es.jaimelozanodiegotorres.backapp.rest.products.services.ProductServiceImp;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
 /**
  * Controlador de la entidad Product
  * Anotación @RestController para indicar que es un controlador
  */
 @RestController
+@RequestMapping("products")
 @Slf4j
-public class ProductController {
+public class ProductController extends CommonController<Product, Long, ProductSaveDto> {
     ProductServiceImp service;
 
     /**
@@ -38,63 +36,48 @@ public class ProductController {
         this.service = service;
     }
 
-    @GetMapping("listAllProducts")
-    List<Product>listAllProducts(){
-        log.info("Buscando todos los productos");
+    @Override
+    @GetMapping("listAll")
+    public List<Product> listAll() {
+        log.info("Listando todos los productos");
         return service.listAll();
     }
 
-    /**
-     * Método que obtiene todos los productos que cumplan con los parámetros de búsqueda
-     *
-     * @param nombre     Nombre del producto
-     * @param stockMax   Stock máximo del producto
-     * @param stockMin   Stock mínimo del producto
-     * @param precioMax  Precio máximo del producto
-     * @param precioMin  Precio mínimo del producto
-     * @param gluten     indica si el producto tiene gluten
-     * @param deletedAt indica si el producto está eliminado
-     * @param page       Número de página
-     * @param size       Tamaño de la página
-     * @param sortBy     Campo de ordenación
-     * @param direction  Dirección de ordenación
-     * @return Página de productos que cumplan con los parámetros de búsqueda
-     */
-    @GetMapping("/productos")
-    public ResponseEntity<PageResponse<Product>> getProducts(
-            @RequestParam(required = false) Optional<String> nombre,
-            @RequestParam(required = false) Optional<Integer> stockMax,
-            @RequestParam(required = false) Optional<Integer> stockMin,
-            @RequestParam(required = false) Optional<Double> precioMax,
-            @RequestParam(required = false) Optional<Double> precioMin,
-            @RequestParam(required = false) Optional<Boolean> gluten,
-            @RequestParam(required = false, defaultValue = "false") Optional<Boolean> deletedAt,
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size,
-            @RequestParam(defaultValue = "id") String sortBy,
-            @RequestParam(defaultValue = "asc") String direction
-    ) {
-        Sort sort = direction.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
-        Page<Product> pageResult = service.findAll(nombre, stockMax, stockMin, precioMax, precioMin, gluten, deletedAt, PageRequest.of(page, size, sort));
-        return ResponseEntity.ok()
-                .body(PageResponse.of(pageResult, sortBy, direction));
+    @GetMapping("pageAll")
+    public ResponseEntity<PageResponse<Product>> pageAll(@Valid ProductFilters filters) {
+        return ResponseEntity.ok(service.pageAll(filters));
     }
 
-    /**
-     * Obtiene un producto por su ID
-     *
-     * @param id ID del producto a buscar
-     * @return Producto que coincida con el ID
-     */
-    @GetMapping("/productos/{id}")
-    public ResponseEntity<Product> getProduct(@PathVariable Long id) {
+    @Override
+    @GetMapping("{id}")
+    public ResponseEntity<Product> findById(@PathVariable Long id) {
+        log.info("Buscando prroducto con id: {}", id);
         return ResponseEntity.ok(service.findById(id));
     }
 
-//    @PutMapping("softDeleted/{id}")
-//    public boolean softDeleted(@PathVariable Long id){
-//        log.info("Borrando el Producto con id: "+id);
-//        return service.softDeleteById(id);
-//    }
+    @Override
+    @PostMapping("saveProduct")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<Product> save(@RequestBody @Valid ProductSaveDto dto) {
+        log.info("Guardando producto");
+        return ResponseEntity.ok(service.save(dto));
+    }
 
+
+    @Override
+    @PutMapping("updateProduct/{id}")
+    public ResponseEntity<Product> update(@PathVariable Long id, @RequestBody @Valid ProductSaveDto dto) {
+        log.info("Actualizando producto con id {} y datos: {}" , id, dto);
+        return ResponseEntity.ok(service.update(id, dto));
+    }
+
+    @Override
+    @DeleteMapping("deleteProduct/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public ResponseEntity<Boolean> deleteById(@PathVariable Long id) {
+        log.info("Borrando producto con id {}", id);
+        return ResponseEntity.ok(service.deleteById(id));
+    }
+
+    
 }

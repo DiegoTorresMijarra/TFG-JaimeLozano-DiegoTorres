@@ -19,4 +19,8 @@ import java.util.List;
  */
 @Repository
 public interface ProductRepository extends CommonRepository<Product,Long> {
+    @Override
+    default String getTableName(){
+        return "Productos";
+    }
 }

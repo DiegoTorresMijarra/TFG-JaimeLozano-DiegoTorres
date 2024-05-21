@@ -1,6 +1,7 @@
 package es.jaimelozanodiegotorres.backapp.rest.commons.mapper;
 
 
+import org.mapstruct.MappingTarget;
 
 /**
  * CommonMapper es una clase abstracta que define métodos para mapear
@@ -8,26 +9,19 @@ package es.jaimelozanodiegotorres.backapp.rest.commons.mapper;
  * de guardado y actualización.
  *
  * @param <M> el tipo del modelo de entidad.
- * @param <S> el tipo del DTO utilizado para la operación de guardado.
- * @param <U> el tipo del DTO utilizado para la operación de actualización.
+ * @param <D> el tipo del DTO utilizado.
  */
-public interface CommonMapper<M, S, U> {
+public interface CommonMapper<M, D> {
 
     //GenericMapper INSTANCE = Mappers.getMapper( GenericMapper.class );
 
     /**
      * Convierte un DTO de guardado a un modelo de entidad.
      *
-     * @param saveDto el DTO de guardado.
+     * @param dto el DTO de guardado.
      * @return el modelo de entidad.
      */
-    M saveToModel(S saveDto);
+    M dtoToModel(D dto);
 
-    /**
-     * Convierte un DTO de actualización a un modelo de entidad.
-     *
-     * @param updateDto el DTO de actualización.
-     * @return el modelo de entidad.
-     */
-    M updateToModel(M original, U updateDto);
+    M updateModel(@MappingTarget M original, D dto);
 }

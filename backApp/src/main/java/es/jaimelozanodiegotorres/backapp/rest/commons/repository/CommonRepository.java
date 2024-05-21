@@ -8,11 +8,13 @@ import org.springframework.data.repository.NoRepositoryBean;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Optional;
 
 @NoRepositoryBean
 public interface CommonRepository <T, ID extends Serializable> extends JpaRepository<T, ID>, JpaSpecificationExecutor<T> {
     List<T> findByDeletedAtIsNotNull();
     List<T> findByDeletedAtIsNull();
+    Optional<T> findByIdAndDeletedAtIsNull(ID id);
     String getTableName();
 
 //    @Modifying
