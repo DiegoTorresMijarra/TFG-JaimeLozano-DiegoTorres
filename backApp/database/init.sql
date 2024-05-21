@@ -16,7 +16,7 @@ CREATE TABLE "public"."products"
     "gluten"     boolean,
     "created_at" timestamp,
     "updated_at" timestamp default CURRENT_TIMESTAMP,
-    "deleted_at"  timestamp default null,
+    "deleted_at" timestamp default null,
     CONSTRAINT "products_pkey" PRIMARY KEY ("id")
 ) WITH (oids = false);
 -- Insertar la tabla products
@@ -27,3 +27,21 @@ VALUES (1, 'Producto1', 10.50, 100, true, '2023-01-01', '2023-01-01'),
        (4, 'Producto4', 8.99, 120, false, '2023-01-04', '2023-01-04'),
        (5, 'Producto5', 25.50, 200, true, '2023-01-05', '2023-01-05')
 ;
+
+CREATE SEQUENCE restaurants_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 START 4 CACHE 1;
+-- Crear la tabla restaurants
+CREATE TABLE "public"."restaurants"
+(
+    "id"         bigint    DEFAULT nextval('restaurants_id_seq') NOT NULL,
+    "name"       character varying(255),
+    phone        varchar(9),
+    "created_at" timestamp,
+    "updated_at" timestamp default CURRENT_TIMESTAMP,
+    "deleted_at" timestamp default null,
+    CONSTRAINT "restaurants_pkey" PRIMARY KEY ("id")
+) WITH (oids = false);
+-- Insertar datos en la tabla restaurants
+INSERT INTO "restaurants" ("id", "name", phone, "created_at", "updated_at")
+VALUES (1, 'Restaurante1', 1, '2023-01-01', '2023-01-01'),
+       (2, 'Restaurante2', 2, '2023-01-02', '2023-01-02'),
+       (3, 'Restaurante3', 3, '2023-01-03', '2023-01-03');
