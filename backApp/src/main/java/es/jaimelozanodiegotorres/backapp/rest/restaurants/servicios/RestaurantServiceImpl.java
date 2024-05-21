@@ -1,11 +1,11 @@
 package es.jaimelozanodiegotorres.backapp.rest.restaurants.servicios;
 
 import es.jaimelozanodiegotorres.backapp.rest.commons.services.CommonService;
-import es.jaimelozanodiegotorres.backapp.rest.restaurants.dto.NewRestaurantDTO;
-import es.jaimelozanodiegotorres.backapp.rest.restaurants.dto.UpdatedRestaurantDTO;
+import es.jaimelozanodiegotorres.backapp.rest.restaurants.dto.RestaurantDto;
 import es.jaimelozanodiegotorres.backapp.rest.restaurants.mapper.RestaurantMapper;
 import es.jaimelozanodiegotorres.backapp.rest.restaurants.modelos.Restaurant;
 import es.jaimelozanodiegotorres.backapp.rest.restaurants.repositories.RestaurantRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CachePut;
@@ -28,8 +28,9 @@ import java.util.Optional;
  */
 @CacheConfig(cacheNames = {"restaurants"})
 @Service
+@Slf4j
 public class RestaurantServiceImpl extends CommonService<Restaurant, Long> {
-    RestaurantMapper map = new RestaurantMapper();
+    RestaurantMapper mapper;
 
     /**
      * Constructor de la clase
@@ -38,6 +39,7 @@ public class RestaurantServiceImpl extends CommonService<Restaurant, Long> {
     @Autowired
     public RestaurantServiceImpl(RestaurantRepository repository){
         super(repository);
+        mapper = RestaurantMapper.INSTANCE;
     }
 
     /**
@@ -48,7 +50,8 @@ public class RestaurantServiceImpl extends CommonService<Restaurant, Long> {
      * @param page informacion de la paginación
      * @return Pagina de restaurantes que cumplan con los parámetros de búsqueda
      */
-    public Page<Restaurant> findAll(Optional<String> name, Optional<String> number, Optional<Boolean> isDeleted, Pageable page) {
+    public Page<Restaurant> pageAll(Optional<String> name, Optional<String> number, Optional<Boolean> isDeleted, Pageable page) {
+        log.info("Devolviendo todos los restaurantes paginados");
         //Criterio busqueda nombre
         Specification<Restaurant> speNameRes=(root, query, criteriaBuilder)->
                 name.map(m -> criteriaBuilder.like(criteriaBuilder.lower(root.get("name")), "%" + m.toLowerCase() + "%")) // Buscamos por nombre
@@ -67,13 +70,12 @@ public class RestaurantServiceImpl extends CommonService<Restaurant, Long> {
 
     /**
      * Método que guarda un restaurante con la información de un RestauranteDTO
-     * @param restau RestauranteDTO con la informacion del restaurante a guardar
+     * @param dto RestauranteDTO con la informacion del restaurante a guardar
      * @return Restaurante guardado
      */
     @CachePut
-    public Restaurant save(NewRestaurantDTO restau) {
-        Restaurant savedRestaurant = map.saveToModel(restau);
-        return super.save(savedRestaurant);
+    public Restaurant save(RestaurantDto dto) {
+        return save(mapper.dtoToModel(dto));
     }
 
     /**
@@ -84,8 +86,8 @@ public class RestaurantServiceImpl extends CommonService<Restaurant, Long> {
      */
     @CachePut
     @Transactional
-    public Restaurant updateByID(Long id, UpdatedRestaurantDTO restaurantDTO) {
+    public Restaurant update(Long id, RestaurantDto restaurantDTO) {
         Restaurant original = findById(id);
-        return update(map.updateToModel(original, restaurantDTO));
+        return update(mapper.updateModel(original, restaurantDTO));
     }
 }

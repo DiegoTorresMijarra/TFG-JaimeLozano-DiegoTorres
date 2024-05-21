@@ -34,6 +34,7 @@ CREATE TABLE "public"."restaurants"
 (
     "id"         bigint    DEFAULT nextval('restaurants_id_seq') NOT NULL,
     "name"       character varying(255),
+    "address"    character varying(255),
     phone        varchar(9),
     "created_at" timestamp,
     "updated_at" timestamp default CURRENT_TIMESTAMP,
@@ -41,7 +42,8 @@ CREATE TABLE "public"."restaurants"
     CONSTRAINT "restaurants_pkey" PRIMARY KEY ("id")
 ) WITH (oids = false);
 -- Insertar datos en la tabla restaurants
-INSERT INTO "restaurants" ("id", "name", phone, "created_at", "updated_at")
-VALUES (1, 'Restaurante1', 1, '2023-01-01', '2023-01-01'),
-       (2, 'Restaurante2', 2, '2023-01-02', '2023-01-02'),
-       (3, 'Restaurante3', 3, '2023-01-03', '2023-01-03');
+INSERT INTO "restaurants" ("id", "name", "address", phone, "created_at", "updated_at")
+VALUES (1, 'Restaurante1','Calle 1', 111111111, '2023-01-01', '2023-01-01'),
+       (2, 'Restaurante2','Calle 2', 999999999, '2023-01-01', '2023-01-01'),
+       (3, 'Restaurante3','Calle 3', 999999999, '2023-01-01', '2023-01-01')
+;

@@ -1,8 +1,8 @@
 package es.jaimelozanodiegotorres.backapp.rest.restaurants.controllers;
 
 import es.jaimelozanodiegotorres.backapp.pagination.PageResponse;
-import es.jaimelozanodiegotorres.backapp.rest.restaurants.dto.NewRestaurantDTO;
-import es.jaimelozanodiegotorres.backapp.rest.restaurants.dto.UpdatedRestaurantDTO;
+import es.jaimelozanodiegotorres.backapp.rest.commons.controller.CommonController;
+import es.jaimelozanodiegotorres.backapp.rest.restaurants.dto.RestaurantDto;
 import es.jaimelozanodiegotorres.backapp.rest.restaurants.modelos.Restaurant;
 import es.jaimelozanodiegotorres.backapp.rest.restaurants.servicios.RestaurantServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
@@ -11,18 +11,16 @@ import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -31,8 +29,10 @@ import java.util.Optional;
  * @Parameter service Servicio de restaurantes
  */
 @RestController
+@RequestMapping("restaurants")
 @Tag(name = "Restaurantes", description = "Endpoint de Restaurantes de nuestra tienda")
-public class RestaurantController {
+@Slf4j
+public class RestaurantController extends CommonController<Restaurant, Long, RestaurantDto> {
     RestaurantServiceImpl service;
 
     /**
@@ -70,8 +70,8 @@ public class RestaurantController {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Error en los parámetros de búsqueda"),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Restaurante no encontrado"),
     })
-    @GetMapping("/restaurant")
-    public ResponseEntity<PageResponse<Restaurant>> getRestaurants(
+    @GetMapping("/pageAll")
+    public ResponseEntity<PageResponse<Restaurant>> pageAll(
             @RequestParam(required=false) Optional<String> name,
             @RequestParam(required = false)Optional<String> number,
             @RequestParam(defaultValue = "false",required = false)Optional<Boolean> isDeleted,
@@ -81,8 +81,16 @@ public class RestaurantController {
             @RequestParam(defaultValue = "asc") String direction
             ){
         Sort sort=direction.equalsIgnoreCase(Sort.Direction.ASC.name())? Sort.by(sortBy).ascending():Sort.by(sortBy).descending();
-        Page<Restaurant> pageResult= service.findAll(name, number,isDeleted, PageRequest.of(page,size,sort));
+        Page<Restaurant> pageResult= service.pageAll(name, number,isDeleted, PageRequest.of(page,size,sort));
         return ResponseEntity.ok().body(PageResponse.of(pageResult,sortBy,direction));
+    }
+
+
+    @GetMapping("listAll")
+    @Override
+    public List<Restaurant> listAll() {
+        log.info("Obteniendo todos los restaurantes");
+        return service.listAll();
     }
 
     /**
@@ -96,34 +104,38 @@ public class RestaurantController {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Restaurante encontrado"),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Restaurante no encontrado"),
     })
-    @GetMapping ("/restaurant/{id}")
-    public ResponseEntity<Restaurant> getRestaurant(@PathVariable Long id){
+    @GetMapping ("/{id}")
+    @Override
+    public ResponseEntity<Restaurant> findById(@PathVariable Long id){
+        log.info("Buscando Restaurante con id: {}", id);
         return ResponseEntity.ok(service.findById(id));
     }
 
     /**
      * Guarda un restaurante
-     * @param restaurantDTO RestauranteDTO con la informacion del restaurante a guardar
+     * @param dto RestauranteDTO con la informacion del restaurante a guardar
      * @return Restaurante guardado
      */
     @Operation(summary = "Guarda un restaurante con la información de un RestauranteDTO")
-    @Parameter(name = "restaurantDTO", description = "RestauranteDTO con información del restaurante a guardar", required = true)
+    @Parameter(name = "dto", description = "RestauranteDTO con información del restaurante a guardar", required = true)
     @ApiResponses(value = {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "201", description = "Restaurante guardado"),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Error en los parámetros del Restaurante"),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "No autorizado")
     })
     @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Restaurante a guardar", required=true)
-    @PostMapping("/restaurant")
+    @PostMapping("/saveRestaurant")
    // @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Restaurant> createRestaurant(@Valid @RequestBody NewRestaurantDTO restaurantDTO){
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.save(restaurantDTO));
+    @Override
+    public ResponseEntity<Restaurant> save(@Valid @RequestBody RestaurantDto dto){
+        log.info("Listando todos los restaurantes");
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.save(dto));
     }
 
     /**
      * Actualiza un restaurante
      * @param id ID del restaurante a actualizar
-     * @param restaurantDTO RestauranteDTO con la información a actualizar
+     * @param dto RestauranteDTO con la información a actualizar
      * @return Restaurante actualizado
      */
     @Operation(summary = "Actualiza un restaurante con la información de un RestauranteDTO")
@@ -137,10 +149,12 @@ public class RestaurantController {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Error en los parámetros del Restaurante"),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Restaurante no encontrado"),
     })
-    @PutMapping("/restaurant/{id}")
+    @PutMapping("updateRestaurant/{id}")
    // @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Restaurant> updateRestaurant(@PathVariable Long id, @Valid @RequestBody UpdatedRestaurantDTO restaurantDTO){
-        return ResponseEntity.ok(service.updateByID(id, restaurantDTO));
+    @Override
+    public ResponseEntity<Restaurant> update(@PathVariable Long id, @Valid @RequestBody RestaurantDto dto){
+        log.info("Actualizando Restaurante con id: {}", id);
+       return ResponseEntity.ok(service.update(id, dto));
     }
 
     /**
@@ -154,27 +168,12 @@ public class RestaurantController {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Restaurante no encontrado"),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "No autorizado")
     })
-    @DeleteMapping("/restaurant/{id}")
+    @DeleteMapping("deleteRestaurant/{id}")
     //@PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Void> deleteRestaurant(@PathVariable Long id){
+    @Override
+    public ResponseEntity<Boolean> deleteById(@PathVariable Long id){
+        log.info("Eliminando Restaurante con id: {}", id);
         service.deleteById(id);
         return ResponseEntity.noContent().build();
-    }
-
-    /**
-     * Controla las excepciones de validación
-     * @param excep Excepción de validación
-     * @return Mapa con los errores de validación
-     */
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public Map<String,String> handleValidationExceptions(MethodArgumentNotValidException excep){
-        Map<String,String> errors = new HashMap<>();
-        excep.getBindingResult().getAllErrors().forEach((error) -> {
-            String fieldName = ((FieldError) error).getField();
-            String errorMessage = error.getDefaultMessage();
-            errors.put(fieldName, errorMessage);
-        });
-        return errors;
     }
 }

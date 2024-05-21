@@ -42,6 +42,11 @@ public class Restaurant {
     @Pattern(regexp="\\d{9}", message = "Debe tener 9 dígitos")
     private String phone;
 
+    @Schema(description = "Dirección del restaurante",example = "Calle 123")
+    @Column
+    @NotBlank(message = "La dirección no puede estar en blanco")
+    private String address;
+
     @CreatedDate
     @Temporal(TemporalType.TIMESTAMP)
     @Builder.Default
