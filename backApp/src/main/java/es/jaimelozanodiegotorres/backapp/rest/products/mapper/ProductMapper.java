@@ -3,7 +3,6 @@ package es.jaimelozanodiegotorres.backapp.rest.products.mapper;
 
 import es.jaimelozanodiegotorres.backapp.rest.commons.mapper.CommonMapper;
 import es.jaimelozanodiegotorres.backapp.rest.products.dto.ProductSaveDto;
-import es.jaimelozanodiegotorres.backapp.rest.products.dto.ProductUpdateDto;
 import es.jaimelozanodiegotorres.backapp.rest.products.models.Product;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;

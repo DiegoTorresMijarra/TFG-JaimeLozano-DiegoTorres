@@ -1,6 +1,8 @@
 package es.jaimelozanodiegotorres.backapp.rest.products.services;
 
 import es.jaimelozanodiegotorres.backapp.pagination.PageResponse;
+import es.jaimelozanodiegotorres.backapp.rest.category.models.Category;
+import es.jaimelozanodiegotorres.backapp.rest.category.services.CategoryServiceImp;
 import es.jaimelozanodiegotorres.backapp.rest.commons.services.CommonService;
 import es.jaimelozanodiegotorres.backapp.rest.products.dto.ProductSaveDto;
 import es.jaimelozanodiegotorres.backapp.rest.products.filters.ProductFilters;
@@ -23,25 +25,33 @@ import org.springframework.stereotype.Service;
 @CacheConfig(cacheNames = {"productos"})
 @Slf4j
 public class ProductServiceImp extends CommonService<Product, Long> {
-    ProductMapper mapper;
+    private final ProductMapper mapper;
+    private final CategoryServiceImp categoryService;
     /**
      * Constructor de la clase
      * @param repository Repositorio de productos
      * (se utiliza la anotación @Autowired para indicar que se trata de una inyección de dependencia).
      */
     @Autowired
-    public ProductServiceImp(ProductRepository repository){
+    public ProductServiceImp(ProductRepository repository,CategoryServiceImp categoryService){
         super(repository);
         this.mapper = ProductMapper.INSTANCE;
+        this.categoryService = categoryService;
     }
 
     public Product save(ProductSaveDto dto){
-        return save(mapper.dtoToModel(dto));
+        Category category = categoryService.findById(dto.getCategoryId()); //lanza exc si no existe
+        Product product = mapper.dtoToModel(dto);
+        product.setCategory(category);
+        return save(product);
     }
 
     public Product update(Long id, ProductSaveDto dto){
         Product original = findById(id);
-        return update(mapper.updateModel(original, dto));
+        Category category = categoryService.findById(dto.getCategoryId()); //lanza exc si no existe
+        Product product = mapper.updateModel(original,dto);
+        product.setCategory(category);
+        return update(product);
     }
 
     public PageResponse<Product> pageAll(ProductFilters filters){

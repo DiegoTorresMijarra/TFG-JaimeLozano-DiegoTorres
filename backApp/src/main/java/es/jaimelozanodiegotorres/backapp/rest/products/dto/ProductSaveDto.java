@@ -35,4 +35,9 @@ public class ProductSaveDto {
     @Builder.Default
     @Schema(description = "Gluten del producto" , example = "true")
     private boolean gluten = true;
+
+    @Schema(description = "El id de la categoria del producto",example = "1")
+    @Builder.Default
+    @PositiveOrZero(message = "El id de la categoria debe ser mayor que 0")
+    private long categoryId = 1; //es la cat por defecto (sin categoria)
 }
