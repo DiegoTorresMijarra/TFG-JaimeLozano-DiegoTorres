@@ -18,6 +18,6 @@ public interface CategoryRepository extends CommonRepository<Category,Long> {
      * @param name  nombre de la categoria a buscar
      * @return categoria encontrado
      */
-    @Query("SELECT w FROM Category w WHERE w.name LIKE :name")
+    @Query("SELECT w FROM CATEGORIES w WHERE w.name LIKE :name")
     public Optional<Category> findByName(String name);
 }

@@ -10,6 +10,7 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLDeletes;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -20,11 +21,11 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-@Getter
+@Builder(toBuilder = true)
 @Entity(name="RESTAURANTS")
 @Table(name="RESTAURANTS")
 @SQLDelete(sql = "UPDATE RESTAURANTS SET deleted_at = CURRENT_TIMESTAMP WHERE id=?")
+@EntityListeners(AuditingEntityListener.class)
 public class Restaurant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

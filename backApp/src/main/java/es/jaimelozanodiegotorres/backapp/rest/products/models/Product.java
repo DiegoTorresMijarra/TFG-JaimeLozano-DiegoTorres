@@ -1,5 +1,7 @@
 package es.jaimelozanodiegotorres.backapp.rest.products.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import es.jaimelozanodiegotorres.backapp.rest.category.models.Category;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
@@ -7,6 +9,7 @@ import lombok.*;
 import org.hibernate.annotations.SQLDelete;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -15,12 +18,13 @@ import java.time.LocalDateTime;
  * Clase que representa el modelo de datos de un producto
  */
 @Data
-@Builder
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder(toBuilder = true)
 @Entity(name = "PRODUCTS")
 @Table(name = "PRODUCTS")
 @SQLDelete(sql = "UPDATE PRODUCTS SET deleted_at = CURRENT_TIMESTAMP WHERE id=?")
+@EntityListeners(AuditingEntityListener.class)
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -67,4 +71,10 @@ public class Product {
     @Column(name = "deleted_at")
     @Schema(description = "The date when the entity is deleted", example = "null")
     private LocalDateTime deletedAt;
+
+    @Schema(description = "Categoria del producto", example = "1")
+    @ManyToOne
+    @JsonManagedReference
+    @JoinColumn(name = "category_id")
+    private Category category;
 }
