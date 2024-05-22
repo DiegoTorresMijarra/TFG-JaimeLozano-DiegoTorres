@@ -25,6 +25,7 @@ import java.util.List;
 @Table(name = "CATEGORIES")
 @SQLDelete(sql = "UPDATE CATEGORIES SET deleted_at = CURRENT_TIMESTAMP WHERE id=?")
 @EntityListeners(AuditingEntityListener.class)
+@SQLDelete(sql = "UPDATE CATEGORIES SET deleted_at = CURRENT_TIMESTAMP WHERE id=?")
 public class Category {
     public static final Category SIN_CATEGORIA = Category.builder() //no es igual a la de la base
             .id(-1L)

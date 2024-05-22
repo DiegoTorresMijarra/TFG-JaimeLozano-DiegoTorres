@@ -7,10 +7,13 @@ DROP TABLE IF EXISTS "categories";
 DROP TABLE IF EXISTS "evaluation";
 DROP TABLE IF EXISTS "products";
 DROP TABLE IF EXISTS "restaurants";
+DROP TABLE IF EXISTS "evaluation";
+DROP TABLE IF EXISTS "offers";
 
 CREATE SEQUENCE products_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 START 6 CACHE 1;
 CREATE SEQUENCE categories_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 START 4 CACHE 1;
 CREATE SEQUENCE evaluation_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 START 6 CACHE 1;
+CREATE SEQUENCE offers_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 START 2 CACHE 1;
 
 -- Crear la tabla categories
 CREATE TABLE "public"."categories"
@@ -88,10 +91,31 @@ CREATE TABLE "public"."evaluation"
 ) WITH (oids = false);
 
 -- Insertar la tabla valoraciones
-INSERT INTO "evaluation" ("id", "valoracion", "created_at", "updated_at", "product_id")
-VALUES (1, 3, '2023-01-01', '2023-01-01', 1),
-       (2, 2, '2023-01-02', '2023-01-02', 2),
-       (3, 3, '2023-01-03', '2023-01-03', 3),
-       (4, 3, '2023-01-03', '2023-01-03', 4),
-       (5, 2, '2023-01-03', '2023-01-03', 5)
+INSERT INTO "evaluation" ("id", "valoracion", "created_at", "updated_at","product_id")
+VALUES (1, 3, '2023-01-01', '2023-01-01',1),
+       (2, 2,  '2023-01-02', '2023-01-02',2),
+       (3, 3,  '2023-01-03', '2023-01-03',3),
+       (4, 3,  '2023-01-03', '2023-01-03',3),
+       (5, 2,  '2023-01-03', '2023-01-03',3)
+;
+
+-- Crear la tabla ofertas
+CREATE TABLE "public"."offers"
+(
+    "id"         bigint    DEFAULT nextval('offers_id_seq') NOT NULL,
+    "descuento"     double precision NOT NULL,
+    "fecha_desde" timestamp NOT NULL,
+    "fecha_hasta" timestamp NOT NULL,
+    "created_at" timestamp,
+    "updated_at" timestamp default CURRENT_TIMESTAMP,
+    "deleted_at"  timestamp default null,
+    "product_id" bigint,
+    CONSTRAINT "offers_pkey" PRIMARY KEY ("id"),
+    CONSTRAINT "fk2fwq10nwymfv3fumatxt9fpgb" FOREIGN KEY ("product_id") REFERENCES "products" ("id") NOT DEFERRABLE
+) WITH (oids = false);
+
+-- Insertar la tabla ofertas
+INSERT INTO "offers" ("id", "descuento", "fecha_desde", "fecha_hasta", "created_at", "updated_at","product_id")
+VALUES (1, 30.0, '2024-01-01', '2024-10-10', '2023-01-01', '2023-01-01',1),
+       (2, 30.0, '2023-01-01', '2023-10-10', '2023-01-01', '2023-01-01',1)
 ;
