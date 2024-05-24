@@ -1,12 +1,7 @@
 package es.jaimelozanodiegotorres.backapp.rest.evaluation.services;
 
 import es.jaimelozanodiegotorres.backapp.pagination.PageResponse;
-import es.jaimelozanodiegotorres.backapp.rest.category.dto.CategoryDto;
-import es.jaimelozanodiegotorres.backapp.rest.category.mappers.CategoryMapper;
-import es.jaimelozanodiegotorres.backapp.rest.category.models.Category;
-import es.jaimelozanodiegotorres.backapp.rest.category.repository.CategoryRepository;
 import es.jaimelozanodiegotorres.backapp.rest.commons.services.CommonService;
-import es.jaimelozanodiegotorres.backapp.rest.category.filters.CategoryFilters;
 import es.jaimelozanodiegotorres.backapp.rest.evaluation.dto.EvaluationDto;
 import es.jaimelozanodiegotorres.backapp.rest.evaluation.filters.EvaluationFilters;
 import es.jaimelozanodiegotorres.backapp.rest.evaluation.mappers.EvaluationMapper;
@@ -15,7 +10,6 @@ import es.jaimelozanodiegotorres.backapp.rest.evaluation.repository.EvaluationRe
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
