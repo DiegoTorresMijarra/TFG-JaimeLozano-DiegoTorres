@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,6 +27,7 @@ import java.util.List;
 @RestController
 @RequestMapping("evaluations")
 @Slf4j
+@PreAuthorize("hasRole('USER')")
 public class EvaluationController extends CommonController<Evaluation, Long, EvaluationDto>{
     EvaluationServiceImp service;
 
@@ -86,6 +88,7 @@ public class EvaluationController extends CommonController<Evaluation, Long, Eva
 
     @Override
     @DeleteMapping("deleteEvaluation/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Boolean> deleteById(@PathVariable Long id) {
         log.info("Borrando valoracion con id {}", id);

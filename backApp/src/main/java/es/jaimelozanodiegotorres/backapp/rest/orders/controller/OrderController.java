@@ -17,6 +17,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -27,7 +28,8 @@ import java.util.List;
  * Anotación @RestController para indicar que es un controlador
  */
 @RestController
-@RequestMapping("orders")
+@RequestMapping("${api.version}/orders")
+@PreAuthorize("hasRole('USER')")
 @Slf4j
 public class OrderController extends CommonController<Order, ObjectId, OrderDto> {
 
@@ -45,12 +47,14 @@ public class OrderController extends CommonController<Order, ObjectId, OrderDto>
 
     @Override
     @GetMapping("listAll")
+    @PreAuthorize("hasRole('ADMIN')")
     public List<Order> listAll() {
         log.info("Listando todos los pedidos");
         return service.listAll();
     }
 
     @GetMapping("pageAll")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<PageResponse<Order>> findAll(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
@@ -84,6 +88,7 @@ public class OrderController extends CommonController<Order, ObjectId, OrderDto>
     @Override
     @PutMapping("updateOrder/{id}")
     @Transactional
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Order> update(@PathVariable("id") ObjectId id,@RequestBody @Valid OrderDto dto) {
         log.info("Actualizando pedido con id {} y datos: {}" , id, dto);
         return ResponseEntity.ok(service.update(id, dto));
@@ -92,6 +97,7 @@ public class OrderController extends CommonController<Order, ObjectId, OrderDto>
     @Override
     @DeleteMapping("deleteOrder/{id}")
     @Transactional
+    @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Boolean> deleteById(@PathVariable("id") ObjectId id) {
         log.info("Borrando pedido con id {}", id);
@@ -121,6 +127,7 @@ public class OrderController extends CommonController<Order, ObjectId, OrderDto>
 
     @Transactional
     @PutMapping ("/isPaid/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Order> updateIsPaidById(
             @PathVariable (value = "id")  ObjectId id,
             @RequestParam  (value = "isPaid",required = true) Boolean isPaid){

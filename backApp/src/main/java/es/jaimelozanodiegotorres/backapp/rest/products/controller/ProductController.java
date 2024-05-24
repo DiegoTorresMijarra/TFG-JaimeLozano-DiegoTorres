@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -57,6 +58,7 @@ public class ProductController extends CommonController<Product, Long, ProductSa
 
     @Override
     @PostMapping("saveProduct")
+    @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Product> save(@RequestBody @Valid ProductSaveDto dto) {
         log.info("Guardando producto");
@@ -66,6 +68,7 @@ public class ProductController extends CommonController<Product, Long, ProductSa
 
     @Override
     @PutMapping("updateProduct/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Product> update(@PathVariable Long id, @RequestBody @Valid ProductSaveDto dto) {
         log.info("Actualizando producto con id {} y datos: {}" , id, dto);
         return ResponseEntity.ok(service.update(id, dto));
@@ -73,6 +76,7 @@ public class ProductController extends CommonController<Product, Long, ProductSa
 
     @Override
     @DeleteMapping("deleteProduct/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Boolean> deleteById(@PathVariable Long id) {
         log.info("Borrando producto con id {}", id);

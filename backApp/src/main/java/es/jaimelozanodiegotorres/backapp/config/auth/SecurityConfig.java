@@ -64,10 +64,10 @@ public class SecurityConfig {
                         // Storage
                         .requestMatchers("/storage/**").permitAll()
                         // Endpoints
-                        .requestMatchers("/productos/**").permitAll()
-                        .requestMatchers("/restaurant/**").permitAll()
+                        .requestMatchers("/products/**").permitAll()
+                        .requestMatchers("/restaurants/**").permitAll()
                         .requestMatchers("/orders/**").permitAll()
-                        .requestMatchers("/positions/**").permitAll()
+                        .requestMatchers("/categories/**").permitAll()
                         //.requestMatchers("/clientes/**").permitAll()
                         // Otras rutas de la API podemos permitiras o no....
                         .requestMatchers("/" + apiVersion + "/**").permitAll()

@@ -25,7 +25,7 @@ import java.util.*;
  */
 @RestController
 @PreAuthorize("hasRole('USER')")
-@RequestMapping("users")
+@RequestMapping("${api.version}/users")
 @Slf4j
 @Tag(name = "Usuarios", description = "Endpoint usuarios de la tienda")
 public class UserController extends CommonController<User, UUID, UserDto> {
@@ -42,24 +42,28 @@ public class UserController extends CommonController<User, UUID, UserDto> {
     }
 
     @Override
+    @PreAuthorize("hasRole('ADMIN')")
     public List<User> listAll() {
         log.info("Listando todos los usuarios");
         return service.listAll();
     }
 
     @GetMapping("pageAll")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<PageResponse<User>> pageAll(@Valid UserFilters filters) {
         return ResponseEntity.ok(service.pageAll(filters));
     }
 
     @Override
     @GetMapping("{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<User> findById(@PathVariable UUID id) {
         log.info("Buscando usuario con id: {}", id);
         return ResponseEntity.ok(service.findById(id));
     }
 
     @PostMapping("saveUser")
+    @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<User> save(@RequestBody @Valid UserDto dto) {
         log.info("Guardando usuario");
@@ -68,6 +72,7 @@ public class UserController extends CommonController<User, UUID, UserDto> {
 
     @Override
     @PutMapping("updateUser/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<User> update(@PathVariable UUID id,@RequestBody @Valid UserDto dto) {
         log.info("Actualizando usuario con id {} y datos: {}" , id, dto);
         return ResponseEntity.ok(service.update(id, dto));
@@ -75,6 +80,7 @@ public class UserController extends CommonController<User, UUID, UserDto> {
 
     @Override
     @DeleteMapping("deleteUser/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Boolean> deleteById(@PathVariable UUID id) {
         log.info("Borrando valoracion con id {}", id);

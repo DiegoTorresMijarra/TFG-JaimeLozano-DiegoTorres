@@ -18,6 +18,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -125,7 +126,7 @@ public class RestaurantController extends CommonController<Restaurant, Long, Res
     })
     @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Restaurante a guardar", required=true)
     @PostMapping("/saveRestaurant")
-   // @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @Override
     public ResponseEntity<Restaurant> save(@Valid @RequestBody RestaurantDto dto){
         log.info("Listando todos los restaurantes");
@@ -150,7 +151,7 @@ public class RestaurantController extends CommonController<Restaurant, Long, Res
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Restaurante no encontrado"),
     })
     @PutMapping("updateRestaurant/{id}")
-   // @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @Override
     public ResponseEntity<Restaurant> update(@PathVariable Long id, @Valid @RequestBody RestaurantDto dto){
         log.info("Actualizando Restaurante con id: {}", id);
@@ -169,7 +170,7 @@ public class RestaurantController extends CommonController<Restaurant, Long, Res
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "No autorizado")
     })
     @DeleteMapping("deleteRestaurant/{id}")
-    //@PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @Override
     public ResponseEntity<Boolean> deleteById(@PathVariable Long id){
         log.info("Eliminando Restaurante con id: {}", id);

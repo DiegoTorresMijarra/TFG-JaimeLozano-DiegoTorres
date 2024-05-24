@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -55,6 +56,7 @@ public class OfferController extends CommonController<Offer, Long, OfferDto>{
 
     @Override
     @PostMapping("saveOffer")
+    @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Offer> save(@RequestBody @Valid OfferDto dto) {
         log.info("Guardando oferta");
@@ -63,6 +65,7 @@ public class OfferController extends CommonController<Offer, Long, OfferDto>{
 
     @Override
     @PutMapping("updateOffer/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Offer> update(@PathVariable Long id,@RequestBody @Valid OfferDto dto) {
         log.info("Actualizando oferta con id {} y datos: {}" , id, dto);
         return ResponseEntity.ok(service.update(id, dto));
@@ -70,6 +73,7 @@ public class OfferController extends CommonController<Offer, Long, OfferDto>{
 
     @Override
     @DeleteMapping("deleteOffer/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Boolean> deleteById(@PathVariable Long id) {
         log.info("Borrando oferta con id {}", id);
