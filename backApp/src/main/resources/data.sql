@@ -34,7 +34,7 @@ VALUES (1, 30.0, '2024-01-01', '2024-10-10', '2023-01-01', '2023-01-01',1),
 ;
 -- Insert usuarios y roles
 -- Contraseña: Admin1
-INSERT INTO usuarios (is_deleted, created_at, id, updated_at, apellidos, email, nombre, password, username)
+INSERT INTO usuarios (deleted_at, created_at, id, updated_at, apellidos, email, nombre, password, username)
 VALUES (false, '2023-11-02 11:43:24.724871', '00000000-0000-0000-0000-000000000000', '2023-11-02 11:43:24.724871', 'Admin Admin', 'admin@prueba.net', 'Admin', '$2a$10$vPaqZvZkz6jhb7U7k/V/v.5vprfNdOnh4sxi/qpPRkYTzPmFlI9p2', 'admin');
 
 -- Asignar roles al administrador
@@ -44,7 +44,7 @@ INSERT INTO user_roles (user_id, roles)
 VALUES ('00000000-0000-0000-0000-000000000000', 'ADMIN');
 
 -- Contraseña: User1
-INSERT INTO usuarios (is_deleted, created_at, id, updated_at, apellidos, email, nombre, password, username)
+INSERT INTO usuarios (deleted_at, created_at, id, updated_at, apellidos, email, nombre, password, username)
 VALUES (false, '2023-11-02 11:43:24.730431', '00000000-0000-0000-0000-000000000001', '2023-11-02 11:43:24.730431', 'User User', 'user@prueba.net', 'User', '$2a$12$RUq2ScW1Kiizu5K4gKoK4OTz80.DWaruhdyfi2lZCB.KeuXTBh0S.', 'user');
 
 -- Asignar roles al usuario
