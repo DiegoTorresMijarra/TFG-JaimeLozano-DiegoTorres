@@ -1,4 +1,4 @@
-package es.jaimelozanodiegotorres.backapp.rest.user;
+package es.jaimelozanodiegotorres.backapp.rest.user.models;
 
 /**
  * Enumerado que representa los roles de los usuarios.
