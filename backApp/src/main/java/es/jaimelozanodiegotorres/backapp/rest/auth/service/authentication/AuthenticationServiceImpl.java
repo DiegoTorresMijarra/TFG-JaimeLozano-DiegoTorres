@@ -50,13 +50,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public JwtAuthResponse signUp(UserSignUpRequest request) {
         log.info("Creando usuario: {}", request);
-        if (request.getPassword().contentEquals(request.getPasswordComprobacion())) {
+        if (request.getPassword().contentEquals(request.getPasswordRepeat())) {
             User user = User.builder()
                     .username(request.getUsername())
                     .password(passwordEncoder.encode(request.getPassword()))
                     .email(request.getEmail())
-                    .nombre(request.getNombre())
-                    .apellidos(request.getApellidos())
+                    .name(request.getName())
+                    .surname(request.getSurname())
                     .roles(Stream.of(Role.USER).collect(Collectors.toSet()))
                     .build();
             try {

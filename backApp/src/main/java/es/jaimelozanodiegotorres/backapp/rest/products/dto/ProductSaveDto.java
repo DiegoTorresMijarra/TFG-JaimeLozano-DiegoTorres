@@ -19,13 +19,13 @@ public class ProductSaveDto {
     @Schema(description = "Nombre del producto", example = "Coca Cola")
     @NotBlank(message = "El nombre no puede estar vacío")
     @Length(max = 50, message = "El nombre no puede tener más de 50 caracteres")
-    private String nombre;
+    private String name;
 
     @Schema(description = "Precio del producto", example = "12.0")
     @Positive(message = "El precio no puede ser negativo")
     @NotNull(message = "El precio no puede estar vacío")
     @Digits(integer = 5, fraction = 2, message = "El precio del producto solo puede tener 5 digitos enteros y 2 decimales")
-    private double precio;
+    private double price;
 
     @Schema(description = "Stock del producto", example = "10")
     @PositiveOrZero(message = "El stock no puede ser negativo")

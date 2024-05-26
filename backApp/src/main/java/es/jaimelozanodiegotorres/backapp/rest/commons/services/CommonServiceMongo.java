@@ -44,13 +44,4 @@ public abstract class CommonServiceMongo <T ,ID  extends Serializable>{
         return repository.save(entity);
     }
 
-    public boolean deleteById(ID id) throws RuntimeException {
-        log.info("Borrando {} con id: {}", entityName, id);
-
-        findById(id);
-
-        repository.deleteById(id);
-
-        return true;
-    }
 }

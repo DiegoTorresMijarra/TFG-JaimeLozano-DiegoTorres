@@ -6,6 +6,7 @@ import es.jaimelozanodiegotorres.backapp.rest.orders.dto.OrderType;
 import es.jaimelozanodiegotorres.backapp.rest.orders.mapper.OrderMapper;
 import es.jaimelozanodiegotorres.backapp.rest.orders.models.Order;
 
+import es.jaimelozanodiegotorres.backapp.rest.orders.models.OrderState;
 import es.jaimelozanodiegotorres.backapp.rest.orders.models.OrderedProduct;
 import es.jaimelozanodiegotorres.backapp.rest.orders.repository.OrderRepository;
 import es.jaimelozanodiegotorres.backapp.rest.products.repository.ProductRepository;
@@ -19,7 +20,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
+import java.time.LocalDateTime;
 
 @Service
 @CacheConfig(cacheNames = {"orders"})
@@ -37,7 +38,7 @@ public class OrderService extends CommonServiceMongo<Order, ObjectId> {
         this.mapper = OrderMapper.INSTANCE;
     }
 
-    public Page<Order> findAll(Pageable pageable) {
+    public Page<Order> pageAll(Pageable pageable) {
         log.info("Listando todos los pedidos pageados");
         return repository.findAll(pageable);
     }
@@ -57,9 +58,9 @@ public class OrderService extends CommonServiceMongo<Order, ObjectId> {
         }
         checkOrderIds(dto);
         var original = findById(objectId);
-        var updated = mapper.updateModel(original,dto);
-        updated.setId(objectId);
-        return update(updated);
+        isUpdatable(original);
+
+        return update(mapper.updateModel(original, dto));
     }
 
     /**
@@ -90,8 +91,10 @@ public class OrderService extends CommonServiceMongo<Order, ObjectId> {
      * @return pedido actualizado
      */
     public Order updateIsPaidById(ObjectId objectId, Boolean isPaid) {
-        log.info("Actualizando isPaid del pedido con id: "+objectId.toHexString()+" a "+ isPaid);
-        var original=findById(objectId);
+        log.info("Actualizando isPaid del pedido con id: {} a {}", objectId.toHexString(), isPaid);
+        Order original = findById(objectId);
+        isUpdatable(original);
+
         original.setIsPaid(isPaid);
         return save(original);
     }
@@ -105,17 +108,17 @@ public class OrderService extends CommonServiceMongo<Order, ObjectId> {
      */
     public <T extends OrderType> void checkOrderedProducts(T order) {
         log.info("Validando la lista de productos del pedido {}",order);
-        var list= order.getOrderedProducts();
+        var list = order.getOrderedProducts();
         if(list.isEmpty()) {
             throw exceptionService.badRequestException("La lista de productos no puede ser vacia");
         }
         for(OrderedProduct orderedProduct : list){
             var repositoryProduct = productRepository.findById(orderedProduct.getProductId()).orElseThrow(()-> exceptionService.notFoundException(orderedProduct.getProductId().toString()));
-            if(orderedProduct.getProductPrice()!=repositoryProduct.getPrecio()) {
-                throw exceptionService.badRequestException("El precio del producto con id"+orderedProduct.getProductId()+" no coincide con el de la base de datos");
+            if(orderedProduct.getProductPrice()!=repositoryProduct.getPrice()) {
+                throw exceptionService.badRequestException("El precio del producto con id "+orderedProduct.getProductId()+" no coincide con el de la base de datos");
             }
             if(orderedProduct.getQuantity()>repositoryProduct.getStock()) {
-                throw exceptionService.badRequestException("La cantidad del producto con id"+orderedProduct.getProductId()+" no coincide con el de la base de datos");
+                throw exceptionService.badRequestException("La cantidad del producto con id " + orderedProduct.getProductId()+" es menor que la cantidad solicitada");
             }
             //Actualizamos la cantidad del producto en el repo
             repositoryProduct.setStock(repositoryProduct.getStock()-orderedProduct.getQuantity());
@@ -147,5 +150,40 @@ public class OrderService extends CommonServiceMongo<Order, ObjectId> {
             var restaurant = restaurantRepository.findById(restaurantId)
                     .orElseThrow(()-> exceptionService.badRequestException("El restaurante con id "+restaurantId+" no existe"));
         }
+    }
+
+    public boolean deleteById(ObjectId id) throws RuntimeException {
+        log.info("Borrando {} con id: {}", entityName, id);
+
+        Order original = findById(id);
+        if(!OrderState.isDeleteable(original.getState()))
+            throw exceptionService.badRequestException("No se puede borrar un pedido con estado " + original.getState());
+
+        original.setState(OrderState.DELETED);
+        original.setDeletedAt(LocalDateTime.now());
+
+        repository.save(original);
+
+        return true;
+    }
+
+    public Order patchState(ObjectId id, OrderState state) {
+        log.info("Cambiando el estado del pedido a {}", state);
+        Order original = findById(id);
+        isUpdatable(original);
+        original.setState(state);
+        // original.setUpdatedAt(LocalDateTime.now()); //todo: no deberia ser necesario
+
+        repository.save(original);
+
+        return original;
+    }
+
+    private void isUpdatable (Order order){
+        if(!OrderState.isUpdatable(order.getState()))
+            throw exceptionService.badRequestException(
+                    "No se puede cambiar el estado del pedido: "
+                            + order.getId() + " con estado " + order.getState()
+            );
     }
 }

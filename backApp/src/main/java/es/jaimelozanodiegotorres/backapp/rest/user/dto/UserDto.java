@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
 import java.util.Set;
-import java.util.UUID;
 
 @Data
 @Builder
@@ -19,10 +18,10 @@ import java.util.UUID;
 public class UserDto {
     @Schema(description = "Nombre del usuario", example = "John")
     @NotBlank(message = "Nombre no puede estar vacío")
-    private String nombre;
+    private String name;
     @Schema(description = "Apellidos del usuario", example = "Doe")
     @NotBlank(message = "Apellidos no puede estar vacío")
-    private String apellidos;
+    private String surname;
     @Schema(description = "Username del usuario", example = "johndoe")
     @NotBlank(message = "Username no puede estar vacío")
     private String username;

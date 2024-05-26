@@ -30,7 +30,6 @@ import java.util.List;
 @Document("order")
 @TypeAlias("Order")
 @EntityListeners(AuditingEntityListener.class)
-@SQLDelete(sql = "UPDATE order SET deletedAt = CURRENT_TIMESTAMP WHERE id=?")
 public class Order {
     @Id
     @Builder.Default
@@ -57,6 +56,9 @@ public class Order {
     @Builder.Default
     private Boolean isPaid = false;
 
+    @Builder.Default
+    private OrderState state = OrderState.PENDING;
+
     @CreationTimestamp
     @Builder.Default
     private LocalDateTime createdAt = LocalDateTime.now();
@@ -77,7 +79,6 @@ public class Order {
      *  Establece la lista de productos pedidos
      * @param orderedProducts lista de productos pedidos
      */
-
     public void setOrderedProducts(List<@Valid OrderedProduct> orderedProducts){
         this.orderedProducts= orderedProducts;
         this.totalPrice = orderedProducts.stream().mapToDouble(OrderedProduct::getTotalPrice).sum();

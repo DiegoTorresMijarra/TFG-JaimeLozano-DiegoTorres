@@ -3,7 +3,6 @@ package es.jaimelozanodiegotorres.backapp.rest.user.service;
 import es.jaimelozanodiegotorres.backapp.pagination.PageResponse;
 import es.jaimelozanodiegotorres.backapp.rest.commons.repository.CommonRepository;
 import es.jaimelozanodiegotorres.backapp.rest.commons.services.CommonService;
-import es.jaimelozanodiegotorres.backapp.rest.evaluation.repository.EvaluationRepository;
 import es.jaimelozanodiegotorres.backapp.rest.user.dto.UserDto;
 import es.jaimelozanodiegotorres.backapp.rest.user.filters.UserFilters;
 import es.jaimelozanodiegotorres.backapp.rest.user.mapper.UserMapper;
@@ -11,7 +10,6 @@ import es.jaimelozanodiegotorres.backapp.rest.user.models.User;
 import es.jaimelozanodiegotorres.backapp.rest.user.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.data.domain.Page;
@@ -38,7 +36,7 @@ public class UserService extends CommonService<User, UUID> {
     public User save(UserDto dto){
         log.info("Guardando usuario");
         dto.setPassword(passwordEncoder.encode(dto.getPassword()));
-        ((UserRepository)repository).findByUsernameEqualsIgnoreCaseOrEmailEqualsIgnoreCase(dto.getUsername(),dto.getEmail())
+        ((UserRepository)repository).findByUsernameEqualsIgnoreCaseOrEmailEqualsIgnoreCaseAndDeletedAtIsNull(dto.getUsername(),dto.getEmail())
                 .ifPresent(u -> {
                     throw exceptionService.badRequestException("Ya existe un usuario con ese username o email");
                 });
@@ -49,7 +47,7 @@ public class UserService extends CommonService<User, UUID> {
         log.info("Actualizando usuario");
         dto.setPassword(passwordEncoder.encode(dto.getPassword()));
         User original = findById(id);
-        ((UserRepository)repository).findByUsernameEqualsIgnoreCaseOrEmailEqualsIgnoreCase(dto.getUsername(),dto.getEmail())
+        ((UserRepository)repository).findByUsernameEqualsIgnoreCaseOrEmailEqualsIgnoreCaseAndDeletedAtIsNull(dto.getUsername(),dto.getEmail())
                 .ifPresent(u -> {
                     if (!u.getId().equals(id)) {
                         System.out.println("usuario encontrado: " + u.getId() + " Mi id: " + id);
@@ -77,7 +75,7 @@ public class UserService extends CommonService<User, UUID> {
        // if (ordersCrudRepository.existsByWorkerUUID(id)) {
 
             // Si no, lo marcamos como borrado lógico
-            ((UserRepository)repository).updateIsDeletedToTrueById(id);
+            ((UserRepository)repository).deleteById(id);
         //} else {
         return true;
        // }

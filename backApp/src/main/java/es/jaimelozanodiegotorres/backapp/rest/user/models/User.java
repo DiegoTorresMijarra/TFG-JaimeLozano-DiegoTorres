@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "USUARIOS")
+@Table(name = "users")
 @EntityListeners(AuditingEntityListener.class) // Para que sea auditada y se autorellene
 public class User implements UserDetails {
     @Id
@@ -42,11 +42,11 @@ public class User implements UserDetails {
     @Schema(description = "Nombre del usuario", example = "Jaime")
     @NotBlank(message = "nombre no puede estar vacío")
     @Column(nullable = false)
-    private String nombre;
+    private String name;
     @Schema(description = "Apellidos del usuario", example = "Lopez")
     @Column(nullable = false)
     @NotBlank(message = "apellidos no puede estar vacío")
-    private String apellidos;
+    private String surname;
     @Schema(description = "Username del usuario", example = "jlopez")
     @Column(unique = true, nullable = false)
     @NotBlank(message = "Username no puede estar vacío")
@@ -61,20 +61,26 @@ public class User implements UserDetails {
     @Length(min = 5, message = "Password debe tener al menos 5 caracteres")
     @Column(nullable = false)
     private String password;
+
     @Schema(description = "Usuario creado", example = "2022-12-01T00:00:00")
+    @Temporal(TemporalType.TIMESTAMP)
     @CreationTimestamp
-    @Column(updatable = false, nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(name = "created_at", updatable = false, nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     @Builder.Default
     private LocalDateTime createdAt = LocalDateTime.now();
+
     @Schema(description = "Usuario actualizado", example = "2022-12-01T00:00:00")
+    @Temporal(TemporalType.TIMESTAMP)
     @UpdateTimestamp
-    @Column(updatable = true, nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(name = "updated_at", updatable = true, nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     @Builder.Default
     private LocalDateTime updatedAt = LocalDateTime.now();
+
     @Schema(description = "Usuario eliminado", example = "false")
-    @Column(columnDefinition = "boolean default false")
-    @Builder.Default
-    private Boolean deletedAt = false;
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "deleted_at")
+    private LocalDateTime deletedAt;
+
     @Schema(description = "Roles del usuario", example = "ADMIN")
     @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
@@ -132,6 +138,6 @@ public class User implements UserDetails {
      */
     @Override
     public boolean isEnabled() {
-        return !deletedAt;
+        return deletedAt == null;
     }
 }

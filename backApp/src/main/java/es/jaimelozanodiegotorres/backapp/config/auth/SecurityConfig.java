@@ -64,13 +64,14 @@ public class SecurityConfig {
                         // Storage
                         .requestMatchers("/storage/**").permitAll()
                         // Endpoints
+                        .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/products/**").permitAll()
                         .requestMatchers("/restaurants/**").permitAll()
                         .requestMatchers("/orders/**").permitAll()
                         .requestMatchers("/categories/**").permitAll()
                         //.requestMatchers("/clientes/**").permitAll()
                         // Otras rutas de la API podemos permitiras o no....
-                        .requestMatchers("/" + apiVersion + "/**").permitAll()
+                        //.requestMatchers("/" + apiVersion + "/**").permitAll()
                         // Podríamos jugar con permismos por ejemplo para una ruta concreta
                         //.requestMatchers("/" + apiVersion + "/auth/me").hasRole("ADMIN")
                         // O con un acción HTTP, POST, PUT, DELETE, etc.

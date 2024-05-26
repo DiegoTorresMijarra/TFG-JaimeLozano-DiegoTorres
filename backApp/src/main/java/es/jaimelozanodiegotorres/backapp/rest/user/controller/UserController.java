@@ -25,7 +25,7 @@ import java.util.*;
  */
 @RestController
 @PreAuthorize("hasRole('USER')")
-@RequestMapping("${api.version}/users")
+@RequestMapping("users")
 @Slf4j
 @Tag(name = "Usuarios", description = "Endpoint usuarios de la tienda")
 public class UserController extends CommonController<User, UUID, UserDto> {

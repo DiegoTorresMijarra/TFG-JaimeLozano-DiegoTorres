@@ -20,9 +20,9 @@ public class UserResponse {
     @Schema(description = "User id", example = "1")
     private Long id;
     @Schema(description = "User name", example = "John")
-    private String nombre;
+    private String name;
     @Schema(description = "User last name", example = "Doe")
-    private String apellidos;
+    private String surname;
     @Schema(description = "User username", example = "johndoe")
     private String username;
     @Schema(description = "User email", example = "johndoe@my.com")
