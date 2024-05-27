@@ -10,6 +10,7 @@ import org.mapstruct.factory.Mappers;
 /**
  * Mapeo de un producto
  */
+
 @Mapper
 public interface ProductMapper extends CommonMapper<Product, ProductSaveDto> {
     ProductMapper INSTANCE = Mappers.getMapper( ProductMapper.class );

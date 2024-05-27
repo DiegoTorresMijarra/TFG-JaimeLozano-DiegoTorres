@@ -6,7 +6,7 @@ VALUES (1, 'categoria1', '2023-01-01', '2023-01-01'),
 ;
 
 -- Insertar la tabla products
-INSERT INTO "products" ("id", "nombre", "precio", "stock", "gluten", "created_at", "updated_at", "category_id")
+INSERT INTO "products" ("id", "name", "price", "stock", "gluten", "created_at", "updated_at", "category_id")
 VALUES (1, 'Producto1', 10.50, 100, true, '2023-01-01', '2023-01-01',1),
        (2, 'Producto2', 15.75, 50, false, '2023-01-02', '2023-01-02', 2),
        (3, 'Producto3', 20.00, 75, true, '2023-01-03', '2023-01-03', 3),
@@ -32,3 +32,21 @@ INSERT INTO "offers" ("id", "descuento", "fecha_desde", "fecha_hasta", "created_
 VALUES (1, 30.0, '2024-01-01', '2024-10-10', '2023-01-01', '2023-01-01',1),
        (2, 30.0, '2023-01-01', '2023-10-10', '2023-01-01', '2023-01-01',1)
 ;
+-- Insert usuarios y roles
+-- Contraseña: Admin1
+INSERT INTO users (deleted_at, created_at, id, updated_at, surname, email, name, password, username)
+VALUES (false, '2023-11-02 11:43:24.724871', '00000000-0000-0000-0000-000000000000', '2023-11-02 11:43:24.724871', 'Admin Admin', 'admin@prueba.net', 'Admin', '$2a$10$vPaqZvZkz6jhb7U7k/V/v.5vprfNdOnh4sxi/qpPRkYTzPmFlI9p2', 'admin');
+
+-- Asignar roles al administrador
+INSERT INTO user_roles (user_id, roles)
+VALUES ('00000000-0000-0000-0000-000000000000', 'USER');
+INSERT INTO user_roles (user_id, roles)
+VALUES ('00000000-0000-0000-0000-000000000000', 'ADMIN');
+
+-- Contraseña: User1
+INSERT INTO users (deleted_at, created_at, id, updated_at, surname, email, name, password, username)
+VALUES (false, '2023-11-02 11:43:24.730431', '00000000-0000-0000-0000-000000000001', '2023-11-02 11:43:24.730431', 'User User', 'user@prueba.net', 'User', '$2a$12$RUq2ScW1Kiizu5K4gKoK4OTz80.DWaruhdyfi2lZCB.KeuXTBh0S.', 'user');
+
+-- Asignar roles al usuario
+INSERT INTO user_roles (user_id, roles)
+VALUES ('00000000-0000-0000-0000-000000000001', 'USER');

@@ -11,7 +11,6 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
@@ -34,13 +33,13 @@ public class Product {
     @Column(nullable = false)
     @NotBlank(message = "El nombre no puede estar vacío")
     @Schema(description = "Nombre del producto", example = "Cafe")
-    private String nombre;
+    private String name;
 
     @Column(nullable = false)
     @Positive(message = "El precio no puede ser negativo")
     @NotNull(message = "El precio no puede estar vacío")
     @Schema(description = "Precio del producto", example = "1.0")
-    private double precio;
+    private double price;
 
     @Column(nullable = false)
     @PositiveOrZero(message = "El stock no puede ser negativo")
@@ -75,6 +74,7 @@ public class Product {
     @Schema(description = "Categoria del producto", example = "1")
     @ManyToOne
     @JsonManagedReference
+    @ToString.Exclude
     @JoinColumn(name = "category_id")
     private Category category;
 }
