@@ -16,9 +16,12 @@ import org.hibernate.validator.constraints.Length;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProductSaveDto {
+    private static final String REGEXP_SANITIZER = "^[\\d\\p{L}\\s,.;:]*$";
+
     @Schema(description = "Nombre del producto", example = "Coca Cola")
     @NotBlank(message = "El nombre no puede estar vacío")
     @Length(max = 50, message = "El nombre no puede tener más de 50 caracteres")
+    @Pattern(regexp = REGEXP_SANITIZER, message = "El campo solo puede contener letras y números")
     private String name;
 
     @Schema(description = "Precio del producto", example = "12.0")

@@ -5,5 +5,6 @@ package es.jaimelozanodiegotorres.backapp.rest.user.models;
  */
 public enum Role {
     USER, // Por defecto
+    WORKER, // TRABAJADOR DEL RESTAURANTE
     ADMIN // Administrador
 }

@@ -52,7 +52,7 @@ public class OrderService extends CommonServiceMongo<Order, ObjectId> {
     }
 
     public Order update(ObjectId objectId, OrderDto dto) {
-        log.info("Actualizando un pedido por su id: "+objectId.toHexString());
+        log.info("Actualizando un pedido por su id: {}", objectId.toHexString());
         if(dto.getOrderedProducts()!=null) {
             checkOrderedProducts(dto);
         }
@@ -70,7 +70,7 @@ public class OrderService extends CommonServiceMongo<Order, ObjectId> {
      * @return pedidos del restaurante
      */
     public Page<Order> findByRestaurantId(Long restaurantId, Pageable pageable) {
-        log.info("Buscando los pedidos del restaurante con id: "+restaurantId);
+        log.info("Buscando los pedidos del restaurante con id: {}", restaurantId);
         return ((OrderRepository)repository).findByRestaurantId(restaurantId, pageable);
     }
 

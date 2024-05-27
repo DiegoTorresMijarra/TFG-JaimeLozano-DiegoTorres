@@ -19,13 +19,16 @@ public class OfferDto {
     @Max(value = 100)
     @Schema(description = "oferta del producto", example = "30")
     private double descuento;
+
     @Schema(description = "Id del producto", example = "1")
     @NotNull(message="El id no puede estar vacío")
     @Positive(message = "El id no puede ser negativo o 0")
     private Long productId;
+
     @Schema(description = "Fecha de inicio de la oferta", example = "2022-01-01 00:00:00")
     @NotNull(message="La fecha de inicio no puede estar vacia")
     private LocalDateTime fechaDesde;
+
     @Schema(description = "Fecha de fin de la oferta", example = "2022-01-01 00:00:00")
     @NotNull(message="La fecha de fin no puede estar vacia")
     private LocalDateTime fechaHasta;

@@ -127,13 +127,13 @@ CREATE TABLE "public".users
 (
     "id"         uuid      DEFAULT uuid_generate_v4() NOT NULL,
     "email"      character varying(255)               NOT NULL,
-    "name"     character varying(255)               NOT NULL,
-    "surname"  character varying(255)               NOT NULL,
+    "name"       character varying(255)               NOT NULL,
+    "surname"    character varying(255)               NOT NULL,
     "password"   character varying(255)               NOT NULL,
     "username"   character varying(255)               NOT NULL,
-    "created_at"  timestamp,
-    "updated_at"  timestamp default CURRENT_TIMESTAMP,
-    "deleted_at"  timestamp default null,
+    "created_at" timestamp,
+    "updated_at" timestamp default CURRENT_TIMESTAMP,
+    "deleted_at" timestamp default null,
     CONSTRAINT "usuarios_email_unique_key" UNIQUE ("email"),
     CONSTRAINT "usuarios_pkey" PRIMARY KEY ("id"),
     CONSTRAINT "usuarios_username_unique_key" UNIQUE ("username")
@@ -147,8 +147,8 @@ CREATE TABLE "public"."user_roles"
 
 -- Insert usuarios y roles
 -- Contraseña: Admin1
-INSERT INTO users (deleted_at, created_at, id, updated_at, surname, email, name, password, username)
-VALUES (null, '2023-11-02 11:43:24.724871', '00000000-0000-0000-0000-000000000000', '2023-11-02 11:43:24.724871',
+INSERT INTO users (created_at, id, updated_at, surname, email, name, password, username)
+VALUES ('2023-11-02 11:43:24.724871', '00000000-0000-0000-0000-000000000000', '2023-11-02 11:43:24.724871',
         'Admin Admin', 'admin@prueba.net', 'Admin', '$2a$10$Fjs4lFtGRtCgOsLURykTW.IGYfdqsFVXZN1jGhl3PlZAqMTKHK7S6',
         'admin');
 
@@ -159,8 +159,8 @@ INSERT INTO user_roles (user_id, roles)
 VALUES ('00000000-0000-0000-0000-000000000000', 'ADMIN');
 
 -- Contraseña: User1
-INSERT INTO users (deleted_at, created_at, id, updated_at, surname, email, name, password, username)
-VALUES (false, '2023-11-02 11:43:24.730431', '00000000-0000-0000-0000-000000000001', '2023-11-02 11:43:24.730431',
+INSERT INTO users (created_at, id, updated_at, surname, email, name, password, username)
+VALUES ('2023-11-02 11:43:24.730431', '00000000-0000-0000-0000-000000000001', '2023-11-02 11:43:24.730431',
         'User User', 'user@prueba.net', 'User', '$2a$10$co8cRNxqcwJvCoOUQD9freA/b.FcKGdlI3khs3FxqniJyo3LcpeHe', 'user');
 
 -- Asignar roles al usuario
@@ -170,3 +170,47 @@ VALUES ('00000000-0000-0000-0000-000000000001', 'USER');
 -- Restricciones de clave externa
 ALTER TABLE ONLY "public"."user_roles"
     ADD CONSTRAINT "user_roles_fk_user" FOREIGN KEY (user_id) REFERENCES users (id) NOT DEFERRABLE;
+
+
+CREATE SEQUENCE addresses_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 START 1 CACHE 1;
+
+-- Crear la tabla addresses
+CREATE TABLE "public"."addresses"
+(
+    "id"          uuid                   NOT NULL,
+    "country"     character varying(255) NOT NULL DEFAULT 'España',
+    "province"    character varying(255) NOT NULL DEFAULT 'Madrid',
+    "city"        character varying(255) NOT NULL,
+    "street"      character varying(255) NOT NULL,
+    "number"      character varying(255) NOT NULL,
+    "apartment"   character varying(255),
+    "postal_code" character varying(255) NOT NULL,
+    "extra_info"  character varying(255),
+    "name"        character varying(255) NOT NULL,
+    "created_at"  timestamp,
+    "updated_at"  timestamp                       default CURRENT_TIMESTAMP,
+    "deleted_at"  timestamp                       default null,
+    "user_id"     uuid,
+    CONSTRAINT "ADDRESSES_pkey" PRIMARY KEY ("id"),
+    CONSTRAINT "FK_ADDRESSES_user_id" FOREIGN KEY ("user_id") REFERENCES "public"."users" ("id") ON DELETE CASCADE
+) WITH (oids = false);
+
+-- Insertar datos en la tabla addresses para casas en Leganés, Madrid
+INSERT INTO "addresses" ("id", "country", "province", "city", "street", "number", "apartment", "postal_code",
+                         "extra_info", "name",
+                         "created_at", "updated_at", "user_id")
+VALUES ('00000000-0000-0000-0000-000000000003', 'España', 'Madrid', 'Leganés', 'Calle de la Luna', '45', 'Bajo B', '28915',
+        'Cuidado con el Perro', 'Casa de la familia Luna', '2023-01-03 00:00:00', '2023-01-03 00:00:00',
+        '00000000-0000-0000-0000-000000000000'),
+       ('00000000-0000-0000-0000-000000000004', 'España', 'Madrid', 'Leganés', 'Avenida de la Universidad', '10', 'Bajo C',
+        '28916', NULL, 'Casa de la familia Universidad', '2023-01-04 00:00:00', '2023-01-04 00:00:00',
+        '00000000-0000-0000-0000-000000000001'),
+       ('00000000-0000-0000-0000-000000000005', 'España', 'Madrid', 'Leganés', 'Calle del Sol', '23', NULL, '28917', NULL,
+        'Casa de la familia Sol', '2023-01-05 00:00:00', '2023-01-05 00:00:00', '00000000-0000-0000-0000-000000000001'),
+       ('00000000-0000-0000-0000-000000000006', 'España', 'Madrid', 'Leganés', 'Calle de la Estrella', '78', NULL, '28918',
+        NULL, 'Casa de la familia Estrella', '2023-01-06 00:00:00', '2023-01-06 00:00:00',
+        '00000000-0000-0000-0000-000000000000'),
+       ('00000000-0000-0000-0000-000000000007', 'España', 'Madrid', 'Leganés', 'Calle del Universo', '11', 'Primero B', '28919',
+        NULL, 'Casa de la familia Universo', '2023-01-07 00:00:00', '2023-01-07 00:00:00',
+        '00000000-0000-0000-0000-000000000001')
+;

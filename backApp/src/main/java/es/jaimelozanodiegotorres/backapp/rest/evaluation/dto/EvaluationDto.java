@@ -12,11 +12,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class EvaluationDto {
+
+    @Schema(description = "Valoracion del producto", example = "1")
     @PositiveOrZero(message = "La valoracion no puede ser negativa")
     @NotNull(message = "La valoracion no puede estar vacía")
     @Max(value = 5)
-    @Schema(description = "Valoracion del producto", example = "1")
     private Integer valoracion;
+
     @Schema(description = "Id del producto", example = "1")
     @NotNull(message="El id no puede estar vacío")
     @Positive(message = "El id no puede ser negativo o 0")

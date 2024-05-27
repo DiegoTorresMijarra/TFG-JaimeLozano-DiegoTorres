@@ -19,14 +19,17 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RestaurantDto {
+    private static final String REGEXP_SANITIZER = "^[\\d\\p{L}\\s,.;:]*$";
 
     @Schema(description = "Nombre del restaurante", example = "McDonalds")
     @NotBlank(message = "El nombre no puede estar en blanco")
+    @Pattern(regexp = REGEXP_SANITIZER, message = "El campo solo puede contener letras y números")
     private String name;
 
     @Schema(description = "Dirección del restaurante",example = "Calle 123")
     @NotBlank(message = "La dirección no puede estar en blanco")
     @Size(max = 255,message = "La dirección del restaurante no puede tener más de 255 caracteres")
+    @Pattern(regexp = REGEXP_SANITIZER, message = "El campo solo puede contener letras y números")
     private String address;
 
     @Schema(description = "Telefono del restaurante", example = "123456789")
