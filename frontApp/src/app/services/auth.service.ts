@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable, map} from "rxjs";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -9,9 +10,9 @@ export class AuthService {
   private apiUrl = 'https://localhost:3000/v1/auth';
   private tokenKey = 'authToken';
 
-  constructor(private http: HttpClient) { }
+  constructor(private router: Router, private http: HttpClient) { }
 
-  login(username: string, password: string): Observable<string> {
+  login( username: string, password: string): Observable<string> {
     const url = `${this.apiUrl}/signin`;
     const body = { username, password };
 
@@ -33,6 +34,7 @@ export class AuthService {
 
   logout(): void {
     localStorage.removeItem(this.tokenKey);
+    this.router.navigate(['/login']);
   }
 
   getToken(): string | null {

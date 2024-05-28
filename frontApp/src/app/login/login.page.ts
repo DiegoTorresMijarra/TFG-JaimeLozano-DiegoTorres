@@ -34,7 +34,6 @@ export class LoginPage {
       this.authService.login(this.username, this.password).subscribe({
         next: () => {
           this.router.navigate(['/folder/products']);
-          this.appComponent.checkLoginStatus();
         },
         error: (err) => {
           this.errorMessage = 'Login fallido. Por favor revisa sus credenciales.';

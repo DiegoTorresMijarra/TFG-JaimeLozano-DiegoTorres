@@ -1,0 +1,30 @@
+<ion-toolbar class="ion-tool ion-padding-end ">
+  <ion-buttons slot="start">
+    <ion-menu-button></ion-menu-button>
+  </ion-buttons>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col class="ion-align-items-end icon-col ion-justify-content-center">
+        <ion-img
+          src="https://ionic-docs-demo-v7.vercel.app/assets/madison.jpg"
+          alt="The Wisconsin State Capitol building in Madison, WI at night"
+        ></ion-img>
+      </ion-col>
+      <ion-col class="ion-align-items-center">
+        <h3 class="title">MacJava</h3>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <div slot="end" style="display: flex">
+    <ion-button (click)="toggleDarkMode()" color="medium">
+      <ion-icon id="iconDarkMode" slot="icon-only" name="contrast-outline" color="dark"></ion-icon>
+    </ion-button>
+    <ion-button *ngIf="isLoggedIn" (click)="authService.logout()" fill="outline" slot="end">Logout</ion-button>
+    <ion-button *ngIf="!isLoggedIn" [routerLink]="['/login']" fill="outline" slot="end">Login</ion-button>
+  </div>
+
+<!--  <ion-progress-bar type="indeterminate" *ngIf="!loaded"></ion-progress-bar> todo-->
+
+</ion-toolbar>
