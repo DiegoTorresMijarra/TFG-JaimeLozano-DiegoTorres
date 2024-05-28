@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import {AuthService} from "./auth.service";
 
 @Injectable({
   providedIn: 'root'
@@ -8,9 +9,11 @@ import { Observable } from 'rxjs';
 export class ProductService {
   private apiUrl = 'https://localhost:3000/v1/products';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private authService: AuthService) { }
 
   getProducts(): Observable<Product[]> {
+    //const headers = this.authService.getAuthHeaders();
+    //return this.http.get<Product[]>(`${this.apiUrl}/listAll`, { headers });
     return this.http.get<Product[]>(`${this.apiUrl}/listAll`);
   }
 }
