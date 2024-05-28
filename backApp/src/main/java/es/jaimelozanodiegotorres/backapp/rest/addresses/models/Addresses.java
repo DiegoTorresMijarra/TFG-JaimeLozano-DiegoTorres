@@ -31,7 +31,8 @@ public class Addresses {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Schema(description = "Identificador de la direccion", example = "1")
-    private UUID id;
+    @Builder.Default
+    private UUID id = UUID.randomUUID();
 
     @Column
     @Builder.Default // de momento va a ser solo España

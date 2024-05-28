@@ -1,5 +1,6 @@
 package es.jaimelozanodiegotorres.backapp.rest.user.models;
 
+import es.jaimelozanodiegotorres.backapp.rest.addresses.models.Addresses;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -18,6 +19,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -38,7 +40,7 @@ public class User implements UserDetails {
     @Schema(description = "Identificar del usuario", example = "12345678-1234-1234-1234-123456789012")
     @Column(columnDefinition = "UUID DEFAULT RANDOM_UUID()")
     @Builder.Default
-    private UUID id=UUID.randomUUID();
+    private UUID id = UUID.randomUUID();
     @Schema(description = "Nombre del usuario", example = "Jaime")
     @NotBlank(message = "nombre no puede estar vacío")
     @Column(nullable = false)
@@ -85,6 +87,10 @@ public class User implements UserDetails {
     @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
+
+    @Schema(description = "Direcciones del usuario")
+    @OneToMany(mappedBy = "id", fetch = FetchType.EAGER)
+    private List<Addresses> addresses;
 
     /**
      * Devuelve los roles del usuario

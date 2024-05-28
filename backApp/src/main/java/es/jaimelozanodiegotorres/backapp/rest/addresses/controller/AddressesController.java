@@ -35,7 +35,7 @@ public class AddressesController extends CommonController<Addresses, UUID, Addre
 
     @Override
     @GetMapping("{uuid}")
-    public ResponseEntity<Addresses> findById(@PathVariable @org.hibernate.validator.constraints.UUID UUID uuid) {
+    public ResponseEntity<Addresses> findById(@PathVariable UUID uuid) {
         log.info("Buscando la direccion con id: {}", uuid.toString());
         return ResponseEntity.ok(addressesService.findById(uuid));
     }
@@ -50,7 +50,7 @@ public class AddressesController extends CommonController<Addresses, UUID, Addre
 
     @Override
     @PutMapping("updateAddress/{uuid}")
-    public ResponseEntity<Addresses> update(@PathVariable @org.hibernate.validator.constraints.UUID UUID uuid, @RequestBody @Valid AddressSaveDto dto) {
+    public ResponseEntity<Addresses> update(@PathVariable  UUID uuid, @RequestBody @Valid AddressSaveDto dto) {
         log.info("Actualizando la direccion con id: {}", uuid.toString());
         return ResponseEntity.ok(addressesService.update(uuid, dto));
     }
@@ -58,7 +58,7 @@ public class AddressesController extends CommonController<Addresses, UUID, Addre
     @Override
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("deleteAddress/{uuid}")
-    public ResponseEntity<Boolean> deleteById(@PathVariable @org.hibernate.validator.constraints.UUID UUID uuid) {
+    public ResponseEntity<Boolean> deleteById(@PathVariable UUID uuid) {
         log.info("Borreando la direccion con id: {}", uuid.toString());
         return ResponseEntity.ok(addressesService.deleteById(uuid));
     }

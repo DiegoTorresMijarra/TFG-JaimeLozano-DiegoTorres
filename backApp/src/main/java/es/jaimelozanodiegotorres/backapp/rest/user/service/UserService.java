@@ -1,7 +1,7 @@
 package es.jaimelozanodiegotorres.backapp.rest.user.service;
 
 import es.jaimelozanodiegotorres.backapp.pagination.PageResponse;
-import es.jaimelozanodiegotorres.backapp.rest.commons.repository.CommonRepository;
+import es.jaimelozanodiegotorres.backapp.rest.addresses.repository.AddressesRepository;
 import es.jaimelozanodiegotorres.backapp.rest.commons.services.CommonService;
 import es.jaimelozanodiegotorres.backapp.rest.user.dto.UserDto;
 import es.jaimelozanodiegotorres.backapp.rest.user.filters.UserFilters;
@@ -23,14 +23,17 @@ import java.util.UUID;
 @CacheConfig(cacheNames = {"usuarios"})
 @Slf4j
 public class UserService extends CommonService<User, UUID> {
-    PasswordEncoder passwordEncoder;
-    UserMapper mapper;
+    private final PasswordEncoder passwordEncoder;
+    private final UserMapper mapper;
+
+    private final AddressesRepository addressesRepository;
 
 
-    protected UserService(CommonRepository<User, UUID> repository, PasswordEncoder passwordEncoder) {
+    protected UserService(UserRepository repository, PasswordEncoder passwordEncoder, AddressesRepository addressesRepository) {
         super(repository);
         this.mapper = UserMapper.INSTANCE;
         this.passwordEncoder = passwordEncoder;
+        this.addressesRepository = addressesRepository;
     }
 
     public User save(UserDto dto){
@@ -69,15 +72,20 @@ public class UserService extends CommonService<User, UUID> {
      */
     @Transactional
     @CacheEvict(key = "#id")
-    public Boolean deleteByIdLogico(UUID id) {
+    @Override
+    public boolean deleteById(UUID id) {
         User user = findById(id);
-        //Hacemos el borrado fisico si no hay pedidos
-       // if (ordersCrudRepository.existsByWorkerUUID(id)) {
+        deleteUserAddresesByUser(user);
 
-            // Si no, lo marcamos como borrado lógico
-            ((UserRepository)repository).deleteById(id);
-        //} else {
+        repository.deleteById(id);
+
         return true;
-       // }
+    }
+
+    @Transactional
+    public void deleteUserAddresesByUser(User user) {
+        log.info("Borrado logico de las direcciones asociadas al usuario con id: {}", user.getId());
+
+        user.getAddresses().forEach(address -> addressesRepository.deleteById(address.getId()));
     }
 }

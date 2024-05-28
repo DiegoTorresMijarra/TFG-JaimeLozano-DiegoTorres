@@ -84,6 +84,6 @@ public class UserController extends CommonController<User, UUID, UserDto> {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Boolean> deleteById(@PathVariable UUID id) {
         log.info("Borrando valoracion con id {}", id);
-        return ResponseEntity.ok(service.deleteByIdLogico(id));
+        return ResponseEntity.ok(service.deleteById(id));
     }
 }

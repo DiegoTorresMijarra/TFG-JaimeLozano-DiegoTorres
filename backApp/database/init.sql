@@ -177,7 +177,7 @@ CREATE SEQUENCE addresses_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 922337203685477
 -- Crear la tabla addresses
 CREATE TABLE "public"."addresses"
 (
-    "id"          uuid                   NOT NULL,
+    "id"          uuid                            DEFAULT uuid_generate_v4() NOT NULL,
     "country"     character varying(255) NOT NULL DEFAULT 'España',
     "province"    character varying(255) NOT NULL DEFAULT 'Madrid',
     "city"        character varying(255) NOT NULL,
@@ -199,18 +199,23 @@ CREATE TABLE "public"."addresses"
 INSERT INTO "addresses" ("id", "country", "province", "city", "street", "number", "apartment", "postal_code",
                          "extra_info", "name",
                          "created_at", "updated_at", "user_id")
-VALUES ('00000000-0000-0000-0000-000000000003', 'España', 'Madrid', 'Leganés', 'Calle de la Luna', '45', 'Bajo B', '28915',
+VALUES ('00000000-0000-0000-0000-000000000003', 'España', 'Madrid', 'Leganés', 'Calle de la Luna', '45', 'Bajo B',
+        '28915',
         'Cuidado con el Perro', 'Casa de la familia Luna', '2023-01-03 00:00:00', '2023-01-03 00:00:00',
         '00000000-0000-0000-0000-000000000000'),
-       ('00000000-0000-0000-0000-000000000004', 'España', 'Madrid', 'Leganés', 'Avenida de la Universidad', '10', 'Bajo C',
+       ('00000000-0000-0000-0000-000000000004', 'España', 'Madrid', 'Leganés', 'Avenida de la Universidad', '10',
+        'Bajo C',
         '28916', NULL, 'Casa de la familia Universidad', '2023-01-04 00:00:00', '2023-01-04 00:00:00',
         '00000000-0000-0000-0000-000000000001'),
-       ('00000000-0000-0000-0000-000000000005', 'España', 'Madrid', 'Leganés', 'Calle del Sol', '23', NULL, '28917', NULL,
+       ('00000000-0000-0000-0000-000000000005', 'España', 'Madrid', 'Leganés', 'Calle del Sol', '23', NULL, '28917',
+        NULL,
         'Casa de la familia Sol', '2023-01-05 00:00:00', '2023-01-05 00:00:00', '00000000-0000-0000-0000-000000000001'),
-       ('00000000-0000-0000-0000-000000000006', 'España', 'Madrid', 'Leganés', 'Calle de la Estrella', '78', NULL, '28918',
+       ('00000000-0000-0000-0000-000000000006', 'España', 'Madrid', 'Leganés', 'Calle de la Estrella', '78', NULL,
+        '28918',
         NULL, 'Casa de la familia Estrella', '2023-01-06 00:00:00', '2023-01-06 00:00:00',
         '00000000-0000-0000-0000-000000000000'),
-       ('00000000-0000-0000-0000-000000000007', 'España', 'Madrid', 'Leganés', 'Calle del Universo', '11', 'Primero B', '28919',
+       ('00000000-0000-0000-0000-000000000007', 'España', 'Madrid', 'Leganés', 'Calle del Universo', '11', 'Primero B',
+        '28919',
         NULL, 'Casa de la familia Universo', '2023-01-07 00:00:00', '2023-01-07 00:00:00',
         '00000000-0000-0000-0000-000000000001')
 ;
