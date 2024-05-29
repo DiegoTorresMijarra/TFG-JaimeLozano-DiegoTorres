@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {catchError, Observable, throwError} from 'rxjs';
 import {AuthService} from "./auth.service";
 
 @Injectable({
@@ -16,6 +16,18 @@ export class ProductService {
     //return this.http.get<Product[]>(`${this.apiUrl}/listAll`, { headers });
     return this.http.get<Product[]>(`${this.apiUrl}/listAll`);
   }
+
+  deleteProduct(id: string): Observable<void> {
+    const headers = this.authService.getAuthHeaders();
+    return this.http.delete<void>(`${this.apiUrl}/deleteProduct/${id}`, { headers }).pipe(
+      catchError(error => {
+        // Manejo de errores
+        console.error('Error borrando producto:', error);
+        return throwError(error);
+      })
+    );
+  }
+
 }
 
 export interface Product {

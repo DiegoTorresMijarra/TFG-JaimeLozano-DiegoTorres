@@ -11,8 +11,6 @@ public class CorsConfig {
     /**
      * CORS: Configuración más ajustada.
      */
-    @Value("${api.version}")
-    private String apiVersion;
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {

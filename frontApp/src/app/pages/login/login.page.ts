@@ -12,8 +12,8 @@ import {
   IonToolbar
 } from '@ionic/angular/standalone';
 import {Router} from "@angular/router";
-import {AuthService} from "../services/auth.service";
-import {AppComponent} from "../app.component";
+import {AuthService} from "../../services/auth.service";
+import {AppComponent} from "../../app.component";
 
 @Component({
   selector: 'app-login',
@@ -33,7 +33,7 @@ export class LoginPage {
     if (this.username && this.password) {
       this.authService.login(this.username, this.password).subscribe({
         next: () => {
-          this.router.navigate(['/folder/products']);
+          this.router.navigate(['/products']);
         },
         error: (err) => {
           this.errorMessage = 'Login fallido. Por favor revisa sus credenciales.';

@@ -4,6 +4,7 @@ import {FormsModule} from '@angular/forms'
 import {NgIf} from '@angular/common'
 import {RouterLink} from "@angular/router";
 import {AuthService} from "../services/auth.service";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-header',
@@ -14,7 +15,7 @@ import {AuthService} from "../services/auth.service";
 })
 export class HeaderComponent implements OnInit {
   darkMode: boolean | undefined
-  isLoggedIn: boolean = false
+ public isLoggedIn: boolean = false
 
   constructor(protected authService: AuthService) {
     this.isLoggedIn = this.authService.isLoggedIn()

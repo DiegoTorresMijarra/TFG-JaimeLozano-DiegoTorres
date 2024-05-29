@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {Observable, map} from "rxjs";
+import {Observable, map, Subject} from "rxjs";
 import {Router} from "@angular/router";
+import {jwtDecode} from "jwt-decode";
+import {HeaderComponent} from "../header/header.component";
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +27,6 @@ export class AuthService {
         if (token) {
           localStorage.setItem(this.tokenKey, token);
         }
-
         // Devolver el token (puede ser nulo si no se encontró un token en la respuesta)
         return token;
       })
@@ -51,6 +52,15 @@ export class AuthService {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
     });
+  }
+
+  getUserRole(): string | null {
+    const token = this.getToken();
+    if (token) {
+      const decodedToken: any = jwtDecode(token);
+      return decodedToken.sub;
+    }
+    return null;
   }
 
 }

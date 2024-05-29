@@ -1,0 +1,25 @@
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Products</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-list>
+    <ion-item *ngFor="let product of products" class="product-item">
+      <ion-label>
+        <h2>{{ product.name }}</h2>
+        <p>Price: ${{ product.price }}</p>
+        <p>Stock: {{ product.stock }}</p>
+        <p>Gluten: {{ product.gluten ? 'Yes' : 'No' }}</p>
+        <p>Category: {{ product.category.name }}</p>
+        <p>Created At: {{ product.createdAt | date: 'short' }}</p>
+        <p>Updated At: {{ product.updatedAt | date: 'short' }}</p>
+      </ion-label>
+      <ion-button *ngIf="isAdmin" (click)="deleteProduct(product.id)" color="danger" fill="clear">
+        Delete Product
+      </ion-button>
+    </ion-item>
+  </ion-list>
+
+</ion-content>
