@@ -1,10 +1,11 @@
-import {booleanAttribute, Component, Input, OnInit} from '@angular/core'
-import {IonicModule} from '@ionic/angular'
-import {FormsModule} from '@angular/forms'
-import {NgIf} from '@angular/common'
-import {RouterLink} from "@angular/router";
-import {AuthService} from "../services/auth.service";
-import {Subscription} from "rxjs";
+import { booleanAttribute, Component, DoCheck, OnInit } from '@angular/core'
+import { IonicModule } from '@ionic/angular'
+import { FormsModule } from '@angular/forms'
+import { NgIf } from '@angular/common'
+import { RouterLink } from '@angular/router'
+import { AuthService } from '../services/auth.service'
+import { contrastOutline } from 'ionicons/icons'
+import { addIcons } from 'ionicons'
 
 @Component({
   selector: 'app-header',
@@ -13,15 +14,17 @@ import {Subscription} from "rxjs";
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, DoCheck {
   darkMode: boolean | undefined
- public isLoggedIn: boolean = false
+  public isLoggedIn: boolean = false
 
   constructor(protected authService: AuthService) {
-    this.isLoggedIn = this.authService.isLoggedIn()
+    this.checkLoggedIn()
   }
 
   ngOnInit(): void {
+    addIcons({ contrastOutline })
+
     let mode = localStorage.getItem('darkMode')
 
     if (mode === 'false' || mode === 'true') {
@@ -33,9 +36,12 @@ export class HeaderComponent implements OnInit {
     this.initMode()
   }
 
+  ngDoCheck(): void {
+    this.checkLoggedIn()
+  }
+
   protected initMode(): void {
-    if (this.darkMode)
-      this.setMode()
+    if (this.darkMode) this.setMode()
   }
 
   protected toggleDarkMode(): void {
@@ -46,5 +52,13 @@ export class HeaderComponent implements OnInit {
 
   protected setMode() {
     document.body.classList.toggle('dark')
+  }
+
+  protected logout() {
+    this.authService.logout()
+  }
+
+  protected checkLoggedIn() {
+    this.isLoggedIn = this.authService.isLoggedIn()
   }
 }

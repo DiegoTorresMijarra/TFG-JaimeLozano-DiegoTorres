@@ -3,7 +3,6 @@ import { AnimationController, IonicModule } from '@ionic/angular'
 import { Clipboard } from '@capacitor/clipboard'
 import { TrabajosComponent } from './trabajos/trabajos.component'
 
-
 @Component({
   selector: 'app-content',
   templateUrl: './content.component.html',

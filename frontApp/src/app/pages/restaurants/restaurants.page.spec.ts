@@ -1,17 +1,17 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { RestaurantsPage } from './restaurants.page';
+import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { RestaurantsPage } from './restaurants.page'
 
 describe('RestaurantsPage', () => {
-  let component: RestaurantsPage;
-  let fixture: ComponentFixture<RestaurantsPage>;
+  let component: RestaurantsPage
+  let fixture: ComponentFixture<RestaurantsPage>
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RestaurantsPage);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(RestaurantsPage)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})

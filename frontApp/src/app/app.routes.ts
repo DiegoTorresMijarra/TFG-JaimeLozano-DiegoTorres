@@ -1,5 +1,5 @@
-import {PreloadAllModules, RouterModule, Routes} from '@angular/router';
-import {NgModule} from "@angular/core";
+import { PreloadAllModules, RouterModule, Routes } from '@angular/router'
+import { NgModule } from '@angular/core'
 
 export const routes: Routes = [
   // {
@@ -10,7 +10,7 @@ export const routes: Routes = [
   {
     path: '',
     redirectTo: 'products',
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
   {
     path: 'folder/:id',
@@ -19,24 +19,27 @@ export const routes: Routes = [
   },
   {
     path: 'login',
-    loadComponent: () => import('./pages/login/login.page').then(m => m.LoginPage)
+    loadComponent: () =>
+      import('./pages/login/login.page').then((m) => m.LoginPage),
   },
   {
     path: 'products',
-    loadComponent: () => import('./pages/products/products.page').then(m => m.ProductsPage)
+    loadComponent: () =>
+      import('./pages/products/products.page').then((m) => m.ProductsPage),
   },
   {
     path: 'restaurants',
-    loadComponent: () => import('./pages/restaurants/restaurants.page').then( m => m.RestaurantsPage)
+    loadComponent: () =>
+      import('./pages/restaurants/restaurants.page').then(
+        (m) => m.RestaurantsPage,
+      ),
   },
-
-
-];
+]
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
+    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
   ],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
