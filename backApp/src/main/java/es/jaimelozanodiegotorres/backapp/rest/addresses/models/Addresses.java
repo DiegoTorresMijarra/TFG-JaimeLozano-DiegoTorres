@@ -91,9 +91,8 @@ public class Addresses {
     @Schema(description = "The date when the entity is deleted", example = "Null")
     private LocalDateTime deletedAt;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
+    @Column(name = "user_id")
     @JsonIgnore
-    @Schema(description = "Usuario al que hace refencia la direccion", example = "1")
-    private User user;
+    @Schema(description = "Usuario al que hace refencia la direccion", example = "UUID")
+    private UUID userId;
 }

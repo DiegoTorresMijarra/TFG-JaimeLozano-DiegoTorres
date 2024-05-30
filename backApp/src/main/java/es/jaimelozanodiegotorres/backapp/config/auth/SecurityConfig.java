@@ -71,6 +71,8 @@ public class SecurityConfig {
                         .requestMatchers("/orders/**").permitAll()
                         .requestMatchers("/categories/**").permitAll()
                         .requestMatchers("/addresses/**").permitAll()
+                        .requestMatchers("/users/**").permitAll()
+                        .requestMatchers("/users/me/**").permitAll()
                         //.requestMatchers("/clientes/**").permitAll()
                         // Otras rutas de la API podemos permitiras o no....
                         //.requestMatchers("/" + apiVersion + "/**").permitAll()

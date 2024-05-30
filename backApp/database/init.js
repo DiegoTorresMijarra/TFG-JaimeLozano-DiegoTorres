@@ -24,7 +24,9 @@ db.order.insertMany([
     {
         //clientUUID: 'f47ac10b-58cc-4372-a567-0e02b2c3d479',
         //workerUUID: '550e8400-e29b-41d4-a716-446655440000',
+        userId: '00000000-0000-0000-0000-000000000001',
         restaurantId: 1,
+        addressesId: '00000000-0000-0000-0000-000000000003',
         orderedProducts: [
             {
                 quantity: 2,

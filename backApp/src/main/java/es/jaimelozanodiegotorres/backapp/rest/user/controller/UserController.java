@@ -3,6 +3,7 @@ package es.jaimelozanodiegotorres.backapp.rest.user.controller;
 import es.jaimelozanodiegotorres.backapp.pagination.PageResponse;
 import es.jaimelozanodiegotorres.backapp.rest.commons.controller.CommonController;
 import es.jaimelozanodiegotorres.backapp.rest.user.dto.UserDto;
+import es.jaimelozanodiegotorres.backapp.rest.user.dto.UserResponseDto;
 import es.jaimelozanodiegotorres.backapp.rest.user.filters.UserFilters;
 import es.jaimelozanodiegotorres.backapp.rest.user.models.User;
 import es.jaimelozanodiegotorres.backapp.rest.user.service.UserService;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -85,5 +87,15 @@ public class UserController extends CommonController<User, UUID, UserDto> {
     public ResponseEntity<Boolean> deleteById(@PathVariable UUID id) {
         log.info("Borrando valoracion con id {}", id);
         return ResponseEntity.ok(service.deleteById(id));
+    }
+
+    // detalles por usuario:
+
+
+    @GetMapping("me/details")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<UserResponseDto> details(@AuthenticationPrincipal User user) {
+        log.info("Buscando detalles del usuario");
+        return ResponseEntity.ok(service.details(user));
     }
 }

@@ -88,9 +88,14 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
 
-    @Schema(description = "Direcciones del usuario")
-    @OneToMany(mappedBy = "id", fetch = FetchType.EAGER)
-    private List<Addresses> addresses;
+    public boolean isWorker() {
+        return isEnabled()&&Role.isWorker(roles);
+    }
+
+    public boolean isClient() {
+        return isEnabled()&&Role.isClient(roles);
+    }
+
 
     /**
      * Devuelve los roles del usuario

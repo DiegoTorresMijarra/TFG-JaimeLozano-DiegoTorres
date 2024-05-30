@@ -71,7 +71,8 @@ public class AddressSaveDto {
     @Pattern(regexp = REGEXP_SANITIZER, message = "El campo solo puede contener letras y números")
     private String name;
 
-    @Schema(description = "Identificador del usuario al que pertenece la direccion", example = "d7e3d74c-2a93-4c87-b66d-51e2b02a9745")
-    @NotNull(message = "Identificador del usuario al que pertenece no puede ser null y tiene que ser valido")
-    private UUID userId;
+// No deberia pasarlo nunca, porq el back lo añade
+//    @Schema(description = "Identificador del usuario al que pertenece la direccion", example = "d7e3d74c-2a93-4c87-b66d-51e2b02a9745")
+//    @NotNull(message = "Identificador del usuario al que pertenece no puede ser null y tiene que ser valido")
+//    private UUID userId;
 }

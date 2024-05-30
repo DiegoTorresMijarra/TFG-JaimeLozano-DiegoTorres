@@ -3,6 +3,8 @@ package es.jaimelozanodiegotorres.backapp.rest.commons.mapper;
 
 import org.mapstruct.MappingTarget;
 
+import java.util.List;
+
 /**
  * CommonMapper es una clase abstracta que define métodos para mapear
  * DTOs (Data Transfer Objects) a modelos de entidades para operaciones
@@ -22,6 +24,10 @@ public interface CommonMapper<M, D> {
      * @return el modelo de entidad.
      */
     M dtoToModel(D dto);
+    List<M> dtoToModel(List<D> dto);
+
+    D modelToDto(M model);
+    List<D> modelToDto(List<M> model);
 
     M updateModel(@MappingTarget M original, D dto);
 }

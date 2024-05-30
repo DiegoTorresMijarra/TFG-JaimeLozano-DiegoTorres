@@ -1,6 +1,7 @@
 package es.jaimelozanodiegotorres.backapp.rest.orders.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import es.jaimelozanodiegotorres.backapp.rest.orders.dto.OrderType;
 import jakarta.persistence.EntityListeners;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -19,6 +20,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Modelo de datos para los pedidos
@@ -30,19 +32,23 @@ import java.util.List;
 @Document("order")
 @TypeAlias("Order")
 @EntityListeners(AuditingEntityListener.class)
-public class Order {
+public class Order implements OrderType {
+
     @Id
     @Builder.Default
     private ObjectId id = new ObjectId();
 
     //@NotNull(message = "El UUID del cliente no puede estar vacio")
-    //private UUID clientUUID;
-
-    //@NotNull(message = "El UUID del cliente no puede estar vacio")
     //private UUID workerUUID;
 
-    @NotNull(message = "El id del usuario no puede ser nulo")
+    @NotNull(message = "El UUID del cliente no puede estar vacio")
+    private UUID userId;
+
+    @NotNull(message = "El id del restaurante no puede ser nulo")
     private Long restaurantId;
+
+    @NotNull(message = "El addressesId no puede ser nulo")
+    private UUID addressesId;
 
     @NotNull(message = "El pedido debe tener al menos una línea de pedido")
     private List<@Valid OrderedProduct> orderedProducts;

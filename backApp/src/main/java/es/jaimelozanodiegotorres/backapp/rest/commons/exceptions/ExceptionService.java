@@ -26,4 +26,8 @@ public class ExceptionService {
         return new EntityBadRequestException(message);
     }
 
+    public EntityBadRequestException badRequestException() {
+        String message = "Ups, ha pasado algo raro. Prueba más tarde.";
+        return new EntityBadRequestException(message);
+    }
 }

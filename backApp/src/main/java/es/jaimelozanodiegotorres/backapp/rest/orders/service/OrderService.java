@@ -1,5 +1,7 @@
 package es.jaimelozanodiegotorres.backapp.rest.orders.service;
 
+import es.jaimelozanodiegotorres.backapp.rest.addresses.models.Addresses;
+import es.jaimelozanodiegotorres.backapp.rest.addresses.services.AddressesServiceImpl;
 import es.jaimelozanodiegotorres.backapp.rest.commons.services.CommonServiceMongo;
 import es.jaimelozanodiegotorres.backapp.rest.orders.dto.OrderDto;
 import es.jaimelozanodiegotorres.backapp.rest.orders.dto.OrderType;
@@ -11,6 +13,8 @@ import es.jaimelozanodiegotorres.backapp.rest.orders.models.OrderedProduct;
 import es.jaimelozanodiegotorres.backapp.rest.orders.repository.OrderRepository;
 import es.jaimelozanodiegotorres.backapp.rest.products.repository.ProductRepository;
 import es.jaimelozanodiegotorres.backapp.rest.restaurants.repositories.RestaurantRepository;
+import es.jaimelozanodiegotorres.backapp.rest.restaurants.servicios.RestaurantServiceImpl;
+import es.jaimelozanodiegotorres.backapp.rest.user.service.UserService;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
@@ -21,6 +25,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.UUID;
 
 @Service
 @CacheConfig(cacheNames = {"orders"})
@@ -28,13 +34,18 @@ import java.time.LocalDateTime;
 public class OrderService extends CommonServiceMongo<Order, ObjectId> {
     OrderMapper mapper;
     private final ProductRepository productRepository;
-    private final RestaurantRepository restaurantRepository;
+    private final UserService userService;
+    private final RestaurantServiceImpl restaurantService;
+    private final AddressesServiceImpl addressesService;
+
 
     @Autowired
-    public OrderService(OrderRepository repository, ProductRepository productRepository, RestaurantRepository restaurantRepository){
+    public OrderService(OrderRepository repository, ProductRepository productRepository, UserService userService, RestaurantServiceImpl restaurantService, AddressesServiceImpl addressesService){
         super(repository);
         this.productRepository = productRepository;
-        this.restaurantRepository = restaurantRepository;
+        this.userService = userService;
+        this.restaurantService = restaurantService;
+        this.addressesService = addressesService;
         this.mapper = OrderMapper.INSTANCE;
     }
 
@@ -46,6 +57,7 @@ public class OrderService extends CommonServiceMongo<Order, ObjectId> {
     @Transactional //no se si es necesario repetirlo en controller tb
     public Order save(OrderDto dto) {
         log.info("Guardando order : {}", dto);
+        // dto.setUserId(getUser); //todo: commonserviceApp con los metodos
         checkOrderIds(dto);
         checkOrderedProducts(dto);
         return save(mapper.dtoToModel(dto));
@@ -56,6 +68,8 @@ public class OrderService extends CommonServiceMongo<Order, ObjectId> {
         if(dto.getOrderedProducts()!=null) {
             checkOrderedProducts(dto);
         }
+
+        // dto.setUserId(getUser); //todo: commonserviceApp con los metodos
         checkOrderIds(dto);
         var original = findById(objectId);
         isUpdatable(original);
@@ -135,21 +149,24 @@ public class OrderService extends CommonServiceMongo<Order, ObjectId> {
      */
     public <T extends OrderType> void checkOrderIds(T order) {
         log.info("Validando las referencias del pedido {}",order);
-        //UUID clientUUID = order.getClientUUID();
-        //if (clientUUID!=null){
-            //var client = clientsRepository.findById(clientUUID)
-                    //.orElseThrow(()->new OrderBadRequest("El cliente con UUID "+clientUUID+" no existe"));
-        //}
-        //UUID workerUUID = order.getWorkerUUID();
-        //if (workerUUID!=null){
-            //var worker = workersCrudRepository.findById(workerUUID)
-                    //.orElseThrow(()->new OrderBadRequest("El trabajador con UUID "+workerUUID+" no existe"));
-        //}
+
+        UUID userId = order.getUserId();
+        if (userId!=null){
+           userService.findById(userId);
+        }
+
         Long restaurantId = order.getRestaurantId();
         if (restaurantId!=null){
-            var restaurant = restaurantRepository.findById(restaurantId)
-                    .orElseThrow(()-> exceptionService.badRequestException("El restaurante con id "+restaurantId+" no existe"));
+            restaurantService.findById(restaurantId);
         }
+
+        UUID addressId = order.getAddressesId();
+        if (addressId!=null){
+            Addresses addresses = addressesService.findById(addressId);
+            if(userId != addresses.getUserId())
+                throw exceptionService.badRequestException("La direccion pasada no pertenece al usuario");
+        }
+
     }
 
     public boolean deleteById(ObjectId id) throws RuntimeException {
@@ -165,6 +182,12 @@ public class OrderService extends CommonServiceMongo<Order, ObjectId> {
         repository.save(original);
 
         return true;
+    }
+
+
+    public List<Order> findByUserId(UUID id) {
+        log.info("Buscando los pedidos del usuario con id: {}", id);
+        return ((OrderRepository)repository).findByUserId(id);
     }
 
     public Order patchState(ObjectId id, OrderState state) {

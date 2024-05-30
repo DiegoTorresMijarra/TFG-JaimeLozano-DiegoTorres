@@ -7,6 +7,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+import java.util.UUID;
+
 @Repository
 public interface OrderRepository extends CommonRepositoryMongo<Order, ObjectId> {
     @Override
@@ -16,4 +19,6 @@ public interface OrderRepository extends CommonRepositoryMongo<Order, ObjectId> 
 
     Page<Order> findByRestaurantId (Long restaurantId, Pageable pageable);
     Boolean existsByRestaurantId (Long restaurantId);
+
+    List<Order> findByUserId(UUID id);
 }

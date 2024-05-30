@@ -15,6 +15,6 @@ public interface AddressesRepository extends CommonRepository<Addresses, UUID> {
         return "Addresses";
     }
 
-    @Query(value = "SELECT a FROM ADDRESSES a where a.user.id = :userId AND a.deletedAt IS NULL")
+    @Query(value = "SELECT a FROM ADDRESSES a where a.userId = :userId AND a.deletedAt IS NULL")
     List<Addresses> findByUserIdAndDeletedAtIsNull(UUID userId);
 }

@@ -38,6 +38,12 @@ public class JwtServiceImpl implements JwtService {
         return extractClaim(token, DecodedJWT::getSubject);
     }
 
+    @Override
+    public String extractUserId(String token) {
+        DecodedJWT decodedJWT = JWT.decode(token);
+        return decodedJWT.getClaim("userId").asString();
+    }
+
     /**
      * Genera un token
      *
@@ -138,6 +144,6 @@ public class JwtServiceImpl implements JwtService {
      */
     private byte[] getSigningKey() {
         return Base64.getEncoder().encode(jwtSigningKey.getBytes());
-
     }
+
 }

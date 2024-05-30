@@ -1,11 +1,17 @@
 package es.jaimelozanodiegotorres.backapp.rest.user.service;
 
 import es.jaimelozanodiegotorres.backapp.pagination.PageResponse;
+import es.jaimelozanodiegotorres.backapp.rest.addresses.models.Addresses;
 import es.jaimelozanodiegotorres.backapp.rest.addresses.repository.AddressesRepository;
+import es.jaimelozanodiegotorres.backapp.rest.addresses.services.AddressesServiceImpl;
 import es.jaimelozanodiegotorres.backapp.rest.commons.services.CommonService;
+import es.jaimelozanodiegotorres.backapp.rest.orders.repository.OrderRepository;
+import es.jaimelozanodiegotorres.backapp.rest.orders.service.OrderService;
 import es.jaimelozanodiegotorres.backapp.rest.user.dto.UserDto;
+import es.jaimelozanodiegotorres.backapp.rest.user.dto.UserResponseDto;
 import es.jaimelozanodiegotorres.backapp.rest.user.filters.UserFilters;
-import es.jaimelozanodiegotorres.backapp.rest.user.mapper.UserMapper;
+import es.jaimelozanodiegotorres.backapp.rest.user.mapper.UserResponseMapper;
+import es.jaimelozanodiegotorres.backapp.rest.user.mapper.UserSaveMapper;
 import es.jaimelozanodiegotorres.backapp.rest.user.models.User;
 import es.jaimelozanodiegotorres.backapp.rest.user.repository.UserRepository;
 import jakarta.transaction.Transactional;
@@ -16,6 +22,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 
@@ -24,14 +31,20 @@ import java.util.UUID;
 @Slf4j
 public class UserService extends CommonService<User, UUID> {
     private final PasswordEncoder passwordEncoder;
-    private final UserMapper mapper;
+    private final UserSaveMapper saveMapper;
+    private final UserResponseMapper responseMapper;
 
     private final AddressesRepository addressesRepository;
+    private final OrderRepository orderRepository;
+    private final AddressesServiceImpl addressesService;
 
 
-    protected UserService(UserRepository repository, PasswordEncoder passwordEncoder, AddressesRepository addressesRepository) {
+    protected UserService(UserRepository repository, PasswordEncoder passwordEncoder, AddressesRepository addressesRepository, OrderRepository orderRepository, AddressesServiceImpl addressesService) {
         super(repository);
-        this.mapper = UserMapper.INSTANCE;
+        this.orderRepository = orderRepository;
+        this.addressesService = addressesService;
+        this.saveMapper = UserSaveMapper.INSTANCE;
+        this.responseMapper = UserResponseMapper.INSTANCE;
         this.passwordEncoder = passwordEncoder;
         this.addressesRepository = addressesRepository;
     }
@@ -43,7 +56,7 @@ public class UserService extends CommonService<User, UUID> {
                 .ifPresent(u -> {
                     throw exceptionService.badRequestException("Ya existe un usuario con ese username o email");
                 });
-        return save(mapper.dtoToModel(dto));
+        return save(saveMapper.dtoToModel(dto));
     }
 
     public User update(UUID id, UserDto dto){
@@ -57,7 +70,7 @@ public class UserService extends CommonService<User, UUID> {
                         throw exceptionService.badRequestException("Ya existe un usuario con ese username o email");
                     }
                 });
-        return update(mapper.updateModel(original, dto));
+        return update(saveMapper.updateModel(original, dto));
     }
 
     public PageResponse<User> pageAll(UserFilters filters){
@@ -86,6 +99,26 @@ public class UserService extends CommonService<User, UUID> {
     public void deleteUserAddresesByUser(User user) {
         log.info("Borrado logico de las direcciones asociadas al usuario con id: {}", user.getId());
 
-        user.getAddresses().forEach(address -> addressesRepository.deleteById(address.getId()));
+        List<Addresses> addresses = addressesRepository.findByUserIdAndDeletedAtIsNull(user.getId());
+        if( addresses != null )
+            addresses.forEach(address -> addressesRepository.deleteById(address.getId()));
+    }
+
+    public UserResponseDto details(User user) {
+        log.info("Devolviendo los Datos del usuario con id: {}", user.getId());
+        UserResponseDto res = responseMapper.modelToDto(user);
+
+        if(user.isClient()){
+            res.setOrders(orderRepository.findByUserId(user.getId()));
+            res.setAddresses(addressesService.findByUserId(user.getId()));
+            return res;
+        }
+
+        if (user.isWorker()){
+            return res;
+        }
+
+        //tal vez se implemente logica más adelante
+        throw exceptionService.badRequestException();
     }
 }

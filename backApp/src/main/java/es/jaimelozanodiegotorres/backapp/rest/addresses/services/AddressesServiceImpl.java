@@ -1,17 +1,12 @@
 package es.jaimelozanodiegotorres.backapp.rest.addresses.services;
 
-import es.jaimelozanodiegotorres.backapp.pagination.PageResponse;
 import es.jaimelozanodiegotorres.backapp.rest.addresses.dto.AddressSaveDto;
 import es.jaimelozanodiegotorres.backapp.rest.addresses.mappers.AddressesMapper;
 import es.jaimelozanodiegotorres.backapp.rest.addresses.models.Addresses;
 import es.jaimelozanodiegotorres.backapp.rest.addresses.repository.AddressesRepository;
-import es.jaimelozanodiegotorres.backapp.rest.category.filters.CategoryFilters;
-import es.jaimelozanodiegotorres.backapp.rest.category.models.Category;
 import es.jaimelozanodiegotorres.backapp.rest.commons.services.CommonService;
-import es.jaimelozanodiegotorres.backapp.rest.user.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,32 +16,47 @@ import java.util.UUID;
 @Slf4j
 public class AddressesServiceImpl extends CommonService<Addresses, UUID> {
     private final AddressesMapper addressesMapper;
-    private final UserService userService;
 
     @Autowired
-    public AddressesServiceImpl(AddressesRepository addressesRepository, UserService userService) {
+    public AddressesServiceImpl(AddressesRepository addressesRepository) {
         super(addressesRepository);
-        this.userService = userService;
         addressesMapper = AddressesMapper.INSTANCE;
     }
 
     public Addresses save(AddressSaveDto dto) {
         Addresses entity = addressesMapper.dtoToModel(dto);
-        entity.setUser(userService.findById(dto.getUserId()));
+
+        entity.setUserId(getLoggedUserId());
 
         return save(entity);
     }
 
     public Addresses update(UUID id, AddressSaveDto dto) {
         Addresses entity = addressesMapper.updateModel(findById(id), dto);
-        entity.setUser(userService.findById(dto.getUserId()));
+
+        verifyLogguedSameUser(entity.getUserId());  //todo
 
         return update(entity);
     }
 
     public List<Addresses> findByUserId(UUID uuid) {
         log.info("Buscando direcciones del usuario con id: {}", uuid);
+
+        // verifyLogguedSameUser(uuid); //todo
+
         return ((AddressesRepository)repository).findByUserIdAndDeletedAtIsNull(uuid);
+    }
+
+    @Override
+    public boolean deleteById(UUID id) {
+        log.info("Borrando {} con id: {}", entityName, id);
+
+        Addresses entity = findById(id);
+        verifyLogguedSameUser(entity.getUserId());
+
+        repository.deleteById(id);  //todo
+
+        return true;
     }
 
 //    public PageResponse<Addresses> pageAll(CategoryFilters filters){ todo
