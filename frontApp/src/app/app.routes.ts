@@ -2,11 +2,6 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router'
 import { NgModule } from '@angular/core'
 
 export const routes: Routes = [
-  // {
-  //   path: '',
-  //   redirectTo: 'folder/products',
-  //   pathMatch: 'full',
-  // },
   {
     path: '',
     redirectTo: 'products',

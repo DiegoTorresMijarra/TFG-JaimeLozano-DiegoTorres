@@ -3,7 +3,6 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable, map, Subject} from "rxjs";
 import {Router} from "@angular/router";
 import {jwtDecode} from "jwt-decode";
-import {HeaderComponent} from "../header/header.component";
 
 @Injectable({
   providedIn: 'root'
