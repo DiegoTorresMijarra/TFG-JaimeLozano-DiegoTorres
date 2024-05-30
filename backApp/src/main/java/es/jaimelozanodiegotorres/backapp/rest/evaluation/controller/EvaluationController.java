@@ -27,7 +27,6 @@ import java.util.List;
 @RestController
 @RequestMapping("evaluations")
 @Slf4j
-@PreAuthorize("hasRole('USER')")
 public class EvaluationController extends CommonController<Evaluation, Long, EvaluationDto>{
     EvaluationServiceImp service;
 
@@ -43,6 +42,7 @@ public class EvaluationController extends CommonController<Evaluation, Long, Eva
 
     @Override
     @GetMapping("listAll")
+    @PreAuthorize("hasRole('ADMIN')")
     public List<Evaluation> listAll() {
         log.info("Listando todas las valoraciones");
         return service.listAll();
@@ -55,6 +55,7 @@ public class EvaluationController extends CommonController<Evaluation, Long, Eva
     }
 
     @GetMapping("pageAll")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<PageResponse<Evaluation>> pageAll(@Valid EvaluationFilters filters) {
         return ResponseEntity.ok(service.pageAll(filters));
     }
@@ -66,6 +67,7 @@ public class EvaluationController extends CommonController<Evaluation, Long, Eva
 
     @Override
     @GetMapping("{id}")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<Evaluation> findById(@PathVariable Long id) {
         log.info("Buscando valoracion con id: {}", id);
         return ResponseEntity.ok(service.findById(id));
@@ -74,6 +76,7 @@ public class EvaluationController extends CommonController<Evaluation, Long, Eva
 
     @PostMapping("saveEvaluation")
     @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<Evaluation> save(@RequestBody @Valid EvaluationDto dto) {
         log.info("Guardando valoracion");
         return ResponseEntity.ok(service.save(dto));
@@ -81,6 +84,7 @@ public class EvaluationController extends CommonController<Evaluation, Long, Eva
 
     @Override
     @PutMapping("updateEvaluation/{id}")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<Evaluation> update(@PathVariable Long id, @RequestBody @Valid EvaluationDto dto) {
         log.info("Actualizando valoracion con id {} y datos: {}" , id, dto);
         return ResponseEntity.ok(service.update(id, dto));
