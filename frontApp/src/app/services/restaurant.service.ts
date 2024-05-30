@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
-import { Observable } from 'rxjs'
+import {catchError, Observable, throwError} from 'rxjs'
 import { AuthService } from './auth.service'
+import {Product, ProductSaveDto} from "./product.service";
 
 @Injectable({
   providedIn: 'root',
@@ -19,6 +20,33 @@ export class RestaurantService {
     //return this.http.get<Restaurant[]>(`${this.apiUrl}/listAll`, { headers });
     return this.http.get<Restaurant[]>(`${this.apiUrl}/listAll`)
   }
+
+  deleteRestaurant(id: string): Observable<void> {
+    const headers = this.authService.getAuthHeaders()
+    return this.http
+      .delete<void>(`${this.apiUrl}/deleteRestaurant/${id}`, { headers })
+      .pipe(
+        catchError((error) => {
+          // Manejo de errores
+          console.error('Error borrando restaurante:', error)
+          return throwError(error)
+        }),
+      )
+  }
+
+  saveRestaurant(restaurant: RestaurantDto): Observable<Restaurant> {
+    const headers = this.authService.getAuthHeaders();
+    return this.http
+      .post<Restaurant>(`${this.apiUrl}/saveRestaurant`, restaurant, { headers })
+      .pipe(
+        catchError((error) => {
+          // Manejo de errores
+          console.error('Error guardando producto:', error);
+          return throwError(error);
+        })
+      );
+  }
+
 }
 
 export interface Restaurant {
@@ -29,4 +57,9 @@ export interface Restaurant {
   createdAt: Date
   updatedAt: Date
   deletedAt: Date | null
+}
+export interface RestaurantDto {
+  name: string
+  phone: string
+  address: string
 }

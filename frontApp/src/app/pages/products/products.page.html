@@ -22,7 +22,7 @@
         <p>Updated At: {{ product.updatedAt | date: 'short' }}</p>
       </ion-label>
       <ion-button *ngIf="isAdmin" (click)="deleteProduct(product.id)" color="danger" fill="clear">
-        Delete Product
+        Borrar Producto
       </ion-button>
     </ion-item>
   </ion-list>

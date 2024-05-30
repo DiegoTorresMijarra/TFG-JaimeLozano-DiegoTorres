@@ -28,6 +28,10 @@ export const routes: Routes = [
     path: 'products/new',
     loadComponent: () => import('./pages/products/new/new.page').then( m => m.NewPage)
   },
+  {
+    path: 'restaurants/new',
+    loadComponent: () => import('./pages/restaurants/new/new.page').then( m => m.NewPage)
+  },
 
 ]
 
