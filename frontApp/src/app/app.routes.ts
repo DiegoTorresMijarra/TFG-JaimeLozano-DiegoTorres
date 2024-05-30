@@ -32,6 +32,16 @@ export const routes: Routes = [
     path: 'restaurants/new',
     loadComponent: () => import('./pages/restaurants/new/new.page').then( m => m.NewPage)
   },
+  {
+    path: 'categories',
+    loadComponent: () => import('./pages/categories/categories.page').then(m => m.CategoriesPage)
+  },
+  {
+    path: 'categories/new',
+    loadComponent: () => import('./pages/categories/new/new.page').then( m => m.NewPage)
+  },
+
+
 
 ]
 

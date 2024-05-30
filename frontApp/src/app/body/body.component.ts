@@ -7,7 +7,7 @@ import { NgForOf } from '@angular/common'
 import { AppComponent } from '../app.component'
 import {
   bagOutline,
-  bagSharp,
+  bagSharp, listOutline, listSharp, optionsOutline, optionsSharp,
   restaurantOutline,
   restaurantSharp,
 } from 'ionicons/icons'
@@ -34,14 +34,15 @@ export class BodyComponent {
   //@ViewChild(AppComponent) body: IonContent;
 
   public appPages = [
-    { title: 'Products', url: '/products', icon: 'bag' },
-    { title: 'Restaurants', url: '/restaurants', icon: 'restaurant' },
+    { title: 'Productos', url: '/products', icon: 'bag' },
+    { title: 'Restaurantes', url: '/restaurants', icon: 'restaurant' },
+    { title: 'Categorias', url: '/categories', icon: 'list'}
   ]
   public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders']
   public isLoggedIn = false
 
   constructor() {
-    addIcons({ bagOutline, bagSharp, restaurantOutline, restaurantSharp })
+    addIcons({ bagOutline, bagSharp, restaurantOutline, restaurantSharp, listOutline, listSharp })
   }
 
   //scrollTo() {
