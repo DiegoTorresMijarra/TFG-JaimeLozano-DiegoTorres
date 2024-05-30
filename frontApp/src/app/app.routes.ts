@@ -8,11 +8,6 @@ export const routes: Routes = [
     pathMatch: 'full',
   },
   {
-    path: 'folder/:id',
-    loadComponent: () =>
-      import('./folder/folder.page').then((m) => m.FolderPage),
-  },
-  {
     path: 'login',
     loadComponent: () =>
       import('./pages/login/login.page').then((m) => m.LoginPage),
@@ -29,6 +24,11 @@ export const routes: Routes = [
         (m) => m.RestaurantsPage,
       ),
   },
+  {
+    path: 'products/new',
+    loadComponent: () => import('./pages/products/new/new.page').then( m => m.NewPage)
+  },
+
 ]
 
 @NgModule({

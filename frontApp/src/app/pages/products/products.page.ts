@@ -2,17 +2,18 @@ import { Component, inject, OnInit } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { FormsModule } from '@angular/forms'
 import {
-  IonButton,
+  IonButton, IonButtons,
   IonContent,
   IonHeader,
   IonItem,
   IonLabel,
-  IonList,
+  IonList, IonMenuButton,
   IonTitle,
   IonToolbar,
 } from '@ionic/angular/standalone'
 import { Product, ProductService } from '../../services/product.service'
 import { AuthService } from '../../services/auth.service'
+import {RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-products',
@@ -30,6 +31,9 @@ import { AuthService } from '../../services/auth.service'
     IonLabel,
     IonList,
     IonButton,
+    IonButtons,
+    IonMenuButton,
+    RouterLink,
   ],
 })
 export class ProductsPage implements OnInit {

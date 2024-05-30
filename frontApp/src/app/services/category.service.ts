@@ -1,0 +1,31 @@
+import { Injectable } from '@angular/core'
+import { HttpClient } from '@angular/common/http'
+import { catchError, Observable, throwError } from 'rxjs'
+import { AuthService } from './auth.service'
+
+@Injectable({
+  providedIn: 'root',
+})
+export class CategoryService {
+  private apiUrl = 'https://localhost:3000/v1/categories'
+
+  constructor(
+    private http: HttpClient,
+    private authService: AuthService,
+  ) {}
+
+  getCategories(): Observable<Category[]> {
+    //const headers = this.authService.getAuthHeaders();
+    //return this.http.get<Product[]>(`${this.apiUrl}/listAll`, { headers });
+    return this.http.get<Category[]>(`${this.apiUrl}/listAll`)
+  }
+
+
+}
+export interface Category {
+  id?: number
+  name: string
+  createdAt: Date
+  updatedAt: Date
+  deletedAt: Date | null
+}

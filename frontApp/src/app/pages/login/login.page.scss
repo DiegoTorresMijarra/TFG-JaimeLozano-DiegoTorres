@@ -24,11 +24,7 @@ ion-content {
       }
 
       ion-input {
-        color: #fff; /* Color del texto de entrada */
-
-        &::placeholder {
-          color: #d3d3d3; /* Color del placeholder */
-        }
+        color: var(--ion-color-primary, #3880ff);
       }
     }
 

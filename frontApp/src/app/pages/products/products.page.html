@@ -1,7 +1,12 @@
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
+  <ion-header>
     <ion-toolbar>
-      <ion-title size="large">Products</ion-title>
+      <ion-title size="large" color="primary">Productos</ion-title>
+      <ion-buttons slot="end">
+        <ion-button *ngIf="isAdmin" [routerLink]="['/products/new']" color="success" fill="solid">
+          Nuevo Producto
+        </ion-button>
+      </ion-buttons>
     </ion-toolbar>
   </ion-header>
 

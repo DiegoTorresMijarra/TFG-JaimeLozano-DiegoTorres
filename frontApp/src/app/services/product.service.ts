@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { catchError, Observable, throwError } from 'rxjs'
 import { AuthService } from './auth.service'
+import {Category} from "./category.service";
 
 @Injectable({
   providedIn: 'root',
@@ -32,6 +33,20 @@ export class ProductService {
         }),
       )
   }
+
+  saveProduct(product: ProductSaveDto): Observable<Product> {
+    const headers = this.authService.getAuthHeaders();
+    return this.http
+      .post<Product>(`${this.apiUrl}/saveProduct`, product, { headers })
+      .pipe(
+        catchError((error) => {
+          // Manejo de errores
+          console.error('Error guardando producto:', error);
+          return throwError(error);
+        })
+      );
+  }
+
 }
 
 export interface Product {
@@ -45,10 +60,10 @@ export interface Product {
   deletedAt: Date | null
   category: Category
 }
-export interface Category {
-  id?: number
-  name: string
-  createdAt: Date
-  updatedAt: Date
-  deletedAt: Date | null
+export interface ProductSaveDto {
+  name: string;
+  price: number;
+  stock: number;
+  gluten: boolean;
+  categoryId: number;
 }
