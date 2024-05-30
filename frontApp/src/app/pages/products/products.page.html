@@ -14,12 +14,16 @@
     <ion-item *ngFor="let product of products" class="product-item">
       <ion-label>
         <h2>{{ product.name }}</h2>
-        <p>Price: ${{ product.price }}</p>
+        <p>Precio: ${{ product.price }}</p>
         <p>Stock: {{ product.stock }}</p>
         <p>Gluten: {{ product.gluten ? 'Yes' : 'No' }}</p>
-        <p>Category: {{ product.category.name }}</p>
-        <p>Created At: {{ product.createdAt | date: 'short' }}</p>
-        <p>Updated At: {{ product.updatedAt | date: 'short' }}</p>
+        <p>Categoria: {{ product.category.name }}</p>
+        <div class="rating">
+          <p>Valoracion:</p>
+          <ion-icon *ngFor="let star of [1, 2, 3, 4, 5]" [name]="star <= product.averageRating ? 'star-sharp' : 'star-outline'"></ion-icon>
+        </div>
+        <p>Creado: {{ product.createdAt | date: 'short' }}</p>
+        <p>Actualizado: {{ product.updatedAt | date: 'short' }}</p>
       </ion-label>
       <ion-button *ngIf="isAdmin" (click)="deleteProduct(product.id)" color="danger" fill="clear">
         Borrar Producto

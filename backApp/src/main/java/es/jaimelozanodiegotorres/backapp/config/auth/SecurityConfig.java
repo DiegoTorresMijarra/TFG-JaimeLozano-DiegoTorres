@@ -65,6 +65,7 @@ public class SecurityConfig {
                         .requestMatchers("/storage/**").permitAll()
                         // Endpoints
                         .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers("/evaluations/**").permitAll()
                         .requestMatchers("/products/**").permitAll()
                         .requestMatchers("/restaurants/**").permitAll()
                         .requestMatchers("/orders/**").permitAll()

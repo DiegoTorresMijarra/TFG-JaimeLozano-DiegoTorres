@@ -7,7 +7,7 @@ import {Product} from "./product.service";
 @Injectable({
   providedIn: 'root',
 })
-export class CategoryService {
+export class EvaluationService {
   private apiUrl = 'https://localhost:3000/v1/evaluations'
 
   constructor(
@@ -15,7 +15,7 @@ export class CategoryService {
     private authService: AuthService,
   ) {}
 
-  getEvaluationsByProductId(id: string): Observable<Evaluation[]> {
+  getEvaluationsByProductId(id: number | undefined): Observable<Evaluation[]> {
     //const headers = this.authService.getAuthHeaders();
     //return this.http.get<Product[]>(`${this.apiUrl}/listAll`, { headers });
     return this.http.get<Evaluation[]>(`${this.apiUrl}/listAll/${id}`)

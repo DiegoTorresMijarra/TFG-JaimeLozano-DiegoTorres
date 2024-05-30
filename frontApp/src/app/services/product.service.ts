@@ -59,6 +59,7 @@ export interface Product {
   updatedAt: Date
   deletedAt: Date | null
   category: Category
+  averageRating: number
 }
 export interface ProductSaveDto {
   name: string;
