@@ -1,0 +1,30 @@
+<ion-content [fullscreen]="true">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title size="large" color="primary">Valoraciones</ion-title>
+      <ion-buttons slot="end">
+        <ion-button [routerLink]="['/evaluations/new']" color="success" fill="solid">
+          Nueva Valoracion
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-list>
+    <ion-item *ngFor="let evaluation of evaluations" class="product-item">
+      <ion-label>
+        <h2>{{ evaluation.product.name }}</h2>
+        <div class="rating">
+          <p>Valoracion:</p>
+          <ion-icon *ngFor="let star of [1, 2, 3, 4, 5]" [name]="star <= evaluation.valoracion ? 'star-sharp' : 'star-outline'"></ion-icon>
+        </div>
+        <p>Creada: {{ evaluation.createdAt | date: 'short' }}</p>
+        <p>Actualizada: {{ evaluation.updatedAt | date: 'short' }}</p>
+      </ion-label>
+      <ion-button (click)="deleteEvaluation(evaluation.id)" color="danger" fill="clear">
+        Borrar Valoracion
+      </ion-button>
+    </ion-item>
+  </ion-list>
+
+</ion-content>

@@ -1,17 +1,18 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core'
+import {AfterViewInit, Component, DoCheck, OnInit, ViewChild} from '@angular/core'
 import { IonContent, IonicModule } from '@ionic/angular'
 import { ContentHeaderComponent } from './content-header/content-header.component'
 import { ContentComponent } from './content/content.component'
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router'
-import { NgForOf } from '@angular/common'
+import {CommonModule, NgForOf} from '@angular/common'
 import { AppComponent } from '../app.component'
 import {
   bagOutline,
   bagSharp, listOutline, listSharp, optionsOutline, optionsSharp,
   restaurantOutline,
-  restaurantSharp,
+  restaurantSharp, starOutline, starSharp,
 } from 'ionicons/icons'
 import { addIcons } from 'ionicons'
+import {AuthService} from "../services/auth.service";
 
 @Component({
   selector: 'app-body',
@@ -26,28 +27,28 @@ import { addIcons } from 'ionicons'
     NgForOf,
     RouterLink,
     RouterOutlet,
+    CommonModule,
   ],
   templateUrl: './body.component.html',
   styleUrl: './body.component.css',
 })
-export class BodyComponent {
-  //@ViewChild(AppComponent) body: IonContent;
-
+export class BodyComponent implements OnInit, DoCheck {
+  public userRole: string | null = null;
   public appPages = [
-    { title: 'Productos', url: '/products', icon: 'bag' },
-    { title: 'Restaurantes', url: '/restaurants', icon: 'restaurant' },
-    { title: 'Categorias', url: '/categories', icon: 'list'}
-  ]
-  public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders']
-  public isLoggedIn = false
+    { title: 'Productos', url: '/products', icon: 'bag', role: '' }, // Disponible para todos los usuarios
+    { title: 'Restaurantes', url: '/restaurants', icon: 'restaurant', role: '' }, // Disponible para todos los usuarios
+    { title: 'Categorias', url: '/categories', icon: 'list', role: '' }, // Disponible para todos los usuarios
+    { title: 'Valoraciones', url: '/evaluations', icon: 'star', role: 'admin' }, // Solo admins
+  ];
 
-  constructor() {
-    addIcons({ bagOutline, bagSharp, restaurantOutline, restaurantSharp, listOutline, listSharp })
+  constructor(private authService: AuthService) {
+    addIcons({ bagOutline, bagSharp, restaurantOutline, restaurantSharp, listOutline, listSharp, starOutline, starSharp })
   }
-
-  //scrollTo() {
-  //      this.body?.scrollToTop().then(r => true);
-  //}
-
+  ngOnInit() {
+    this.userRole = this.authService.getUserRole();
+  }
+  ngDoCheck(): void {
+    this.userRole = this.authService.getUserRole();
+  }
   protected readonly AppComponent = AppComponent
 }

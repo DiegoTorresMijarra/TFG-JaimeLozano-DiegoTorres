@@ -15,6 +15,11 @@ export class EvaluationService {
     private authService: AuthService,
   ) {}
 
+  getEvaluations(): Observable<Evaluation[]> {
+    const headers = this.authService.getAuthHeaders();
+    return this.http.get<Evaluation[]>(`${this.apiUrl}/listAll`, { headers })
+  }
+
   getEvaluationsByProductId(id: number | undefined): Observable<Evaluation[]> {
     //const headers = this.authService.getAuthHeaders();
     //return this.http.get<Product[]>(`${this.apiUrl}/listAll`, { headers });

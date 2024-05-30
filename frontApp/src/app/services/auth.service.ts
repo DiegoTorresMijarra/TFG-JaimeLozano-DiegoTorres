@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {Observable, map, Subject} from "rxjs";
+import {Observable, map} from "rxjs";
 import {Router} from "@angular/router";
 import {jwtDecode} from "jwt-decode";
 

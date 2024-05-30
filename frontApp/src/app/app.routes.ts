@@ -40,6 +40,15 @@ export const routes: Routes = [
     path: 'categories/new',
     loadComponent: () => import('./pages/categories/new/new.page').then( m => m.NewPage)
   },
+  {
+    path: 'evaluations',
+    loadComponent: () => import('./pages/evaluations/evaluations.page').then( m => m.EvaluationsPage)
+  },
+  {
+    path: 'evaluations/new',
+    loadComponent: () => import('./pages/evaluations/new/new.page').then( m => m.NewPage)
+  },
+
 
 
 
