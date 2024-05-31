@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ category?.name }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismissModal()" color="light">
+        <ion-icon class="cerrar" name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-label>Nombre:</ion-label>
+      <ion-text>{{ category?.name }}</ion-text>
+    </ion-item>
+    <ion-item>
+      <ion-label>Creado en:</ion-label>
+      <ion-text>{{ category?.createdAt | date: 'short' }}</ion-text>
+    </ion-item>
+    <ion-item>
+      <ion-label>Actualizado en:</ion-label>
+      <ion-text>{{ category?.updatedAt | date: 'short' }}</ion-text>
+    </ion-item>
+  </ion-list>
+</ion-content>

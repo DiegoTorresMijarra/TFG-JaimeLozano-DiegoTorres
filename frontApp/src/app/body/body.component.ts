@@ -1,7 +1,5 @@
 import {AfterViewInit, Component, DoCheck, OnInit, ViewChild} from '@angular/core'
 import { IonContent, IonicModule } from '@ionic/angular'
-import { ContentHeaderComponent } from './content-header/content-header.component'
-import { ContentComponent } from './content/content.component'
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router'
 import {CommonModule, NgForOf} from '@angular/common'
 import { AppComponent } from '../app.component'
@@ -18,11 +16,7 @@ import {AuthService} from "../services/auth.service";
   selector: 'app-body',
   standalone: true,
   imports: [
-    ContentHeaderComponent,
     IonicModule,
-    ContentComponent,
-    ContentHeaderComponent,
-    ContentComponent,
     RouterLinkActive,
     NgForOf,
     RouterLink,

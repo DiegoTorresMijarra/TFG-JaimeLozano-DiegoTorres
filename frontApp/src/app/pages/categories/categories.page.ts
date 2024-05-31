@@ -14,6 +14,8 @@ import {
 import {AuthService} from "../../services/auth.service";
 import {Category, CategoryService} from "../../services/category.service";
 import {RouterLink} from "@angular/router";
+import {CategoryModalComponent} from "./category-modal/category-modal.component";
+import {AnimationController, ModalController} from "@ionic/angular";
 
 @Component({
   selector: 'app-categories',
@@ -27,11 +29,15 @@ export class CategoriesPage implements OnInit {
   private categoryService = inject(CategoryService)
   private authService = inject(AuthService)
   public isAdmin: boolean = false
-  constructor() { }
+  constructor(private modalController: ModalController, private animationCtrl: AnimationController) { }
 
   ngOnInit() {
     this.loadCategories()
     this.isAdmin = this.authService.getUserRole() === 'admin'
+  }
+
+  async openCategoryDetailsModal(category: Category) {
+    await this.presentModal(category);
   }
 
   loadCategories() {
@@ -55,4 +61,43 @@ export class CategoriesPage implements OnInit {
     })
   }
 
+  async presentModal(category: Category) {
+    const modal = await this.modalController.create({
+      component: CategoryModalComponent,
+      componentProps: {
+        category: category
+      },
+      enterAnimation: this.enterAnimation,
+      leaveAnimation: this.leaveAnimation
+    });
+    return await modal.present();
+  }
+
+  enterAnimation = (baseEl: HTMLElement) => {
+    const root = baseEl.shadowRoot;
+
+    const backdropAnimation = this.animationCtrl
+      .create()
+      .addElement(root?.querySelector('ion-backdrop')!)
+      .fromTo('opacity', '0.01', 'var(--backdrop-opacity)');
+
+    const wrapperAnimation = this.animationCtrl
+      .create()
+      .addElement(root?.querySelector('.modal-wrapper')!)
+      .keyframes([
+        {offset: 0, opacity: '0', transform: 'scale(0)'},
+        {offset: 1, opacity: '0.99', transform: 'scale(1)'},
+      ]);
+
+    return this.animationCtrl
+      .create()
+      .addElement(baseEl)
+      .easing('ease-out')
+      .duration(400)
+      .addAnimation([backdropAnimation, wrapperAnimation]);
+  };
+
+  leaveAnimation = (baseEl: HTMLElement) => {
+    return this.enterAnimation(baseEl).direction('reverse');
+  };
 }

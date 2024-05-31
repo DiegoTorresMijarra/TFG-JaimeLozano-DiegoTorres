@@ -12,7 +12,7 @@
 
   <ion-list>
     <ion-item *ngFor="let category of categories" class="product-item">
-      <ion-label>
+      <ion-label (click)="openCategoryDetailsModal(category)">
         <h2>{{ category.name }}</h2>
         <p>Created At: {{ category.createdAt | date: 'short' }}</p>
         <p>Updated At: {{ category.updatedAt | date: 'short' }}</p>
