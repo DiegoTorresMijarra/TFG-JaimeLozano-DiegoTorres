@@ -32,6 +32,15 @@ export class AuthService {
     );
   }
 
+  register(user: UserSignUpRequest): Observable<any> {
+    const url = `${this.apiUrl}/signup`;
+    return this.http.post(url, user, { responseType: 'json' }).pipe(
+      map((response: any) => {
+        return response;
+      })
+    );
+  }
+
   logout(): void {
     localStorage.removeItem(this.tokenKey);
     this.router.navigate(['/login']);
@@ -62,4 +71,12 @@ export class AuthService {
     return null;
   }
 
+}
+export interface UserSignUpRequest {
+  name: string;
+  surname: string;
+  username: string;
+  email: string;
+  password: string;
+  passwordRepeat: string;
 }

@@ -22,5 +22,5 @@ public class EvaluationDto {
     @Schema(description = "Id del producto", example = "1")
     @NotNull(message="El id no puede estar vacío")
     @Positive(message = "El id no puede ser negativo o 0")
-    private Long productId;
+    private long productId;
 }

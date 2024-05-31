@@ -21,6 +21,7 @@
     <ion-button (click)="toggleDarkMode()" color="medium">
       <ion-icon id="iconDarkMode" slot="icon-only" name="contrast-outline" color="dark"></ion-icon>
     </ion-button>
+    <ion-button *ngIf="!isLoggedIn" [routerLink]="['/register']" fill="outline" slot="end">Register</ion-button>
     <ion-button *ngIf="isLoggedIn" (click)="logout(); checkLoggedIn()" fill="outline" slot="end">Logout</ion-button>
     <ion-button *ngIf="!isLoggedIn" [routerLink]="['/login']" fill="outline" slot="end">Login</ion-button>
   </div>

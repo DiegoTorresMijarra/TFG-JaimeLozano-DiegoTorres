@@ -7,6 +7,8 @@ import es.jaimelozanodiegotorres.backapp.rest.evaluation.filters.EvaluationFilte
 import es.jaimelozanodiegotorres.backapp.rest.evaluation.mappers.EvaluationMapper;
 import es.jaimelozanodiegotorres.backapp.rest.evaluation.models.Evaluation;
 import es.jaimelozanodiegotorres.backapp.rest.evaluation.repository.EvaluationRepository;
+import es.jaimelozanodiegotorres.backapp.rest.products.models.Product;
+import es.jaimelozanodiegotorres.backapp.rest.products.services.ProductServiceImp;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
@@ -19,17 +21,22 @@ import java.util.List;
 @CacheConfig(cacheNames = {"valoraciones"})
 @Slf4j
 public class EvaluationServiceImp extends CommonService<Evaluation, Long>{
-    EvaluationMapper mapper;
+    private final EvaluationMapper mapper;
+    private final ProductServiceImp productServiceImp;
 
     @Autowired
-    public EvaluationServiceImp(EvaluationRepository repository){
+    public EvaluationServiceImp(EvaluationRepository repository, ProductServiceImp productServiceImp){
         super(repository);
         this.mapper = EvaluationMapper.INSTANCE;
+        this.productServiceImp = productServiceImp;
     }
 
     public Evaluation save(EvaluationDto dto){
         log.info("Guardando valoracion");
-        return save(mapper.dtoToModel(dto));
+        Product product = productServiceImp.findById(dto.getProductId());
+        Evaluation evaluation = mapper.dtoToModel(dto);
+        evaluation.setProduct(product);
+        return save(evaluation);
     }
 
     public Evaluation update(Long id, EvaluationDto dto){
