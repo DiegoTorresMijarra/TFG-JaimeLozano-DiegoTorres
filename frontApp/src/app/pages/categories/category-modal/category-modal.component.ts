@@ -16,7 +16,6 @@ import {FormsModule} from "@angular/forms";
 import {RouterLink} from "@angular/router";
 import {addIcons} from "ionicons";
 import {closeOutline, closeSharp} from "ionicons/icons";
-import {CategoriesPage} from "../categories.page";
 
 @Component({
   selector: 'app-category-modal',

@@ -16,6 +16,7 @@ import {Category, CategoryService} from "../../services/category.service";
 import {RouterLink} from "@angular/router";
 import {CategoryModalComponent} from "./category-modal/category-modal.component";
 import {AnimationController, ModalController} from "@ionic/angular";
+import {AnimationService} from "../../services/animation.service";
 
 @Component({
   selector: 'app-categories',
@@ -28,8 +29,9 @@ export class CategoriesPage implements OnInit {
   public categories: Category[] = []
   private categoryService = inject(CategoryService)
   private authService = inject(AuthService)
+  private animationService = inject(AnimationService)
   public isAdmin: boolean = false
-  constructor(private modalController: ModalController, private animationCtrl: AnimationController) { }
+  constructor(private modalController: ModalController) { }
 
   ngOnInit() {
     this.loadCategories()
@@ -67,37 +69,9 @@ export class CategoriesPage implements OnInit {
       componentProps: {
         category: category
       },
-      enterAnimation: this.enterAnimation,
-      leaveAnimation: this.leaveAnimation
+      enterAnimation: this.animationService.enterAnimation,
+      leaveAnimation: this.animationService.leaveAnimation
     });
     return await modal.present();
   }
-
-  enterAnimation = (baseEl: HTMLElement) => {
-    const root = baseEl.shadowRoot;
-
-    const backdropAnimation = this.animationCtrl
-      .create()
-      .addElement(root?.querySelector('ion-backdrop')!)
-      .fromTo('opacity', '0.01', 'var(--backdrop-opacity)');
-
-    const wrapperAnimation = this.animationCtrl
-      .create()
-      .addElement(root?.querySelector('.modal-wrapper')!)
-      .keyframes([
-        {offset: 0, opacity: '0', transform: 'scale(0)'},
-        {offset: 1, opacity: '0.99', transform: 'scale(1)'},
-      ]);
-
-    return this.animationCtrl
-      .create()
-      .addElement(baseEl)
-      .easing('ease-out')
-      .duration(400)
-      .addAnimation([backdropAnimation, wrapperAnimation]);
-  };
-
-  leaveAnimation = (baseEl: HTMLElement) => {
-    return this.enterAnimation(baseEl).direction('reverse');
-  };
 }
