@@ -35,18 +35,18 @@ VALUES (1, 30.0, '2024-01-01', '2024-10-10', '2023-01-01', '2023-01-01',1),
 -- Insert usuarios y roles
 -- Contraseña: Admin1
 INSERT INTO users (created_at, id, updated_at, surname, email, name, password, username)
-VALUES ('2023-11-02 11:43:24.724871', '00000000-0000-0000-0000-000000000000', '2023-11-02 11:43:24.724871', 'Admin Admin', 'admin@prueba.net', 'Admin', '$2a$10$Fjs4lFtGRtCgOsLURykTW.IGYfdqsFVXZN1jGhl3PlZAqMTKHK7S6', 'admin');
+VALUES ('2023-11-02 11:43:24.724871', 'a8fd9bb7-62e1-41dc-9f57-338b17c5bcc0', '2023-11-02 11:43:24.724871', 'Admin Admin', 'admin@prueba.net', 'Admin', '$2a$10$Fjs4lFtGRtCgOsLURykTW.IGYfdqsFVXZN1jGhl3PlZAqMTKHK7S6', 'admin');
 
 -- Asignar roles al administrador
 INSERT INTO user_roles (user_id, roles)
-VALUES ('00000000-0000-0000-0000-000000000000', 'USER');
+VALUES ('a8fd9bb7-62e1-41dc-9f57-338b17c5bcc0', 'USER');
 INSERT INTO user_roles (user_id, roles)
-VALUES ('00000000-0000-0000-0000-000000000000', 'ADMIN');
+VALUES ('a8fd9bb7-62e1-41dc-9f57-338b17c5bcc0', 'ADMIN');
 
 -- Contraseña: User1
 INSERT INTO users (created_at, id, updated_at, surname, email, name, password, username)
-VALUES ('2023-11-02 11:43:24.730431', '00000000-0000-0000-0000-000000000001', '2023-11-02 11:43:24.730431', 'User User', 'user@prueba.net', 'User', '$2a$10$co8cRNxqcwJvCoOUQD9freA/b.FcKGdlI3khs3FxqniJyo3LcpeHe', 'user');
+VALUES ('2023-11-02 11:43:24.730431', '24bee18d-920c-4f25-971f-99e91d0aa331', '2023-11-02 11:43:24.730431', 'User User', 'user@prueba.net', 'User', '$2a$10$co8cRNxqcwJvCoOUQD9freA/b.FcKGdlI3khs3FxqniJyo3LcpeHe', 'user');
 
 -- Asignar roles al usuario
 INSERT INTO user_roles (user_id, roles)
-VALUES ('00000000-0000-0000-0000-000000000001', 'USER');
+VALUES ('24bee18d-920c-4f25-971f-99e91d0aa331', 'USER');

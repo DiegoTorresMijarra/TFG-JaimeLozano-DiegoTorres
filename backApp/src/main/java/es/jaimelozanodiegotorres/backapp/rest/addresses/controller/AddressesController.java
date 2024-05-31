@@ -2,7 +2,7 @@ package es.jaimelozanodiegotorres.backapp.rest.addresses.controller;
 
 import es.jaimelozanodiegotorres.backapp.rest.addresses.dto.AddressSaveDto;
 import es.jaimelozanodiegotorres.backapp.rest.addresses.models.Addresses;
-import es.jaimelozanodiegotorres.backapp.rest.addresses.services.AddressesServiceImpl;
+import es.jaimelozanodiegotorres.backapp.rest.addresses.services.AddressesServicePgSqlImpl;
 import es.jaimelozanodiegotorres.backapp.rest.commons.controller.CommonController;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
@@ -19,10 +19,10 @@ import java.util.UUID;
 @Slf4j
 public class AddressesController extends CommonController<Addresses, UUID, AddressSaveDto> {
 
-    private final AddressesServiceImpl addressesService;
+    private final AddressesServicePgSqlImpl addressesService;
 
     @Autowired
-    public AddressesController(AddressesServiceImpl addressesService) {
+    public AddressesController(AddressesServicePgSqlImpl addressesService) {
         this.addressesService = addressesService;
     }
 

@@ -2,8 +2,8 @@ package es.jaimelozanodiegotorres.backapp.rest.products.services;
 
 import es.jaimelozanodiegotorres.backapp.pagination.PageResponse;
 import es.jaimelozanodiegotorres.backapp.rest.category.models.Category;
-import es.jaimelozanodiegotorres.backapp.rest.category.services.CategoryServiceImp;
-import es.jaimelozanodiegotorres.backapp.rest.commons.services.CommonService;
+import es.jaimelozanodiegotorres.backapp.rest.category.services.CategoryServicePgSqlImp;
+import es.jaimelozanodiegotorres.backapp.rest.commons.services.CommonServicePgSql;
 import es.jaimelozanodiegotorres.backapp.rest.products.dto.ProductSaveDto;
 import es.jaimelozanodiegotorres.backapp.rest.products.filters.ProductFilters;
 import es.jaimelozanodiegotorres.backapp.rest.products.mapper.ProductMapper;
@@ -13,7 +13,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 /**
@@ -24,16 +23,16 @@ import org.springframework.stereotype.Service;
 @Service
 @CacheConfig(cacheNames = {"productos"})
 @Slf4j
-public class ProductServiceImp extends CommonService<Product, Long> {
+public class ProductServicePgSqlImp extends CommonServicePgSql<Product, Long> {
     private final ProductMapper mapper;
-    private final CategoryServiceImp categoryService;
+    private final CategoryServicePgSqlImp categoryService;
     /**
      * Constructor de la clase
      * @param repository Repositorio de productos
      * (se utiliza la anotación @Autowired para indicar que se trata de una inyección de dependencia).
      */
     @Autowired
-    public ProductServiceImp(ProductRepository repository,CategoryServiceImp categoryService){
+    public ProductServicePgSqlImp(ProductRepository repository, CategoryServicePgSqlImp categoryService){
         super(repository);
         this.mapper = ProductMapper.INSTANCE;
         this.categoryService = categoryService;

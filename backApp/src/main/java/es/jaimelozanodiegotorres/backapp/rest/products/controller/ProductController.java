@@ -2,11 +2,10 @@ package es.jaimelozanodiegotorres.backapp.rest.products.controller;
 
 import es.jaimelozanodiegotorres.backapp.pagination.PageResponse;
 import es.jaimelozanodiegotorres.backapp.rest.commons.controller.CommonController;
-import es.jaimelozanodiegotorres.backapp.rest.commons.filters.CommonFilters;
 import es.jaimelozanodiegotorres.backapp.rest.products.dto.ProductSaveDto;
 import es.jaimelozanodiegotorres.backapp.rest.products.filters.ProductFilters;
 import es.jaimelozanodiegotorres.backapp.rest.products.models.Product;
-import es.jaimelozanodiegotorres.backapp.rest.products.services.ProductServiceImp;
+import es.jaimelozanodiegotorres.backapp.rest.products.services.ProductServicePgSqlImp;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +24,7 @@ import java.util.List;
 @RequestMapping("products")
 @Slf4j
 public class ProductController extends CommonController<Product, Long, ProductSaveDto> {
-    ProductServiceImp service;
+    ProductServicePgSqlImp service;
 
     /**
      * Constructor de la clase
@@ -33,7 +32,7 @@ public class ProductController extends CommonController<Product, Long, ProductSa
      * @param service Servicio de productos
      */
     @Autowired
-    public ProductController(ProductServiceImp service) {
+    public ProductController(ProductServicePgSqlImp service) {
         this.service = service;
     }
 

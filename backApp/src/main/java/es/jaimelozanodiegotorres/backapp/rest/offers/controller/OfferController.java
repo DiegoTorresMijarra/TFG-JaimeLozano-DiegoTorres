@@ -3,7 +3,7 @@ package es.jaimelozanodiegotorres.backapp.rest.offers.controller;
 import es.jaimelozanodiegotorres.backapp.rest.commons.controller.CommonController;
 import es.jaimelozanodiegotorres.backapp.rest.offers.dto.OfferDto;
 import es.jaimelozanodiegotorres.backapp.rest.offers.models.Offer;
-import es.jaimelozanodiegotorres.backapp.rest.offers.service.OfferServiceImp;
+import es.jaimelozanodiegotorres.backapp.rest.offers.service.OfferServicePgSqlImp;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ import java.util.List;
 @RequestMapping("offers")
 @Slf4j
 public class OfferController extends CommonController<Offer, Long, OfferDto>{
-    OfferServiceImp service;
+    OfferServicePgSqlImp service;
 
     /**
      * Constructor de la clase
@@ -30,7 +30,7 @@ public class OfferController extends CommonController<Offer, Long, OfferDto>{
      * @param service Servicio de productos
      */
     @Autowired
-    public OfferController(OfferServiceImp service) {
+    public OfferController(OfferServicePgSqlImp service) {
         this.service = service;
     }
 

@@ -6,7 +6,7 @@ import es.jaimelozanodiegotorres.backapp.rest.user.dto.UserDto;
 import es.jaimelozanodiegotorres.backapp.rest.user.dto.UserResponseDto;
 import es.jaimelozanodiegotorres.backapp.rest.user.filters.UserFilters;
 import es.jaimelozanodiegotorres.backapp.rest.user.models.User;
-import es.jaimelozanodiegotorres.backapp.rest.user.service.UserService;
+import es.jaimelozanodiegotorres.backapp.rest.user.service.UserServicePgSql;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
@@ -31,7 +31,7 @@ import java.util.*;
 @Slf4j
 @Tag(name = "Usuarios", description = "Endpoint usuarios de la tienda")
 public class UserController extends CommonController<User, UUID, UserDto> {
-    UserService service;
+    UserServicePgSql service;
 
     /**
      * Constructor de la clase
@@ -39,7 +39,7 @@ public class UserController extends CommonController<User, UUID, UserDto> {
      * @param service Servicio de productos
      */
     @Autowired
-    public UserController(UserService service) {
+    public UserController(UserServicePgSql service) {
         this.service = service;
     }
 
@@ -93,7 +93,7 @@ public class UserController extends CommonController<User, UUID, UserDto> {
 
 
     @GetMapping("me/details")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasAnyRole('USER','ADMIN','WORKER')")
     public ResponseEntity<UserResponseDto> details(@AuthenticationPrincipal User user) {
         log.info("Buscando detalles del usuario");
         return ResponseEntity.ok(service.details(user));

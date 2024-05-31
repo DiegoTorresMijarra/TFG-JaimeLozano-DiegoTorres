@@ -4,7 +4,7 @@ import es.jaimelozanodiegotorres.backapp.rest.addresses.dto.AddressSaveDto;
 import es.jaimelozanodiegotorres.backapp.rest.addresses.mappers.AddressesMapper;
 import es.jaimelozanodiegotorres.backapp.rest.addresses.models.Addresses;
 import es.jaimelozanodiegotorres.backapp.rest.addresses.repository.AddressesRepository;
-import es.jaimelozanodiegotorres.backapp.rest.commons.services.CommonService;
+import es.jaimelozanodiegotorres.backapp.rest.commons.services.CommonServicePgSql;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,11 +14,11 @@ import java.util.UUID;
 
 @Service
 @Slf4j
-public class AddressesServiceImpl extends CommonService<Addresses, UUID> {
+public class AddressesServicePgSqlImpl extends CommonServicePgSql<Addresses, UUID> {
     private final AddressesMapper addressesMapper;
 
     @Autowired
-    public AddressesServiceImpl(AddressesRepository addressesRepository) {
+    public AddressesServicePgSqlImpl(AddressesRepository addressesRepository) {
         super(addressesRepository);
         addressesMapper = AddressesMapper.INSTANCE;
     }
@@ -42,7 +42,7 @@ public class AddressesServiceImpl extends CommonService<Addresses, UUID> {
     public List<Addresses> findByUserId(UUID uuid) {
         log.info("Buscando direcciones del usuario con id: {}", uuid);
 
-        // verifyLogguedSameUser(uuid); //todo
+         verifyLogguedSameUser(uuid);
 
         return ((AddressesRepository)repository).findByUserIdAndDeletedAtIsNull(uuid);
     }
@@ -54,7 +54,7 @@ public class AddressesServiceImpl extends CommonService<Addresses, UUID> {
         Addresses entity = findById(id);
         verifyLogguedSameUser(entity.getUserId());
 
-        repository.deleteById(id);  //todo
+        repository.deleteById(id);
 
         return true;
     }

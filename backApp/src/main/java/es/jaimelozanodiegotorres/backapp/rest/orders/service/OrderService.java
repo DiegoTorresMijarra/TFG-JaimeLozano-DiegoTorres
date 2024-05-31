@@ -1,7 +1,7 @@
 package es.jaimelozanodiegotorres.backapp.rest.orders.service;
 
 import es.jaimelozanodiegotorres.backapp.rest.addresses.models.Addresses;
-import es.jaimelozanodiegotorres.backapp.rest.addresses.services.AddressesServiceImpl;
+import es.jaimelozanodiegotorres.backapp.rest.addresses.services.AddressesServicePgSqlImpl;
 import es.jaimelozanodiegotorres.backapp.rest.commons.services.CommonServiceMongo;
 import es.jaimelozanodiegotorres.backapp.rest.orders.dto.OrderDto;
 import es.jaimelozanodiegotorres.backapp.rest.orders.dto.OrderType;
@@ -12,9 +12,8 @@ import es.jaimelozanodiegotorres.backapp.rest.orders.models.OrderState;
 import es.jaimelozanodiegotorres.backapp.rest.orders.models.OrderedProduct;
 import es.jaimelozanodiegotorres.backapp.rest.orders.repository.OrderRepository;
 import es.jaimelozanodiegotorres.backapp.rest.products.repository.ProductRepository;
-import es.jaimelozanodiegotorres.backapp.rest.restaurants.repositories.RestaurantRepository;
-import es.jaimelozanodiegotorres.backapp.rest.restaurants.servicios.RestaurantServiceImpl;
-import es.jaimelozanodiegotorres.backapp.rest.user.service.UserService;
+import es.jaimelozanodiegotorres.backapp.rest.restaurants.servicios.RestaurantServicePgSqlImpl;
+import es.jaimelozanodiegotorres.backapp.rest.user.service.UserServicePgSql;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
@@ -34,13 +33,13 @@ import java.util.UUID;
 public class OrderService extends CommonServiceMongo<Order, ObjectId> {
     OrderMapper mapper;
     private final ProductRepository productRepository;
-    private final UserService userService;
-    private final RestaurantServiceImpl restaurantService;
-    private final AddressesServiceImpl addressesService;
+    private final UserServicePgSql userService;
+    private final RestaurantServicePgSqlImpl restaurantService;
+    private final AddressesServicePgSqlImpl addressesService;
 
 
     @Autowired
-    public OrderService(OrderRepository repository, ProductRepository productRepository, UserService userService, RestaurantServiceImpl restaurantService, AddressesServiceImpl addressesService){
+    public OrderService(OrderRepository repository, ProductRepository productRepository, UserServicePgSql userService, RestaurantServicePgSqlImpl restaurantService, AddressesServicePgSqlImpl addressesService){
         super(repository);
         this.productRepository = productRepository;
         this.userService = userService;
@@ -57,7 +56,9 @@ public class OrderService extends CommonServiceMongo<Order, ObjectId> {
     @Transactional //no se si es necesario repetirlo en controller tb
     public Order save(OrderDto dto) {
         log.info("Guardando order : {}", dto);
-        // dto.setUserId(getUser); //todo: commonserviceApp con los metodos
+
+         dto.setUserId(getLoggedUserId());//todo: commonserviceApp con los metodos
+
         checkOrderIds(dto);
         checkOrderedProducts(dto);
         return save(mapper.dtoToModel(dto));
@@ -69,7 +70,8 @@ public class OrderService extends CommonServiceMongo<Order, ObjectId> {
             checkOrderedProducts(dto);
         }
 
-        // dto.setUserId(getUser); //todo: commonserviceApp con los metodos
+        dto.setUserId(getLoggedUserId()); //todo: commonserviceApp con los metodos
+
         checkOrderIds(dto);
         var original = findById(objectId);
         isUpdatable(original);
@@ -173,7 +175,7 @@ public class OrderService extends CommonServiceMongo<Order, ObjectId> {
         log.info("Borrando {} con id: {}", entityName, id);
 
         Order original = findById(id);
-        if(!OrderState.isDeleteable(original.getState()))
+        if(!original.isDeleteable())
             throw exceptionService.badRequestException("No se puede borrar un pedido con estado " + original.getState());
 
         original.setState(OrderState.DELETED);
@@ -193,6 +195,7 @@ public class OrderService extends CommonServiceMongo<Order, ObjectId> {
     public Order patchState(ObjectId id, OrderState state) {
         log.info("Cambiando el estado del pedido a {}", state);
         Order original = findById(id);
+
         isUpdatable(original);
         original.setState(state);
         // original.setUpdatedAt(LocalDateTime.now()); //todo: no deberia ser necesario
@@ -203,7 +206,7 @@ public class OrderService extends CommonServiceMongo<Order, ObjectId> {
     }
 
     private void isUpdatable (Order order){
-        if(!OrderState.isUpdatable(order.getState()))
+        if(!order.isUpdatable())
             throw exceptionService.badRequestException(
                     "No se puede cambiar el estado del pedido: "
                             + order.getId() + " con estado " + order.getState()

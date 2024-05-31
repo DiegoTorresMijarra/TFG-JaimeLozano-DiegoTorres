@@ -5,7 +5,7 @@ import es.jaimelozanodiegotorres.backapp.rest.category.dto.CategoryDto;
 import es.jaimelozanodiegotorres.backapp.rest.category.mappers.CategoryMapper;
 import es.jaimelozanodiegotorres.backapp.rest.category.models.Category;
 import es.jaimelozanodiegotorres.backapp.rest.category.repository.CategoryRepository;
-import es.jaimelozanodiegotorres.backapp.rest.commons.services.CommonService;
+import es.jaimelozanodiegotorres.backapp.rest.commons.services.CommonServicePgSql;
 import es.jaimelozanodiegotorres.backapp.rest.category.filters.CategoryFilters;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +17,11 @@ import org.springframework.stereotype.Service;
 @Service
 @CacheConfig(cacheNames = {"categorias"})
 @Slf4j
-public class CategoryServiceImp extends CommonService<Category, Long> {
+public class CategoryServicePgSqlImp extends CommonServicePgSql<Category, Long> {
     CategoryMapper mapper;
 
     @Autowired
-    public CategoryServiceImp(CategoryRepository repository){
+    public CategoryServicePgSqlImp(CategoryRepository repository){
         super(repository);
         this.mapper = CategoryMapper.INSTANCE;
     }

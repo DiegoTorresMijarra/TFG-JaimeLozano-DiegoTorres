@@ -1,15 +1,11 @@
 package es.jaimelozanodiegotorres.backapp.rest.evaluation.controller;
 
 import es.jaimelozanodiegotorres.backapp.pagination.PageResponse;
-import es.jaimelozanodiegotorres.backapp.rest.category.dto.CategoryDto;
-import es.jaimelozanodiegotorres.backapp.rest.category.filters.CategoryFilters;
-import es.jaimelozanodiegotorres.backapp.rest.category.models.Category;
-import es.jaimelozanodiegotorres.backapp.rest.category.services.CategoryServiceImp;
 import es.jaimelozanodiegotorres.backapp.rest.commons.controller.CommonController;
 import es.jaimelozanodiegotorres.backapp.rest.evaluation.dto.EvaluationDto;
 import es.jaimelozanodiegotorres.backapp.rest.evaluation.filters.EvaluationFilters;
 import es.jaimelozanodiegotorres.backapp.rest.evaluation.models.Evaluation;
-import es.jaimelozanodiegotorres.backapp.rest.evaluation.services.EvaluationServiceImp;
+import es.jaimelozanodiegotorres.backapp.rest.evaluation.services.EvaluationServicePgSqlImp;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +24,7 @@ import java.util.List;
 @RequestMapping("evaluations")
 @Slf4j
 public class EvaluationController extends CommonController<Evaluation, Long, EvaluationDto>{
-    EvaluationServiceImp service;
+    EvaluationServicePgSqlImp service;
 
     /**
      * Constructor de la clase
@@ -36,7 +32,7 @@ public class EvaluationController extends CommonController<Evaluation, Long, Eva
      * @param service Servicio de productos
      */
     @Autowired
-    public EvaluationController(EvaluationServiceImp service) {
+    public EvaluationController(EvaluationServicePgSqlImp service) {
         this.service = service;
     }
 

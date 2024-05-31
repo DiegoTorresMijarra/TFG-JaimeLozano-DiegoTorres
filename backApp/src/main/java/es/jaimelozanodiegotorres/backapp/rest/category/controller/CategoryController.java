@@ -4,7 +4,7 @@ import es.jaimelozanodiegotorres.backapp.pagination.PageResponse;
 import es.jaimelozanodiegotorres.backapp.rest.category.dto.CategoryDto;
 import es.jaimelozanodiegotorres.backapp.rest.category.filters.CategoryFilters;
 import es.jaimelozanodiegotorres.backapp.rest.category.models.Category;
-import es.jaimelozanodiegotorres.backapp.rest.category.services.CategoryServiceImp;
+import es.jaimelozanodiegotorres.backapp.rest.category.services.CategoryServicePgSqlImp;
 import es.jaimelozanodiegotorres.backapp.rest.commons.controller.CommonController;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +24,7 @@ import java.util.List;
 @RequestMapping("categories")
 @Slf4j
 public class CategoryController extends CommonController<Category, Long, CategoryDto> {
-    CategoryServiceImp service;
+    CategoryServicePgSqlImp service;
 
     /**
      * Constructor de la clase
@@ -32,7 +32,7 @@ public class CategoryController extends CommonController<Category, Long, Categor
      * @param service Servicio de productos
      */
     @Autowired
-    public CategoryController(CategoryServiceImp service) {
+    public CategoryController(CategoryServicePgSqlImp service) {
         this.service = service;
     }
 

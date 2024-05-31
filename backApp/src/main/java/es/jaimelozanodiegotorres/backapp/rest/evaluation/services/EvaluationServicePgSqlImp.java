@@ -1,14 +1,14 @@
 package es.jaimelozanodiegotorres.backapp.rest.evaluation.services;
 
 import es.jaimelozanodiegotorres.backapp.pagination.PageResponse;
-import es.jaimelozanodiegotorres.backapp.rest.commons.services.CommonService;
+import es.jaimelozanodiegotorres.backapp.rest.commons.services.CommonServicePgSql;
 import es.jaimelozanodiegotorres.backapp.rest.evaluation.dto.EvaluationDto;
 import es.jaimelozanodiegotorres.backapp.rest.evaluation.filters.EvaluationFilters;
 import es.jaimelozanodiegotorres.backapp.rest.evaluation.mappers.EvaluationMapper;
 import es.jaimelozanodiegotorres.backapp.rest.evaluation.models.Evaluation;
 import es.jaimelozanodiegotorres.backapp.rest.evaluation.repository.EvaluationRepository;
 import es.jaimelozanodiegotorres.backapp.rest.products.models.Product;
-import es.jaimelozanodiegotorres.backapp.rest.products.services.ProductServiceImp;
+import es.jaimelozanodiegotorres.backapp.rest.products.services.ProductServicePgSqlImp;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
@@ -20,12 +20,12 @@ import java.util.List;
 @Service
 @CacheConfig(cacheNames = {"valoraciones"})
 @Slf4j
-public class EvaluationServiceImp extends CommonService<Evaluation, Long>{
+public class EvaluationServicePgSqlImp extends CommonServicePgSql<Evaluation, Long> {
     private final EvaluationMapper mapper;
-    private final ProductServiceImp productServiceImp;
+    private final ProductServicePgSqlImp productServiceImp;
 
     @Autowired
-    public EvaluationServiceImp(EvaluationRepository repository, ProductServiceImp productServiceImp){
+    public EvaluationServicePgSqlImp(EvaluationRepository repository, ProductServicePgSqlImp productServiceImp){
         super(repository);
         this.mapper = EvaluationMapper.INSTANCE;
         this.productServiceImp = productServiceImp;

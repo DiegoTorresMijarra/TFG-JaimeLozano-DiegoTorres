@@ -148,24 +148,36 @@ CREATE TABLE "public"."user_roles"
 -- Insert usuarios y roles
 -- Contraseña: Admin1
 INSERT INTO users (created_at, id, updated_at, surname, email, name, password, username)
-VALUES ('2023-11-02 11:43:24.724871', '00000000-0000-0000-0000-000000000000', '2023-11-02 11:43:24.724871',
+VALUES ('2023-11-02 11:43:24.724871', 'a8fd9bb7-62e1-41dc-9f57-338b17c5bcc0', '2023-11-02 11:43:24.724871',
         'Admin Admin', 'admin@prueba.net', 'Admin', '$2a$10$Fjs4lFtGRtCgOsLURykTW.IGYfdqsFVXZN1jGhl3PlZAqMTKHK7S6',
         'admin');
 
 -- Asignar roles al administrador
 INSERT INTO user_roles (user_id, roles)
-VALUES ('00000000-0000-0000-0000-000000000000', 'USER');
+VALUES ('a8fd9bb7-62e1-41dc-9f57-338b17c5bcc0', 'USER');
 INSERT INTO user_roles (user_id, roles)
-VALUES ('00000000-0000-0000-0000-000000000000', 'ADMIN');
+VALUES ('a8fd9bb7-62e1-41dc-9f57-338b17c5bcc0', 'ADMIN');
+INSERT INTO user_roles (user_id, roles)
+VALUES ('a8fd9bb7-62e1-41dc-9f57-338b17c5bcc0', 'WORKER');
+
+-- Contraseña: Worker1
+INSERT INTO users (created_at, id, updated_at, surname, email, name, password, username)
+VALUES ('2023-11-02 11:43:24.730431', '455e6e87-5c32-454b-b658-e39330ceefa2', '2023-11-02 11:43:24.730431',
+        'Worker Worker', 'worker@prueba.net', 'Worker', '$2a$10$XYoJYUTLtLcQX9eytXQ/cuGk.OeUBNMWfqWHzoIFZJOMTgG11/zui', 'worker');
+
+-- Asignar roles al usuario
+INSERT INTO user_roles (user_id, roles)
+VALUES ('455e6e87-5c32-454b-b658-e39330ceefa2', 'WORKER');
+
 
 -- Contraseña: User1
 INSERT INTO users (created_at, id, updated_at, surname, email, name, password, username)
-VALUES ('2023-11-02 11:43:24.730431', '00000000-0000-0000-0000-000000000001', '2023-11-02 11:43:24.730431',
+VALUES ('2023-11-02 11:43:24.730431', '24bee18d-920c-4f25-971f-99e91d0aa331', '2023-11-02 11:43:24.730431',
         'User User', 'user@prueba.net', 'User', '$2a$10$co8cRNxqcwJvCoOUQD9freA/b.FcKGdlI3khs3FxqniJyo3LcpeHe', 'user');
 
 -- Asignar roles al usuario
 INSERT INTO user_roles (user_id, roles)
-VALUES ('00000000-0000-0000-0000-000000000001', 'USER');
+VALUES ('24bee18d-920c-4f25-971f-99e91d0aa331', 'USER');
 
 -- Restricciones de clave externa
 ALTER TABLE ONLY "public"."user_roles"
@@ -202,20 +214,20 @@ INSERT INTO "addresses" ("id", "country", "province", "city", "street", "number"
 VALUES ('00000000-0000-0000-0000-000000000003', 'España', 'Madrid', 'Leganés', 'Calle de la Luna', '45', 'Bajo B',
         '28915',
         'Cuidado con el Perro', 'Casa de la familia Luna', '2023-01-03 00:00:00', '2023-01-03 00:00:00',
-        '00000000-0000-0000-0000-000000000000'),
+        'a8fd9bb7-62e1-41dc-9f57-338b17c5bcc0'),
        ('00000000-0000-0000-0000-000000000004', 'España', 'Madrid', 'Leganés', 'Avenida de la Universidad', '10',
         'Bajo C',
         '28916', NULL, 'Casa de la familia Universidad', '2023-01-04 00:00:00', '2023-01-04 00:00:00',
-        '00000000-0000-0000-0000-000000000001'),
+        '24bee18d-920c-4f25-971f-99e91d0aa331'),
        ('00000000-0000-0000-0000-000000000005', 'España', 'Madrid', 'Leganés', 'Calle del Sol', '23', NULL, '28917',
         NULL,
-        'Casa de la familia Sol', '2023-01-05 00:00:00', '2023-01-05 00:00:00', '00000000-0000-0000-0000-000000000001'),
+        'Casa de la familia Sol', '2023-01-05 00:00:00', '2023-01-05 00:00:00', '24bee18d-920c-4f25-971f-99e91d0aa331'),
        ('00000000-0000-0000-0000-000000000006', 'España', 'Madrid', 'Leganés', 'Calle de la Estrella', '78', NULL,
         '28918',
         NULL, 'Casa de la familia Estrella', '2023-01-06 00:00:00', '2023-01-06 00:00:00',
-        '00000000-0000-0000-0000-000000000000'),
+        'a8fd9bb7-62e1-41dc-9f57-338b17c5bcc0'),
        ('00000000-0000-0000-0000-000000000007', 'España', 'Madrid', 'Leganés', 'Calle del Universo', '11', 'Primero B',
         '28919',
         NULL, 'Casa de la familia Universo', '2023-01-07 00:00:00', '2023-01-07 00:00:00',
-        '00000000-0000-0000-0000-000000000001')
+        '24bee18d-920c-4f25-971f-99e91d0aa331')
 ;

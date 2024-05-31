@@ -3,10 +3,9 @@ package es.jaimelozanodiegotorres.backapp.rest.user.service;
 import es.jaimelozanodiegotorres.backapp.pagination.PageResponse;
 import es.jaimelozanodiegotorres.backapp.rest.addresses.models.Addresses;
 import es.jaimelozanodiegotorres.backapp.rest.addresses.repository.AddressesRepository;
-import es.jaimelozanodiegotorres.backapp.rest.addresses.services.AddressesServiceImpl;
-import es.jaimelozanodiegotorres.backapp.rest.commons.services.CommonService;
+import es.jaimelozanodiegotorres.backapp.rest.addresses.services.AddressesServicePgSqlImpl;
+import es.jaimelozanodiegotorres.backapp.rest.commons.services.CommonServicePgSql;
 import es.jaimelozanodiegotorres.backapp.rest.orders.repository.OrderRepository;
-import es.jaimelozanodiegotorres.backapp.rest.orders.service.OrderService;
 import es.jaimelozanodiegotorres.backapp.rest.user.dto.UserDto;
 import es.jaimelozanodiegotorres.backapp.rest.user.dto.UserResponseDto;
 import es.jaimelozanodiegotorres.backapp.rest.user.filters.UserFilters;
@@ -29,17 +28,17 @@ import java.util.UUID;
 @Service
 @CacheConfig(cacheNames = {"usuarios"})
 @Slf4j
-public class UserService extends CommonService<User, UUID> {
+public class UserServicePgSql extends CommonServicePgSql<User, UUID> {
     private final PasswordEncoder passwordEncoder;
     private final UserSaveMapper saveMapper;
     private final UserResponseMapper responseMapper;
 
     private final AddressesRepository addressesRepository;
     private final OrderRepository orderRepository;
-    private final AddressesServiceImpl addressesService;
+    private final AddressesServicePgSqlImpl addressesService;
 
 
-    protected UserService(UserRepository repository, PasswordEncoder passwordEncoder, AddressesRepository addressesRepository, OrderRepository orderRepository, AddressesServiceImpl addressesService) {
+    protected UserServicePgSql(UserRepository repository, PasswordEncoder passwordEncoder, AddressesRepository addressesRepository, OrderRepository orderRepository, AddressesServicePgSqlImpl addressesService) {
         super(repository);
         this.orderRepository = orderRepository;
         this.addressesService = addressesService;
@@ -108,13 +107,13 @@ public class UserService extends CommonService<User, UUID> {
         log.info("Devolviendo los Datos del usuario con id: {}", user.getId());
         UserResponseDto res = responseMapper.modelToDto(user);
 
-        if(user.isClient()){
-            res.setOrders(orderRepository.findByUserId(user.getId()));
-            res.setAddresses(addressesService.findByUserId(user.getId()));
+        if (user.isWorker()){
             return res;
         }
 
-        if (user.isWorker()){
+        if(user.isClient()){
+            res.setOrders(orderRepository.findByUserId(user.getId()));
+            res.setAddresses(addressesService.findByUserId(user.getId()));
             return res;
         }
 

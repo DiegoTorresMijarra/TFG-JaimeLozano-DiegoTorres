@@ -90,4 +90,12 @@ public class Order implements OrderType {
         this.totalPrice = orderedProducts.stream().mapToDouble(OrderedProduct::getTotalPrice).sum();
         this.totalQuantityProducts = orderedProducts.stream().mapToInt(OrderedProduct::getQuantity).sum();
     }
+
+    public boolean isDeleteable(){
+        return OrderState.isDeleteable(this.getState());
+    }
+
+    public boolean isUpdatable(){
+        return OrderState.isUpdatable(this.getState());
+    }
 }

@@ -92,7 +92,7 @@ public class Addresses {
     private LocalDateTime deletedAt;
 
     @Column(name = "user_id")
-    @JsonIgnore
+//    @JsonIgnore
     @Schema(description = "Usuario al que hace refencia la direccion", example = "UUID")
     private UUID userId;
 }

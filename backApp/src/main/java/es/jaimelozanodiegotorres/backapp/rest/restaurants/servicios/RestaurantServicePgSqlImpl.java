@@ -1,6 +1,6 @@
 package es.jaimelozanodiegotorres.backapp.rest.restaurants.servicios;
 
-import es.jaimelozanodiegotorres.backapp.rest.commons.services.CommonService;
+import es.jaimelozanodiegotorres.backapp.rest.commons.services.CommonServicePgSql;
 import es.jaimelozanodiegotorres.backapp.rest.restaurants.dto.RestaurantDto;
 import es.jaimelozanodiegotorres.backapp.rest.restaurants.mapper.RestaurantMapper;
 import es.jaimelozanodiegotorres.backapp.rest.restaurants.modelos.Restaurant;
@@ -9,7 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CachePut;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -29,7 +28,7 @@ import java.util.Optional;
 @CacheConfig(cacheNames = {"restaurants"})
 @Service
 @Slf4j
-public class RestaurantServiceImpl extends CommonService<Restaurant, Long> {
+public class RestaurantServicePgSqlImpl extends CommonServicePgSql<Restaurant, Long> {
     RestaurantMapper mapper;
 
     /**
@@ -37,7 +36,7 @@ public class RestaurantServiceImpl extends CommonService<Restaurant, Long> {
      * @param repository Repositorio de restaurantes
      */
     @Autowired
-    public RestaurantServiceImpl(RestaurantRepository repository){
+    public RestaurantServicePgSqlImpl(RestaurantRepository repository){
         super(repository);
         mapper = RestaurantMapper.INSTANCE;
     }

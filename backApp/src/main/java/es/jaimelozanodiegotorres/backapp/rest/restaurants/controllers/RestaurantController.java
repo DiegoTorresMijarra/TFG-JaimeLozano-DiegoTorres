@@ -4,7 +4,7 @@ import es.jaimelozanodiegotorres.backapp.pagination.PageResponse;
 import es.jaimelozanodiegotorres.backapp.rest.commons.controller.CommonController;
 import es.jaimelozanodiegotorres.backapp.rest.restaurants.dto.RestaurantDto;
 import es.jaimelozanodiegotorres.backapp.rest.restaurants.modelos.Restaurant;
-import es.jaimelozanodiegotorres.backapp.rest.restaurants.servicios.RestaurantServiceImpl;
+import es.jaimelozanodiegotorres.backapp.rest.restaurants.servicios.RestaurantServicePgSqlImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
@@ -34,14 +34,14 @@ import java.util.Optional;
 @Tag(name = "Restaurantes", description = "Endpoint de Restaurantes de nuestra tienda")
 @Slf4j
 public class RestaurantController extends CommonController<Restaurant, Long, RestaurantDto> {
-    RestaurantServiceImpl service;
+    RestaurantServicePgSqlImpl service;
 
     /**
      * Constructor de la clase
      * @param service Servicio de restaurantes
      */
     @Autowired
-    public RestaurantController(RestaurantServiceImpl service){
+    public RestaurantController(RestaurantServicePgSqlImpl service){
         this.service=service;
     }
 
