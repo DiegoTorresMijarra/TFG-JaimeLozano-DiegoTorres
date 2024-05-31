@@ -42,7 +42,10 @@ public class EvaluationServiceImp extends CommonService<Evaluation, Long>{
     public Evaluation update(Long id, EvaluationDto dto){
         log.info("Actualizando valoracion");
         Evaluation original = findById(id);
-        return update(mapper.updateModel(original, dto));
+        Product product = productServiceImp.findById(dto.getProductId());
+        Evaluation evaluation = mapper.updateModel(original, dto);
+        evaluation.setProduct(product);
+        return update(evaluation);
     }
 
     public PageResponse<Evaluation> pageAll(EvaluationFilters filters){

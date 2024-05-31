@@ -26,7 +26,7 @@ export class UpdatePage implements OnInit {
   categoryForm!: FormGroup;
   private categoryService = inject(CategoryService)
 
-  constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute,) { }
+  constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.categoryId = this.route.snapshot.paramMap.get('id')!;

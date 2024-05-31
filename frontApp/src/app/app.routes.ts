@@ -56,6 +56,21 @@ export const routes: Routes = [
     path: 'categories/:id',
     loadComponent: () => import('./pages/categories/update/update.page').then( m => m.UpdatePage)
   },
+  {
+    path: 'evaluations/:id',
+    loadComponent: () => import('./pages/evaluations/update/update.page').then( m => m.UpdatePage)
+  },
+  {
+    path: 'restaurants/:id',
+    loadComponent: () => import('./pages/restaurants/update/update.page').then( m => m.UpdatePage)
+  },
+  {
+    path: 'products/:id',
+    loadComponent: () => import('./pages/products/update/update.page').then( m => m.UpdatePage)
+  },
+
+
+
 
 
 

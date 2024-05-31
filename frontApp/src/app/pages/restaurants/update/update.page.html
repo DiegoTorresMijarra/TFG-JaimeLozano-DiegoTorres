@@ -1,0 +1,44 @@
+<ion-content [fullscreen]="true">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title color="primary" size="large">Nuevo Restaurante</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content class="ion-padding">
+    <form [formGroup]="restaurantForm" (ngSubmit)="onSubmit()">
+      <ion-item>
+        <ion-label position="floating">Nombre del Restaurante</ion-label>
+        <ion-input formControlName="name" type="text"></ion-input>
+      </ion-item>
+      <ion-text color="danger" *ngIf="restaurantForm.get('name')?.touched && restaurantForm.get('name')?.errors?.['required']">
+        <ion-note *ngIf="restaurantForm.get('name')?.errors?.['required']">El nombre no puede estar en blanco.</ion-note>
+      </ion-text>
+
+      <ion-item>
+        <ion-label position="floating">Dirección del Restaurante</ion-label>
+        <ion-input formControlName="address" type="text"></ion-input>
+      </ion-item>
+      <ion-text color="danger" *ngIf="restaurantForm.get('address')?.touched && restaurantForm.get('address')?.errors?.['required']">
+        <ion-note *ngIf="restaurantForm.get('address')?.errors?.['required']">La dirección no puede estar en blanco.</ion-note>
+      </ion-text>
+      <ion-text color="danger" *ngIf="restaurantForm.get('address')?.touched && restaurantForm.get('address')?.errors?.['maxlength']">
+        <ion-note *ngIf="restaurantForm.get('address')?.errors?.['maxlength']">La dirección no puede tener más de 255 caracteres.</ion-note>
+      </ion-text>
+
+      <ion-item>
+        <ion-label position="floating">Teléfono del Restaurante</ion-label>
+        <ion-input formControlName="phone" type="tel"></ion-input>
+      </ion-item>
+      <ion-text color="danger" *ngIf="restaurantForm.get('phone')?.touched && restaurantForm.get('phone')?.errors?.['required']">
+        <ion-note *ngIf="restaurantForm.get('phone')?.errors?.['required']">El teléfono no puede estar en blanco.</ion-note>
+      </ion-text>
+      <ion-text color="danger" *ngIf="restaurantForm.get('phone')?.touched && restaurantForm.get('phone')?.errors?.['pattern']">
+        <ion-note *ngIf="restaurantForm.get('phone')?.errors?.['pattern']">El teléfono debe tener 9 dígitos.</ion-note>
+      </ion-text>
+
+      <ion-button expand="block" type="submit" [disabled]="restaurantForm.invalid">Guardar Restaurante</ion-button>
+    </form>
+  </ion-content>
+
+</ion-content>

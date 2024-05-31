@@ -65,8 +65,9 @@ export class EvaluationService {
   }
 
   getEvaluation(id: string): Observable<Evaluation> {
+    const headers = this.authService.getAuthHeaders();
     return this.http
-      .get<Evaluation>(`${this.apiUrl}/${id}`)
+      .get<Evaluation>(`${this.apiUrl}/${id}`, { headers })
       .pipe(
         catchError((error) => {
           // Manejo de errores

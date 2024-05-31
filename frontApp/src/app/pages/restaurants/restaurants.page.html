@@ -19,6 +19,9 @@
         <p>Created At: {{ restaurant.createdAt | date: 'short' }}</p>
         <p>Updated At: {{ restaurant.updatedAt | date: 'short' }}</p>
       </ion-label>
+      <ion-button *ngIf="isAdmin" [routerLink]="['/restaurants', restaurant.id]" color="tertiary" fill="clear">
+        Actualizar Restaurante
+      </ion-button>
       <ion-button *ngIf="isAdmin" (click)="deleteRestaurant(restaurant.id)" color="danger" fill="clear">
         Borrar Restaurante
       </ion-button>
