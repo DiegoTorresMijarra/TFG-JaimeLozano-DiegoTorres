@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http'
 import { catchError, Observable, throwError } from 'rxjs'
 import { AuthService } from './auth.service'
 import {Category} from "./category.service";
+import {Evaluation, EvaluationDto} from "./evaluation.service";
 
 @Injectable({
   providedIn: 'root',
@@ -45,6 +46,30 @@ export class ProductService {
           return throwError(error);
         })
       );
+  }
+
+  updateProduct(id: string, product: ProductSaveDto): Observable<Product> {
+    const headers = this.authService.getAuthHeaders();
+    return this.http
+      .put<Product>(`${this.apiUrl}/updateProduct/${id}`, product, { headers })
+      .pipe(
+        catchError((error) => {
+          console.error('Error actualizando producto:', error);
+          return throwError(error);
+        })
+      );
+  }
+
+  getProduct(id: string): Observable<Product> {
+    return this.http
+      .get<Product>(`${this.apiUrl}/${id}`)
+      .pipe(
+        catchError((error) => {
+          // Manejo de errores
+          console.error('Error obteniendo producto:', error)
+          return throwError(error)
+        }),
+      )
   }
 
 }

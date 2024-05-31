@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http'
 import {catchError, Observable, throwError} from 'rxjs'
 import { AuthService } from './auth.service'
 import {Product, ProductSaveDto} from "./product.service";
+import {Category, CategoryDto} from "./category.service";
 
 @Injectable({
   providedIn: 'root',
@@ -45,6 +46,30 @@ export class RestaurantService {
           return throwError(error);
         })
       );
+  }
+
+  updateRestaurant(id: string,restaurant: RestaurantDto): Observable<Restaurant> {
+    const headers = this.authService.getAuthHeaders();
+    return this.http
+      .put<Restaurant>(`${this.apiUrl}/updateRestaurant/${id}`, restaurant, { headers })
+      .pipe(
+        catchError((error) => {
+          console.error('Error actualizando restaurante:', error);
+          return throwError(error);
+        })
+      );
+  }
+
+  getRestaurant(id: string): Observable<Restaurant> {
+    return this.http
+      .get<Restaurant>(`${this.apiUrl}/${id}`)
+      .pipe(
+        catchError((error) => {
+          // Manejo de errores
+          console.error('Error obteniendo restaurante:', error)
+          return throwError(error)
+        }),
+      )
   }
 
 }

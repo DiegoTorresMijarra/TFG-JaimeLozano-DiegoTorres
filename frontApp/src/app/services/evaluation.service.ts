@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http'
 import { catchError, Observable, throwError } from 'rxjs'
 import { AuthService } from './auth.service'
 import {Product} from "./product.service";
+import {Restaurant, RestaurantDto} from "./restaurant.service";
 
 @Injectable({
   providedIn: 'root',
@@ -49,6 +50,30 @@ export class EvaluationService {
           return throwError(error);
         })
       );
+  }
+
+  updateEvaluation(id: string,evaluation: EvaluationDto): Observable<Evaluation> {
+    const headers = this.authService.getAuthHeaders();
+    return this.http
+      .put<Evaluation>(`${this.apiUrl}/updateEvaluation/${id}`, evaluation, { headers })
+      .pipe(
+        catchError((error) => {
+          console.error('Error actualizando valoracion:', error);
+          return throwError(error);
+        })
+      );
+  }
+
+  getEvaluation(id: string): Observable<Evaluation> {
+    return this.http
+      .get<Evaluation>(`${this.apiUrl}/${id}`)
+      .pipe(
+        catchError((error) => {
+          // Manejo de errores
+          console.error('Error obteniendo valoracion:', error)
+          return throwError(error)
+        }),
+      )
   }
 
 }

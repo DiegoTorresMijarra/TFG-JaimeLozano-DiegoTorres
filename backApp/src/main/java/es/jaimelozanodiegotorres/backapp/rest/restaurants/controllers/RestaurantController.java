@@ -105,7 +105,7 @@ public class RestaurantController extends CommonController<Restaurant, Long, Res
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Restaurante encontrado"),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Restaurante no encontrado"),
     })
-    @GetMapping ("/{id}")
+    @GetMapping ("{id}")
     @Override
     public ResponseEntity<Restaurant> findById(@PathVariable Long id){
         log.info("Buscando Restaurante con id: {}", id);
