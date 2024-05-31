@@ -15,6 +15,11 @@ import {Evaluation, EvaluationService} from "../../services/evaluation.service";
 import {RouterLink} from "@angular/router";
 import {addIcons} from "ionicons";
 import {starOutline, starSharp} from "ionicons/icons";
+import {Category} from "../../services/category.service";
+import {CategoryModalComponent} from "../categories/category-modal/category-modal.component";
+import {EvaluationModalComponent} from "./modal/modal.component";
+import {AnimationService} from "../../services/animation.service";
+import {ModalController} from "@ionic/angular";
 
 @Component({
   selector: 'app-evaluations',
@@ -26,7 +31,8 @@ import {starOutline, starSharp} from "ionicons/icons";
 export class EvaluationsPage implements OnInit {
   public evaluations: Evaluation[] = []
   private evaluationService = inject(EvaluationService)
-  constructor() {
+  private animationService = inject(AnimationService)
+  constructor(private modalController: ModalController) {
     addIcons({ starOutline, starSharp})
   }
 
@@ -38,6 +44,10 @@ export class EvaluationsPage implements OnInit {
     this.evaluationService.getEvaluations().subscribe((data) => {
       this.evaluations = data
     })
+  }
+
+  async openDetailsModal(evaluation: Evaluation) {
+    await this.presentModal(evaluation);
   }
 
   deleteEvaluation(id: number | undefined): void {
@@ -53,5 +63,17 @@ export class EvaluationsPage implements OnInit {
         // Manejar el error según sea necesario
       },
     })
+  }
+
+  async presentModal(evaluation: Evaluation) {
+    const modal = await this.modalController.create({
+      component: EvaluationModalComponent,
+      componentProps: {
+        evaluation: evaluation
+      },
+      enterAnimation: this.animationService.enterAnimation,
+      leaveAnimation: this.animationService.leaveAnimation
+    });
+    return await modal.present();
   }
 }

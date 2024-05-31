@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Valoracion con ID: {{ evaluation?.id }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismissModal()" color="light">
+        <ion-icon class="cerrar" name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="evaluation">
+  <ion-list>
+    <ion-item class="rating">
+      <ion-label>Valoracion:</ion-label>
+      <ion-icon *ngFor="let star of [1, 2, 3, 4, 5]" [name]="star <= evaluation.valoracion ? 'star-sharp' : 'star-outline'"></ion-icon>
+    </ion-item>
+    <ion-item>
+      <ion-label>Producto:</ion-label>
+      <ion-text>{{ evaluation.product.name }}</ion-text>
+    </ion-item>
+    <ion-item>
+      <ion-label>Creado en:</ion-label>
+      <ion-text>{{ evaluation.createdAt | date: 'short' }}</ion-text>
+    </ion-item>
+    <ion-item>
+      <ion-label>Actualizado en:</ion-label>
+      <ion-text>{{ evaluation.updatedAt | date: 'short' }}</ion-text>
+    </ion-item>
+  </ion-list>
+</ion-content>

@@ -12,7 +12,7 @@
 
   <ion-list>
     <ion-item *ngFor="let evaluation of evaluations" class="product-item">
-      <ion-label>
+      <ion-label (click)="openDetailsModal(evaluation)">
         <h2>{{ evaluation.product.name }}</h2>
         <div class="rating">
           <p>Valoracion:</p>
