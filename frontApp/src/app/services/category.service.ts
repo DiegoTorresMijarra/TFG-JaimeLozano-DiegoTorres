@@ -45,6 +45,29 @@ export class CategoryService {
       );
   }
 
+  updateCategory(id: string,category: CategoryDto): Observable<Category> {
+    const headers = this.authService.getAuthHeaders();
+    return this.http
+      .put<Category>(`${this.apiUrl}/updateCategory/${id}`, category, { headers })
+      .pipe(
+        catchError((error) => {
+          console.error('Error actualizando categoria:', error);
+          return throwError(error);
+        })
+      );
+  }
+
+  getCategory(id: string): Observable<Category> {
+    return this.http
+      .get<Category>(`${this.apiUrl}/${id}`)
+      .pipe(
+        catchError((error) => {
+          // Manejo de errores
+          console.error('Error obteniendo categoria:', error)
+          return throwError(error)
+        }),
+      )
+  }
 }
 export interface Category {
   id?: number

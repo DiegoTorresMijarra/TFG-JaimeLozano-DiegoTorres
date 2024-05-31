@@ -55,7 +55,7 @@ public class CategoryController extends CommonController<Category, Long, Categor
         return ResponseEntity.ok(service.findById(id));
     }
 
-    @GetMapping("{name}")
+    @GetMapping("nombre/{name}")
     public ResponseEntity<Category> findByName(@PathVariable String name){
         log.info("Buscando Categoria con nombre: " + name);
         return ResponseEntity.ok(service.findByName(name));
