@@ -107,6 +107,8 @@ public class UserServicePgSql extends CommonServicePgSql<User, UUID> {
         log.info("Devolviendo los Datos del usuario con id: {}", user.getId());
         UserResponseDto res = responseMapper.modelToDto(user);
 
+        verifyLogguedSameUser(user);
+
         if (user.isWorker()){
             return res;
         }

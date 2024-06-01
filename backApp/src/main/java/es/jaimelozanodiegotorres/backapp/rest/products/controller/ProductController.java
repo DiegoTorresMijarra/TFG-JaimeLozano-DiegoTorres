@@ -23,7 +23,8 @@ import java.util.List;
 @RestController
 @RequestMapping("products")
 @Slf4j
-public class ProductController extends CommonController<Product, Long, ProductSaveDto> {
+public class
+ProductController extends CommonController<Product, Long, ProductSaveDto> {
     ProductServicePgSqlImp service;
 
     /**
@@ -57,7 +58,7 @@ public class ProductController extends CommonController<Product, Long, ProductSa
 
     @Override
     @PostMapping("saveProduct")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('WORKER','ADMIN')")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Product> save(@RequestBody @Valid ProductSaveDto dto) {
         log.info("Guardando producto");
@@ -67,7 +68,7 @@ public class ProductController extends CommonController<Product, Long, ProductSa
 
     @Override
     @PutMapping("updateProduct/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('WORKER','ADMIN')")
     public ResponseEntity<Product> update(@PathVariable Long id, @RequestBody @Valid ProductSaveDto dto) {
         log.info("Actualizando producto con id {} y datos: {}" , id, dto);
         return ResponseEntity.ok(service.update(id, dto));
@@ -81,6 +82,4 @@ public class ProductController extends CommonController<Product, Long, ProductSa
         log.info("Borrando producto con id {}", id);
         return ResponseEntity.ok(service.deleteById(id));
     }
-
-
 }

@@ -2,6 +2,7 @@ package es.jaimelozanodiegotorres.backapp.rest.evaluation.models;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import es.jaimelozanodiegotorres.backapp.rest.products.models.Product;
+import es.jaimelozanodiegotorres.backapp.rest.user.models.User;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
@@ -16,7 +17,6 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -28,6 +28,7 @@ import java.time.LocalDateTime;
 @EntityListeners(AuditingEntityListener.class)
 @SQLDelete(sql = "UPDATE EVALUATION SET deleted_at = CURRENT_TIMESTAMP WHERE id=?")
 public class Evaluation {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Schema(description = "Identificador de la valoracion", example = "1")
@@ -38,7 +39,11 @@ public class Evaluation {
     @NotNull(message = "La valoracion no puede estar vacía")
     @Max(value = 5)
     @Schema(description = "Valoracion del producto", example = "1")
-    private Integer valoracion;
+    private Integer value;
+
+    @Column()
+    @Schema(description = "Comentario de la valoracion", example = "Muy buen producto")
+    private String comment;
 
     @CreatedDate
     @Temporal(TemporalType.TIMESTAMP)
@@ -46,6 +51,7 @@ public class Evaluation {
     @Column ( name="created_at")
     @Schema(description = "Fecha de creación de la valoracion", example = "2022-01-01 00:00:00")
     private LocalDateTime createdAt = LocalDateTime.now();
+
     @LastModifiedDate
     @Temporal(TemporalType.TIMESTAMP)
     @Builder.Default()
@@ -64,4 +70,11 @@ public class Evaluation {
     @JsonManagedReference
     @NotNull(message = "El producto no puede estar vacío")
     private Product product;
+
+    @Schema(description = "Usuario al que hace refencia la valoracion", example = "1")
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    @JsonManagedReference
+    @NotNull(message = "El usuario no puede estar vacío")
+    private User user;
 }

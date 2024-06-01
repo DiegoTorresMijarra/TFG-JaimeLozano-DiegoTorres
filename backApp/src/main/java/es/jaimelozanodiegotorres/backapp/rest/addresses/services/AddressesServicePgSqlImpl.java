@@ -34,7 +34,7 @@ public class AddressesServicePgSqlImpl extends CommonServicePgSql<Addresses, UUI
     public Addresses update(UUID id, AddressSaveDto dto) {
         Addresses entity = addressesMapper.updateModel(findById(id), dto);
 
-        verifyLogguedSameUser(entity.getUserId());  //todo
+        verifyLogguedSameUser(entity.getUserId());
 
         return update(entity);
     }
@@ -42,7 +42,7 @@ public class AddressesServicePgSqlImpl extends CommonServicePgSql<Addresses, UUI
     public List<Addresses> findByUserId(UUID uuid) {
         log.info("Buscando direcciones del usuario con id: {}", uuid);
 
-         verifyLogguedSameUser(uuid);
+//         verifyLogguedSameUser(uuid);
 
         return ((AddressesRepository)repository).findByUserIdAndDeletedAtIsNull(uuid);
     }

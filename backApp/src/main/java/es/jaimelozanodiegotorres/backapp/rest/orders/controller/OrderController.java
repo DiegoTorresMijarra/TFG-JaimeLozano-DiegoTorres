@@ -45,14 +45,14 @@ public class OrderController extends CommonController<Order, ObjectId, OrderDto>
 
     @Override
     @GetMapping("listAll")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('WORKER','ADMIN')")
     public List<Order> listAll() {
         log.info("Listando todos los pedidos");
         return service.listAll();
     }
 
     @GetMapping("pageAll")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('WORKER','ADMIN')")
     public ResponseEntity<PageResponse<Order>> findAll(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
@@ -69,6 +69,7 @@ public class OrderController extends CommonController<Order, ObjectId, OrderDto>
 
     @Override
     @GetMapping("{id}")
+    @PreAuthorize("hasAnyRole('WORKER','ADMIN')")
     public ResponseEntity<Order> findById(@PathVariable("id") ObjectId id) {
         log.info("Buscando pedido con id: {}", id);
         return ResponseEntity.ok(service.findById(id));
@@ -86,7 +87,7 @@ public class OrderController extends CommonController<Order, ObjectId, OrderDto>
     @Override
     @PutMapping("updateOrder/{id}")
     @Transactional
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('WORKER','ADMIN')")
     public ResponseEntity<Order> update(@PathVariable("id") ObjectId id,@RequestBody @Valid OrderDto dto) {
         log.info("Actualizando pedido con id {} y datos: {}" , id, dto);
         return ResponseEntity.ok(service.update(id, dto));
@@ -103,12 +104,14 @@ public class OrderController extends CommonController<Order, ObjectId, OrderDto>
     }
 
     @GetMapping("/restaurantExists/{id}")
+    @PreAuthorize("hasAnyRole('WORKER','ADMIN')")
     public ResponseEntity<Boolean> existsByRestaurantId(@PathVariable("id") Long id){
         log.info("Buscando si existe algun pedido con restaurante id: " + id);
         return ResponseEntity.ok(service.existsByRestaurantId(id));
     }
 
     @GetMapping("/restaurant/{id}")
+    @PreAuthorize("hasAnyRole('WORKER','ADMIN')")
     public ResponseEntity<PageResponse<Order>> findByRestaurantId(@PathVariable("id") Long id,
                                                                   @RequestParam(defaultValue = "0") int page,
                                                                   @RequestParam(defaultValue = "10") int size,
@@ -125,7 +128,7 @@ public class OrderController extends CommonController<Order, ObjectId, OrderDto>
 
     @Transactional
     @PutMapping ("/updateIsPaid/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('WORKER','ADMIN')")
     public ResponseEntity<Order> updateIsPaidById(
             @PathVariable (value = "id")  ObjectId id,
             @RequestParam  (value = "isPaid",required = true) Boolean isPaid){
@@ -135,7 +138,7 @@ public class OrderController extends CommonController<Order, ObjectId, OrderDto>
 
     @Transactional
     @PatchMapping ("/patchState/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('WORKER','ADMIN')")
     public ResponseEntity<Order> patchStateById(
             @PathVariable (value = "id")  ObjectId id,
             @RequestParam  (value = "state") OrderState state){

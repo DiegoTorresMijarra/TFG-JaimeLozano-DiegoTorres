@@ -35,16 +35,23 @@ public class EvaluationServicePgSqlImp extends CommonServicePgSql<Evaluation, Lo
         log.info("Guardando valoracion");
         Product product = productServiceImp.findById(dto.getProductId());
         Evaluation evaluation = mapper.dtoToModel(dto);
+
         evaluation.setProduct(product);
+        evaluation.setUser(getLoggedUser());
+
         return save(evaluation);
     }
 
     public Evaluation update(Long id, EvaluationDto dto){
         log.info("Actualizando valoracion");
         Evaluation original = findById(id);
+
+        verifyLogguedSameUser(original.getUser());
+
         Product product = productServiceImp.findById(dto.getProductId());
         Evaluation evaluation = mapper.updateModel(original, dto);
         evaluation.setProduct(product);
+
         return update(evaluation);
     }
 

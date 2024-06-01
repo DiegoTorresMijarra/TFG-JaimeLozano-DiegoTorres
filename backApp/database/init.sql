@@ -79,28 +79,6 @@ VALUES (1, 'Restaurante1', 'Calle 1', 111111111, '2023-01-01', '2023-01-01'),
        (3, 'Restaurante3', 'Calle 3', 999999999, '2023-01-01', '2023-01-01')
 ;
 
--- Crear la tabla valoraciones
-CREATE TABLE "public"."evaluation"
-(
-    "id"         bigint    DEFAULT nextval('evaluation_id_seq') NOT NULL,
-    "valoracion" Integer                                        NOT NULL,
-    "created_at" timestamp,
-    "updated_at" timestamp default CURRENT_TIMESTAMP,
-    "deleted_at" timestamp default null,
-    "product_id" bigint,
-    CONSTRAINT "evaluation_pkey" PRIMARY KEY ("id"),
-    CONSTRAINT "evaluation_fk_products" FOREIGN KEY ("product_id") REFERENCES "products" ("id") NOT DEFERRABLE
-) WITH (oids = false);
-
--- Insertar la tabla valoraciones
-INSERT INTO "evaluation" ("id", "valoracion", "created_at", "updated_at", "product_id")
-VALUES (1, 3, '2023-01-01', '2023-01-01', 1),
-       (2, 2, '2023-01-02', '2023-01-02', 2),
-       (3, 3, '2023-01-03', '2023-01-03', 3),
-       (4, 3, '2023-01-03', '2023-01-03', 3),
-       (5, 2, '2023-01-03', '2023-01-03', 3)
-;
-
 -- Crear la tabla ofertas
 CREATE TABLE "public"."offers"
 (
@@ -163,7 +141,8 @@ VALUES ('a8fd9bb7-62e1-41dc-9f57-338b17c5bcc0', 'WORKER');
 -- Contraseña: Worker1
 INSERT INTO users (created_at, id, updated_at, surname, email, name, password, username)
 VALUES ('2023-11-02 11:43:24.730431', '455e6e87-5c32-454b-b658-e39330ceefa2', '2023-11-02 11:43:24.730431',
-        'Worker Worker', 'worker@prueba.net', 'Worker', '$2a$10$XYoJYUTLtLcQX9eytXQ/cuGk.OeUBNMWfqWHzoIFZJOMTgG11/zui', 'worker');
+        'Worker Worker', 'worker@prueba.net', 'Worker', '$2a$10$XYoJYUTLtLcQX9eytXQ/cuGk.OeUBNMWfqWHzoIFZJOMTgG11/zui',
+        'worker');
 
 -- Asignar roles al usuario
 INSERT INTO user_roles (user_id, roles)
@@ -230,4 +209,29 @@ VALUES ('00000000-0000-0000-0000-000000000003', 'España', 'Madrid', 'Leganés',
         '28919',
         NULL, 'Casa de la familia Universo', '2023-01-07 00:00:00', '2023-01-07 00:00:00',
         '24bee18d-920c-4f25-971f-99e91d0aa331')
+;
+
+-- Crear la tabla valoraciones
+CREATE TABLE "public"."evaluation"
+(
+    "id"         bigint    DEFAULT nextval('evaluation_id_seq') NOT NULL,
+    "value"      Integer                                        NOT NULL,
+    "comment"    VARCHAR(255),
+    "created_at" timestamp,
+    "updated_at" timestamp default CURRENT_TIMESTAMP,
+    "deleted_at" timestamp default null,
+    "user_id"    uuid                                           not null,
+    "product_id" bigint,
+    CONSTRAINT "evaluation_pkey" PRIMARY KEY ("id"),
+    CONSTRAINT "evaluation_fk_users" FOREIGN KEY ("user_id") REFERENCES "users" ("id") NOT DEFERRABLE,
+    CONSTRAINT "evaluation_fk_products" FOREIGN KEY ("product_id") REFERENCES "products" ("id") NOT DEFERRABLE
+) WITH (oids = false);
+
+-- Insertar la tabla valoraciones
+INSERT INTO "evaluation" ("id", "value", "comment", "created_at", "updated_at", "user_id", "product_id")
+VALUES (1, 3, 'Muy buen producto', '2023-01-01', '2023-01-01', '24bee18d-920c-4f25-971f-99e91d0aa331', 1),
+       (2, 2, 'Muy buen producto', '2023-01-02', '2023-01-02', '24bee18d-920c-4f25-971f-99e91d0aa331', 2),
+       (3, 3, 'Muy buen producto', '2023-01-03', '2023-01-03', '24bee18d-920c-4f25-971f-99e91d0aa331', 3),
+       (4, 3, 'Muy buen producto', '2023-01-03', '2023-01-03', '24bee18d-920c-4f25-971f-99e91d0aa331', 3),
+       (5, 2, 'Muy buen producto', '2023-01-03', '2023-01-03', '24bee18d-920c-4f25-971f-99e91d0aa331', 3)
 ;

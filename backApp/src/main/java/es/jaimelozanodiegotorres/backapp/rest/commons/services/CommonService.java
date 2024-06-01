@@ -16,8 +16,13 @@ public abstract class CommonService {
         this.exceptionService = new ExceptionService(entityName);
     }
 
+    protected User getLoggedUser() {
+
+        return (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    }
+
     protected UUID getLoggedUserId() {
-        User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = getLoggedUser();
 
         if (user == null)
             return null;
