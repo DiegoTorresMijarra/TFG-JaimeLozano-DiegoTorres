@@ -3,7 +3,7 @@
     <ion-toolbar>
       <ion-title size="large" color="primary">Productos</ion-title>
       <ion-buttons slot="end">
-        <ion-button *ngIf="isAdmin" [routerLink]="['/products/new']" color="success" fill="solid">
+        <ion-button *ngIf="isWorker" [routerLink]="['/products/new']" color="success" fill="solid">
           Nuevo Producto
         </ion-button>
       </ion-buttons>
@@ -25,7 +25,7 @@
         <p>Creado: {{ product.createdAt | date: 'short' }}</p>
         <p>Actualizado: {{ product.updatedAt | date: 'short' }}</p>
       </ion-label>
-      <ion-button *ngIf="isAdmin" [routerLink]="['/products', product.id]" color="tertiary" fill="clear">
+      <ion-button *ngIf="isWorker" [routerLink]="['/products', product.id]" color="tertiary" fill="clear">
         Actualizar Producto
       </ion-button>
       <ion-button *ngIf="isAdmin" (click)="deleteProduct(product.id)" color="danger" fill="clear">

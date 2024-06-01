@@ -1,0 +1,80 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Pedido: {{ order?.id }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismissModal()" color="light">
+        <ion-icon class="cerrar" name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-label>Usuario:</ion-label>
+      <ion-text>{{ order?.userId }}</ion-text>
+    </ion-item>
+    <ion-item>
+      <ion-label>Restaurante:</ion-label>
+      <ion-text>{{ getRestaurantName(order?.restaurantId) }}</ion-text>
+    </ion-item>
+    <ion-item>
+      <ion-label>Direccion:</ion-label>
+      <ion-text>{{ order?.addressesId }}</ion-text>
+    </ion-item>
+    <ion-item-divider>
+      <ion-label>Productos:</ion-label>
+      <ion-button fill="clear" size="small" (click)="toggleProducts()">
+        {{ showProducts ? 'Ocultar' : 'Mostrar' }}
+      </ion-button>
+    </ion-item-divider>
+    <ng-container *ngIf="showProducts">
+    <ion-item *ngFor="let orderedProduct of order?.orderedProducts">
+      <ion-item>
+        <ion-item>
+          <ion-label>Producto:</ion-label>
+          <ion-text>{{ getProductName(orderedProduct?.productId) }}</ion-text>
+        </ion-item>
+        <ion-item>
+          <ion-label>Precio producto:</ion-label>
+          <ion-text>{{ orderedProduct?.productPrice }}</ion-text>
+        </ion-item>
+        <ion-item>
+          <ion-label>Cantidad:</ion-label>
+          <ion-text>{{ orderedProduct?.quantity }}</ion-text>
+        </ion-item>
+        <ion-item>
+          <ion-label>Precio Total:</ion-label>
+          <ion-text>{{ orderedProduct?.totalPrice }}</ion-text>
+        </ion-item>
+      </ion-item>
+    </ion-item>
+    </ng-container>
+    <ion-item-divider *ngIf="showProducts"></ion-item-divider>
+    <ion-item>
+      <ion-label>Cantidad total:</ion-label>
+      <ion-text>{{ order?.totalQuantityProducts }}</ion-text>
+    </ion-item>
+    <ion-item>
+      <ion-label>Precio total:</ion-label>
+      <ion-text>{{ order?.totalPrice }}</ion-text>
+    </ion-item>
+    <ion-item>
+      <ion-label>Pagado:</ion-label>
+      <ion-text>{{ order?.isPaid ? 'Si' : 'No' }}</ion-text>
+    </ion-item>
+    <ion-item>
+      <ion-label>Estado:</ion-label>
+      <ion-text>{{ order?.state }}</ion-text>
+    </ion-item>
+    <ion-item>
+      <ion-label>Creado en:</ion-label>
+      <ion-text>{{ order?.createdAt | date: 'short' }}</ion-text>
+    </ion-item>
+    <ion-item>
+      <ion-label>Actualizado en:</ion-label>
+      <ion-text>{{ order?.updatedAt | date: 'short' }}</ion-text>
+    </ion-item>
+  </ion-list>
+</ion-content>

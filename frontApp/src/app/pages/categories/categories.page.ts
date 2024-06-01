@@ -15,7 +15,7 @@ import {AuthService} from "../../services/auth.service";
 import {Category, CategoryService} from "../../services/category.service";
 import {RouterLink} from "@angular/router";
 import {CategoryModalComponent} from "./category-modal/category-modal.component";
-import {AnimationController, ModalController} from "@ionic/angular";
+import {ModalController} from "@ionic/angular";
 import {AnimationService} from "../../services/animation.service";
 
 @Component({

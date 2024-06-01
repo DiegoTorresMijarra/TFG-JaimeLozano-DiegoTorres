@@ -1,0 +1,35 @@
+<ion-content [fullscreen]="true">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title size="large" color="primary">Pedidos</ion-title>
+      <ion-buttons slot="end">
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-list>
+    <ion-item *ngFor="let order of orders" class="product-item">
+      <ion-label (click)="openDetailsModal(order)">
+        <h2>Pedido: {{ order.id }}</h2>
+        <p>Usuario: {{ order.userId }}</p>
+        <p>Restaurante: {{ getRestaurantName(order.restaurantId) }}</p>
+        <p>Direccion: {{ order.addressesId }}</p>
+        <ion-item *ngFor="let orderedProduct of order.orderedProducts" class="product-item">
+            <ion-label>
+              <h2>{{ getProductName(orderedProduct.productId) }}</h2>
+              <p>Precio del producto: ${{ orderedProduct.productPrice}}</p>
+              <p>Cantidad: ${{ orderedProduct.quantity}}</p>
+              <p>Precio Total: ${{ orderedProduct.totalPrice}}</p>
+            </ion-label>
+        </ion-item>
+        <p>Cantidad Total: {{ order.totalQuantityProducts }}</p>
+        <p>Precio Total: {{ order.totalPrice }}</p>
+        <p>Pagado: {{ order.isPaid ? 'Si' : 'No' }}</p>
+        <p>Estado: {{ order.state }}</p>
+        <p>Creado: {{ order.createdAt | date: 'short' }}</p>
+        <p>Actualizado: {{order.updatedAt | date: 'short' }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+</ion-content>

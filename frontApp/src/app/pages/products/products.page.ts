@@ -55,6 +55,7 @@ export class ProductsPage implements OnInit {
   private authService = inject(AuthService)
   private evaluationService = inject(EvaluationService)
   public isAdmin: boolean = false
+  public isWorker: boolean = false
   constructor() {
     addIcons({ starOutline, starSharp })
   }
@@ -62,6 +63,7 @@ export class ProductsPage implements OnInit {
   ngOnInit() {
     this.loadProducts()
     this.isAdmin = this.authService.hasRole("ROLE_ADMIN")
+    this.isWorker = this.authService.hasRole("ROLE_WORKER")
   }
 
   loadProducts() {
