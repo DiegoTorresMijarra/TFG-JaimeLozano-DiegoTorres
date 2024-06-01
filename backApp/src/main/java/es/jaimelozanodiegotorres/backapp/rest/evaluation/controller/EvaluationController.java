@@ -3,6 +3,7 @@ package es.jaimelozanodiegotorres.backapp.rest.evaluation.controller;
 import es.jaimelozanodiegotorres.backapp.pagination.PageResponse;
 import es.jaimelozanodiegotorres.backapp.rest.commons.controller.CommonController;
 import es.jaimelozanodiegotorres.backapp.rest.evaluation.dto.EvaluationDto;
+import es.jaimelozanodiegotorres.backapp.rest.evaluation.dto.EvaluationResponseDto;
 import es.jaimelozanodiegotorres.backapp.rest.evaluation.filters.EvaluationFilters;
 import es.jaimelozanodiegotorres.backapp.rest.evaluation.models.Evaluation;
 import es.jaimelozanodiegotorres.backapp.rest.evaluation.services.EvaluationServicePgSqlImp;
@@ -45,7 +46,7 @@ public class EvaluationController extends CommonController<Evaluation, Long, Eva
     }
 
     @GetMapping("listAll/{id}")
-    public List<Evaluation> listAllByProductId(@PathVariable Long id) {
+    public List<EvaluationResponseDto> listAllByProductId(@PathVariable Long id) {
         log.info("Listando todas las valoraciones de un producto");
         return service.findByProductId(id);
     }

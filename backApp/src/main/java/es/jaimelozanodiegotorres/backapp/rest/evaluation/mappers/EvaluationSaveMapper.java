@@ -7,6 +7,6 @@ import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
 @Mapper
-public interface EvaluationMapper extends CommonMapper<Evaluation, EvaluationDto> {
-    EvaluationMapper INSTANCE = Mappers.getMapper( EvaluationMapper.class );
+public interface EvaluationSaveMapper extends CommonMapper<Evaluation, EvaluationDto> {
+    EvaluationSaveMapper INSTANCE = Mappers.getMapper( EvaluationSaveMapper.class );
 }

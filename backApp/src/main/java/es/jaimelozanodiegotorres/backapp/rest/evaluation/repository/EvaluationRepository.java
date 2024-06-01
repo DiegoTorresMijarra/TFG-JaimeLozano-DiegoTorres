@@ -17,6 +17,6 @@ public interface EvaluationRepository extends CommonRepository<Evaluation,Long>{
         return "evaluation";
     }
 
-    Optional<Page<Evaluation>> findByProductId(Long product_id, Specification<Evaluation> specification, Pageable pageable);
-    Optional<List<Evaluation>> findByProductId(Long product_id);
+    Optional<Page<Evaluation>> findByProductId(Long productId, Specification<Evaluation> specification, Pageable pageable);
+    List<Evaluation> findByProductId(Long productId);
 }

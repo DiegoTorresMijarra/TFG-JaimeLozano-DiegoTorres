@@ -3,8 +3,10 @@ package es.jaimelozanodiegotorres.backapp.rest.evaluation.services;
 import es.jaimelozanodiegotorres.backapp.pagination.PageResponse;
 import es.jaimelozanodiegotorres.backapp.rest.commons.services.CommonServicePgSql;
 import es.jaimelozanodiegotorres.backapp.rest.evaluation.dto.EvaluationDto;
+import es.jaimelozanodiegotorres.backapp.rest.evaluation.dto.EvaluationResponseDto;
 import es.jaimelozanodiegotorres.backapp.rest.evaluation.filters.EvaluationFilters;
-import es.jaimelozanodiegotorres.backapp.rest.evaluation.mappers.EvaluationMapper;
+import es.jaimelozanodiegotorres.backapp.rest.evaluation.mappers.EvaluationResponseMapper;
+import es.jaimelozanodiegotorres.backapp.rest.evaluation.mappers.EvaluationSaveMapper;
 import es.jaimelozanodiegotorres.backapp.rest.evaluation.models.Evaluation;
 import es.jaimelozanodiegotorres.backapp.rest.evaluation.repository.EvaluationRepository;
 import es.jaimelozanodiegotorres.backapp.rest.products.models.Product;
@@ -21,20 +23,22 @@ import java.util.List;
 @CacheConfig(cacheNames = {"valoraciones"})
 @Slf4j
 public class EvaluationServicePgSqlImp extends CommonServicePgSql<Evaluation, Long> {
-    private final EvaluationMapper mapper;
+    private final EvaluationSaveMapper evaluationSaveMapper;
+    private final EvaluationResponseMapper evaluationResponseMapper;
     private final ProductServicePgSqlImp productServiceImp;
 
     @Autowired
     public EvaluationServicePgSqlImp(EvaluationRepository repository, ProductServicePgSqlImp productServiceImp){
         super(repository);
-        this.mapper = EvaluationMapper.INSTANCE;
+        this.evaluationSaveMapper = EvaluationSaveMapper.INSTANCE;
+        this.evaluationResponseMapper = EvaluationResponseMapper.INSTANCE;
         this.productServiceImp = productServiceImp;
     }
 
     public Evaluation save(EvaluationDto dto){
         log.info("Guardando valoracion");
         Product product = productServiceImp.findById(dto.getProductId());
-        Evaluation evaluation = mapper.dtoToModel(dto);
+        Evaluation evaluation = evaluationSaveMapper.dtoToModel(dto);
 
         evaluation.setProduct(product);
         evaluation.setUser(getLoggedUser());
@@ -49,7 +53,7 @@ public class EvaluationServicePgSqlImp extends CommonServicePgSql<Evaluation, Lo
         verifyLogguedSameUser(original.getUser());
 
         Product product = productServiceImp.findById(dto.getProductId());
-        Evaluation evaluation = mapper.updateModel(original, dto);
+        Evaluation evaluation = evaluationSaveMapper.updateModel(original, dto);
         evaluation.setProduct(product);
 
         return update(evaluation);
@@ -61,13 +65,16 @@ public class EvaluationServicePgSqlImp extends CommonServicePgSql<Evaluation, Lo
         return PageResponse.of(page, filters.getSortBy(), filters.getDirection());
     }
 
-    public PageResponse<Evaluation> findByProductId(Long productId,EvaluationFilters filters) {
+    public PageResponse<Evaluation> findByProductId(Long productId, EvaluationFilters filters) {
         log.info("Buscando todas las valoraciones paginadas de un producto");
         Page<Evaluation> page = ((EvaluationRepository)repository).findByProductId(productId, filters.getSpecifications(), filters.getPageable()).orElseThrow(()-> exceptionService.notFoundException(productId.toString()));
         return PageResponse.of(page, filters.getSortBy(), filters.getDirection());
     }
-    public List<Evaluation> findByProductId(Long productId) {
+
+    public List<EvaluationResponseDto> findByProductId(Long productId) {
         log.info("Buscando todas las valoraciones de un producto");
-        return ((EvaluationRepository)repository).findByProductId(productId).orElseThrow(()-> exceptionService.notFoundException(productId.toString()));
+
+        return evaluationResponseMapper.modelToDto(
+                ((EvaluationRepository)repository).findByProductId(productId));
     }
 }

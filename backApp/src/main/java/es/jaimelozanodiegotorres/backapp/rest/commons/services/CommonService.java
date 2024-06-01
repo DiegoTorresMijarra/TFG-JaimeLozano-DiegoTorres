@@ -1,6 +1,7 @@
 package es.jaimelozanodiegotorres.backapp.rest.commons.services;
 
 import es.jaimelozanodiegotorres.backapp.rest.commons.exceptions.ExceptionService;
+import es.jaimelozanodiegotorres.backapp.rest.user.models.Role;
 import es.jaimelozanodiegotorres.backapp.rest.user.models.User;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -38,5 +39,11 @@ public abstract class CommonService {
     protected void verifyLogguedSameUser(UUID userId){
         if(userId.equals(getLoggedUserId()))
             throw exceptionService.badRequestException("El usuario que accede no es el mismo que al que pertenece la entidad");
+    }
+
+    protected boolean verifyAdmin(){
+        User user = getLoggedUser();
+
+        return user.getRoles().contains(Role.ADMIN);
     }
 }
