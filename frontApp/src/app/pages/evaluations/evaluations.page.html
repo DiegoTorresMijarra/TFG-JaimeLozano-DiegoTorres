@@ -16,8 +16,9 @@
         <h2>{{ evaluation.product.name }}</h2>
         <div class="rating">
           <p>Valoracion:</p>
-          <ion-icon *ngFor="let star of [1, 2, 3, 4, 5]" [name]="star <= evaluation.valoracion ? 'star-sharp' : 'star-outline'"></ion-icon>
+          <ion-icon *ngFor="let star of [1, 2, 3, 4, 5]" [name]="star <= evaluation.value ? 'star-sharp' : 'star-outline'"></ion-icon>
         </div>
+        <p>Mensaje: {{ evaluation.comment }}</p>
         <p>Creada: {{ evaluation.createdAt | date: 'short' }}</p>
         <p>Actualizada: {{ evaluation.updatedAt | date: 'short' }}</p>
       </ion-label>

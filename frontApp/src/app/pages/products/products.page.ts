@@ -79,7 +79,7 @@ export class ProductsPage implements OnInit {
             const evaluations = evaluationsLists[i]
             if (evaluations.length > 0) {
               products[i].averageRating =
-                evaluations.reduce((acc, curr) => acc + curr.valoracion, 0) /
+                evaluations.reduce((acc, curr) => acc + curr.value, 0) /
                 evaluations.length
             } else {
               products[i].averageRating = 5

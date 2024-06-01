@@ -80,13 +80,15 @@ export class EvaluationService {
 }
 export interface Evaluation {
   id?: number
-  valoracion: number
+  value: number
+  comment: string
   createdAt: Date
   updatedAt: Date
   deletedAt: Date | null
   product: Product
 }
 export interface EvaluationDto{
-  valoracion: number
+  value: number
+  comment: string
   productId: number
 }

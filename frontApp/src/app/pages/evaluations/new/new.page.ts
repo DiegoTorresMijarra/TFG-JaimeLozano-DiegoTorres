@@ -11,7 +11,7 @@ import {
   IonTitle, IonToggle,
   IonToolbar
 } from '@ionic/angular/standalone';
-import {Product, ProductSaveDto, ProductService} from "../../../services/product.service";
+import {Product, ProductService} from "../../../services/product.service";
 import {Router} from "@angular/router";
 import {Evaluation, EvaluationDto, EvaluationService} from "../../../services/evaluation.service";
 import {addIcons} from "ionicons";
@@ -38,7 +38,8 @@ export class NewPage implements OnInit {
     this.evaluationForm = this.fb.group({
 
       productId: [1, [Validators.min(0)]],
-      valoracion: [Validators.required]
+      value: [Validators.required],
+      comment: ['', [Validators.required, Validators.maxLength(100)]]
     });
   }
   loadProducts() {

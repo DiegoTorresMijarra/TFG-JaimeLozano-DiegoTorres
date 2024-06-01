@@ -1,7 +1,7 @@
 <ion-content [fullscreen]="true">
   <ion-header>
     <ion-toolbar>
-      <ion-title color="primary" size="large">Nueva Valoracion</ion-title>
+      <ion-title color="primary" size="large">Actualizar Valoracion</ion-title>
     </ion-toolbar>
   </ion-header>
 
@@ -22,7 +22,7 @@
 
       <ion-item>
         <ion-label>Valoración</ion-label>
-        <ion-range formControlName="valoracion" min="0" max="5" step="1" snaps="true">
+        <ion-range formControlName="value" min="0" max="5" step="1" snaps="true">
           <ion-label slot="start" class="star-label">
             <ion-icon name="star-outline"></ion-icon>
           </ion-label>
@@ -31,6 +31,17 @@
           </ion-label>
         </ion-range>
       </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Mensaje</ion-label>
+        <ion-input formControlName="comment" type="text"></ion-input>
+      </ion-item>
+      <ion-text color="danger" *ngIf="evaluationForm.get('comment')?.touched && evaluationForm.get('comment')?.errors?.['required']">
+        <ion-note *ngIf="evaluationForm.get('comment')?.errors?.['required']">El mensaje no puede estar vacío.</ion-note>
+      </ion-text>
+      <ion-text color="danger" *ngIf="evaluationForm.get('name')?.touched && evaluationForm.get('comment')?.errors?.['maxlength']">
+        <ion-note *ngIf="evaluationForm.get('comment')?.errors?.['maxlength']">El mensaje no puede tener más de 100 caracteres.</ion-note>
+      </ion-text>
 
       <ion-button expand="block" type="submit" [disabled]="evaluationForm.invalid">Guardar Valoracion</ion-button>
     </form>

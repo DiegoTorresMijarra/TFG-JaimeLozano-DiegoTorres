@@ -2,28 +2,27 @@ import {Component, inject, OnInit} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {
-  IonButton,
-  IonContent,
-  IonHeader,
-  IonIcon,
-  IonItem,
-  IonLabel, IonNote, IonRange, IonSelect, IonSelectOption, IonText,
-  IonTitle,
-  IonToolbar
+    IonButton,
+    IonContent,
+    IonHeader,
+    IonIcon, IonInput,
+    IonItem,
+    IonLabel, IonNote, IonRange, IonSelect, IonSelectOption, IonText,
+    IonTitle,
+    IonToolbar
 } from '@ionic/angular/standalone';
 import {Product, ProductService} from "../../../services/product.service";
 import {Evaluation, EvaluationDto, EvaluationService} from "../../../services/evaluation.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {addIcons} from "ionicons";
 import {starOutline, starSharp} from "ionicons/icons";
-import {Category} from "../../../services/category.service";
 
 @Component({
   selector: 'app-update',
   templateUrl: './update.page.html',
   styleUrls: ['./update.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonButton, IonIcon, IonItem, IonLabel, IonNote, IonRange, IonSelect, IonSelectOption, IonText, ReactiveFormsModule]
+    imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonButton, IonIcon, IonItem, IonLabel, IonNote, IonRange, IonSelect, IonSelectOption, IonText, ReactiveFormsModule, IonInput]
 })
 export class UpdatePage implements OnInit {
   private evaluationId!: string;
@@ -41,7 +40,8 @@ export class UpdatePage implements OnInit {
     this.evaluationForm = this.fb.group({
 
       productId: [1, [Validators.min(0)]],
-      valoracion: [Validators.required]
+      value: [Validators.required],
+      comment: [Validators.required, Validators.maxLength(100)]
     });
     this.loadEvaluationData();
   }
@@ -50,8 +50,9 @@ export class UpdatePage implements OnInit {
     this.evaluationService.getEvaluation(this.evaluationId).subscribe({
       next: (evaluation: Evaluation) => {
         this.evaluationForm.patchValue({
-          valoracion: evaluation.valoracion,
-          productId: evaluation.product.id
+          value: evaluation.value,
+          productId: evaluation.product.id,
+          comment: evaluation.comment
         });
       },
       error: (error: any) => {
