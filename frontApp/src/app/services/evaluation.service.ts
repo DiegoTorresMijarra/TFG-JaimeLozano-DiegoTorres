@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http'
 import { catchError, Observable, throwError } from 'rxjs'
 import { AuthService } from './auth.service'
 import {Product} from "./product.service";
-import {Restaurant, RestaurantDto} from "./restaurant.service";
 
 @Injectable({
   providedIn: 'root',
@@ -21,10 +20,10 @@ export class EvaluationService {
     return this.http.get<Evaluation[]>(`${this.apiUrl}/listAll`, { headers })
   }
 
-  getEvaluationsByProductId(id: number | undefined): Observable<Evaluation[]> {
+  getEvaluationsByProductId(id: number | undefined): Observable<EvaluationResponseDto[]> {
     //const headers = this.authService.getAuthHeaders();
     //return this.http.get<Product[]>(`${this.apiUrl}/listAll`, { headers });
-    return this.http.get<Evaluation[]>(`${this.apiUrl}/listAll/${id}`)
+    return this.http.get<EvaluationResponseDto[]>(`${this.apiUrl}/listAll/${id}`)
   }
 
   deleteEvaluation(id: string): Observable<void> {
@@ -86,9 +85,17 @@ export interface Evaluation {
   updatedAt: Date
   deletedAt: Date | null
   product: Product
+  //user: User
 }
 export interface EvaluationDto{
   value: number
   comment: string
   productId: number
+}
+export interface EvaluationResponseDto {
+  value: number
+  comment: string
+  productId: number
+  userName: string
+  createdAt: Date
 }

@@ -19,7 +19,7 @@ import { Product, ProductService } from '../../services/product.service'
 import { AuthService } from '../../services/auth.service'
 import { RouterLink } from '@angular/router'
 import {
-  Evaluation,
+  Evaluation, EvaluationResponseDto,
   EvaluationService,
 } from '../../services/evaluation.service'
 import { forkJoin } from 'rxjs'
@@ -73,7 +73,7 @@ export class ProductsPage implements OnInit {
 
       // Combinar las observables de las evaluaciones
       forkJoin(evaluationsObservables).subscribe(
-        (evaluationsLists: Evaluation[][]) => {
+        (evaluationsLists: EvaluationResponseDto[][]) => {
           // Calcular la media de las evaluaciones para cada producto
           for (let i = 0; i < products.length; i++) {
             const evaluations = evaluationsLists[i]
