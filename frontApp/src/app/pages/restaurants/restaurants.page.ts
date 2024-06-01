@@ -47,7 +47,7 @@ export class RestaurantsPage implements OnInit {
 
   ngOnInit() {
     this.loadRestaurants()
-    this.isAdmin = this.authService.getUserRole() === 'admin'
+    this.isAdmin = this.authService.hasRole("ROLE_ADMIN")
   }
 
   loadRestaurants() {

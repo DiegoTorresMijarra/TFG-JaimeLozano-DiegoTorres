@@ -62,7 +62,7 @@ export class AuthService {
     });
   }
 
-  getUserRole(): string | null {
+  getUserName(): string | null {
     const token = this.getToken();
     if (token) {
       const decodedToken: any = jwtDecode(token);
@@ -71,6 +71,24 @@ export class AuthService {
     return null;
   }
 
+  getUserRoles(): string[] | null {
+    const token = this.getToken();
+    if (token) {
+      const decodedToken: any = jwtDecode(token);
+      if (decodedToken.roles && typeof decodedToken.roles === 'string') {
+        return decodedToken.roles.slice(1, -1).split(', ');
+      }
+    }
+    return null;
+  }
+
+  hasRole(role: string): boolean {
+    const roles = this.getUserRoles();
+    if (roles === null) {
+      return false;
+    }
+    return roles.includes(role);
+  }
 }
 export interface UserSignUpRequest {
   name: string;

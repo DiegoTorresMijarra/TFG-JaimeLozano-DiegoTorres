@@ -27,22 +27,27 @@ import {AuthService} from "../services/auth.service";
   styleUrl: './body.component.css',
 })
 export class BodyComponent implements OnInit, DoCheck {
-  public userRole: string | null = null;
+  public rolesList: string[] | null = [];
   public appPages = [
     { title: 'Productos', url: '/products', icon: 'bag', role: '' }, // Disponible para todos los usuarios
     { title: 'Restaurantes', url: '/restaurants', icon: 'restaurant', role: '' }, // Disponible para todos los usuarios
-    { title: 'Categorias', url: '/categories', icon: 'list', role: '' }, // Disponible para todos los usuarios
-    { title: 'Valoraciones', url: '/evaluations', icon: 'star', role: 'admin' }, // Solo admins
+    { title: 'Categorias', url: '/categories', icon: 'list', role: 'ROLE_WORKER' }, // Disponible para todos los usuarios
+    { title: 'Valoraciones', url: '/evaluations', icon: 'star', role: 'ROLE_ADMIN' }, // Solo admins
   ];
 
   constructor(private authService: AuthService) {
     addIcons({ bagOutline, bagSharp, restaurantOutline, restaurantSharp, listOutline, listSharp, starOutline, starSharp })
   }
   ngOnInit() {
-    this.userRole = this.authService.getUserRole();
+    this.rolesList = this.authService.getUserRoles();
   }
   ngDoCheck(): void {
-    this.userRole = this.authService.getUserRole();
+    this.rolesList = this.authService.getUserRoles();
   }
+
+  hasRole(role: string): boolean {
+    return <boolean>this.rolesList?.includes(role);
+  }
+
   protected readonly AppComponent = AppComponent
 }

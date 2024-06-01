@@ -61,7 +61,7 @@ export class ProductsPage implements OnInit {
 
   ngOnInit() {
     this.loadProducts()
-    this.isAdmin = this.authService.getUserRole() === 'admin'
+    this.isAdmin = this.authService.hasRole("ROLE_ADMIN")
   }
 
   loadProducts() {

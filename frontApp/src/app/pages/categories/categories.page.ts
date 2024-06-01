@@ -35,7 +35,7 @@ export class CategoriesPage implements OnInit {
 
   ngOnInit() {
     this.loadCategories()
-    this.isAdmin = this.authService.getUserRole() === 'admin'
+    this.isAdmin = this.authService.hasRole("ROLE_ADMIN")
   }
 
   async openCategoryDetailsModal(category: Category) {

@@ -101,7 +101,7 @@ public class JwtServiceImpl implements JwtService {
                 .withSubject(userDetails.getUsername())
                 .withIssuedAt(now)
                 .withExpiresAt(expirationDate)
-                .withClaim("extraClaims", extraClaims)
+                .withClaim("roles", userDetails.getAuthorities().toString())
                 .sign(algorithm);
     }
 
