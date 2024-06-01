@@ -10,6 +10,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
@@ -29,4 +30,6 @@ public class EvaluationResponseDto {
 
     @Schema(description = "Usuario de la valoracion")
     private String userName;
+
+    private LocalDateTime createdAt;
 }

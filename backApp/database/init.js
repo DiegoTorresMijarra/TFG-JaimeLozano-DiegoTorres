@@ -1,7 +1,3 @@
-// Creamos el usuario administrador de la base de datos
-// con sus daatos de conexion y los roles que tendra
-// creo q es para mongoexpress
-
 db.createUser({
     user: 'admin',
     pwd: 'admin',
@@ -13,20 +9,16 @@ db.createUser({
     ],
 });
 
-// Nos conectamos a la base de datos world
 db = db.getSiblingDB('mongo');
 
-// Creamos la coleccion city
 db.createCollection('order');
 
 // Insertamos los datos de la coleccion pedidos
 db.order.insertMany([
     {
-        //clientUUID: 'f47ac10b-58cc-4372-a567-0e02b2c3d479',
-        //workerUUID: '550e8400-e29b-41d4-a716-446655440000',
-        userId: '24bee18d-920c-4f25-971f-99e91d0aa331',
+        userId: BinData(3, "JU8Mko3hviQxowod6Zkflw=="),
         restaurantId: 1,
-        addressesId: '00000000-0000-0000-0000-000000000003',
+        addressesId: '37bf14f0-db5d-4f12-bf4a-7b780cfac071',
         orderedProducts: [
             {
                 quantity: 2,
@@ -49,9 +41,9 @@ db.order.insertMany([
         deletedAt: null,
     },
     {
-        //clientUUID: "168ecf01-a6b6-4a56-ba5a-cb26199f21ab", //esta mal, no existe ese uuid, es para probar put
-        //workerUUID: "550e8400-e29b-41d4-a716-446655440000",
+        userId: BinData(3, "JU8Mko3hviQxowod6Zkflw=="),
         restaurantId: 2,
+        addressesId: '37bf14f0-db5d-4f12-bf4a-7b780cfac071',
         orderedProducts: [
             {
                 quantity: 4,

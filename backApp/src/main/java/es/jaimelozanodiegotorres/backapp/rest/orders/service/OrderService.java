@@ -165,7 +165,7 @@ public class OrderService extends CommonServiceMongo<Order, ObjectId> {
         UUID addressId = order.getAddressesId();
         if (addressId!=null){
             Addresses addresses = addressesService.findById(addressId);
-            if(userId != addresses.getUserId())
+            if(!addresses.getUserId().equals(userId))
                 throw exceptionService.badRequestException("La direccion pasada no pertenece al usuario");
         }
 

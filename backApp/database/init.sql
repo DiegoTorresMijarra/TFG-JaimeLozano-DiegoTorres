@@ -144,7 +144,7 @@ VALUES ('2023-11-02 11:43:24.730431', '455e6e87-5c32-454b-b658-e39330ceefa2', '2
         'Worker Worker', 'worker@prueba.net', 'Worker', '$2a$10$XYoJYUTLtLcQX9eytXQ/cuGk.OeUBNMWfqWHzoIFZJOMTgG11/zui',
         'worker');
 
--- Asignar roles al usuario
+-- Asignar roles al trabajador
 INSERT INTO user_roles (user_id, roles)
 VALUES ('455e6e87-5c32-454b-b658-e39330ceefa2', 'WORKER');
 
@@ -190,22 +190,22 @@ CREATE TABLE "public"."addresses"
 INSERT INTO "addresses" ("id", "country", "province", "city", "street", "number", "apartment", "postal_code",
                          "extra_info", "name",
                          "created_at", "updated_at", "user_id")
-VALUES ('00000000-0000-0000-0000-000000000003', 'España', 'Madrid', 'Leganés', 'Calle de la Luna', '45', 'Bajo B',
+VALUES ('37bf14f0-db5d-4f12-bf4a-7b780cfac071', 'España', 'Madrid', 'Leganés', 'Calle de la Luna', '45', 'Bajo B',
         '28915',
         'Cuidado con el Perro', 'Casa de la familia Luna', '2023-01-03 00:00:00', '2023-01-03 00:00:00',
-        'a8fd9bb7-62e1-41dc-9f57-338b17c5bcc0'),
-       ('00000000-0000-0000-0000-000000000004', 'España', 'Madrid', 'Leganés', 'Avenida de la Universidad', '10',
+        '24bee18d-920c-4f25-971f-99e91d0aa331'),
+       ('64873a5d-5336-45ba-8907-09a8b74da391', 'España', 'Madrid', 'Leganés', 'Avenida de la Universidad', '10',
         'Bajo C',
         '28916', NULL, 'Casa de la familia Universidad', '2023-01-04 00:00:00', '2023-01-04 00:00:00',
         '24bee18d-920c-4f25-971f-99e91d0aa331'),
-       ('00000000-0000-0000-0000-000000000005', 'España', 'Madrid', 'Leganés', 'Calle del Sol', '23', NULL, '28917',
+       (default, 'España', 'Madrid', 'Leganés', 'Calle del Sol', '23', NULL, '28917',
         NULL,
         'Casa de la familia Sol', '2023-01-05 00:00:00', '2023-01-05 00:00:00', '24bee18d-920c-4f25-971f-99e91d0aa331'),
-       ('00000000-0000-0000-0000-000000000006', 'España', 'Madrid', 'Leganés', 'Calle de la Estrella', '78', NULL,
+       (default, 'España', 'Madrid', 'Leganés', 'Calle de la Estrella', '78', NULL,
         '28918',
         NULL, 'Casa de la familia Estrella', '2023-01-06 00:00:00', '2023-01-06 00:00:00',
-        'a8fd9bb7-62e1-41dc-9f57-338b17c5bcc0'),
-       ('00000000-0000-0000-0000-000000000007', 'España', 'Madrid', 'Leganés', 'Calle del Universo', '11', 'Primero B',
+        '24bee18d-920c-4f25-971f-99e91d0aa331'),
+       (default, 'España', 'Madrid', 'Leganés', 'Calle del Universo', '11', 'Primero B',
         '28919',
         NULL, 'Casa de la familia Universo', '2023-01-07 00:00:00', '2023-01-07 00:00:00',
         '24bee18d-920c-4f25-971f-99e91d0aa331')

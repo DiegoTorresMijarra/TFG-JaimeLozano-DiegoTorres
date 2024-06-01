@@ -32,12 +32,12 @@ public abstract class CommonService {
     }
 
     protected void verifyLogguedSameUser(User user){
-        if(user.getId().equals(getLoggedUserId()))
+        if(!user.getId().equals(getLoggedUserId()))
             throw exceptionService.badRequestException("El usuario que accede no es el mismo que al que pertenece la entidad");
     }
 
     protected void verifyLogguedSameUser(UUID userId){
-        if(userId.equals(getLoggedUserId()))
+        if(!userId.equals(getLoggedUserId()))
             throw exceptionService.badRequestException("El usuario que accede no es el mismo que al que pertenece la entidad");
     }
 
