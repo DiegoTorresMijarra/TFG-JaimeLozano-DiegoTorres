@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms'
 import { NgIf } from '@angular/common'
 import { RouterLink } from '@angular/router'
 import { AuthService } from '../services/auth.service'
-import { contrastOutline } from 'ionicons/icons'
+import { contrastOutline, personOutline, cartOutline } from 'ionicons/icons'
 import { addIcons } from 'ionicons'
 
 @Component({
@@ -23,7 +23,7 @@ export class HeaderComponent implements OnInit, DoCheck {
   }
 
   ngOnInit(): void {
-    addIcons({ contrastOutline })
+    addIcons({ contrastOutline, personOutline, cartOutline })
 
     let mode = localStorage.getItem('darkMode')
 

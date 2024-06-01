@@ -15,16 +15,15 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/angular/standalone'
-import { Product, ProductService } from '../../services/product.service'
+import { ProductService } from '../../services/product.service'
 import { AuthService } from '../../services/auth.service'
 import { RouterLink } from '@angular/router'
-import {
-  Evaluation, EvaluationResponseDto,
-  EvaluationService,
-} from '../../services/evaluation.service'
+import { EvaluationService } from '../../services/evaluation.service'
 import { forkJoin } from 'rxjs'
 import { addIcons } from 'ionicons'
 import { starOutline, starSharp } from 'ionicons/icons'
+import { Product } from '../../models/product.entity'
+import { EvaluationResponseDto } from '../../models/evaluation.entity'
 
 @Component({
   selector: 'app-products',
@@ -62,8 +61,8 @@ export class ProductsPage implements OnInit {
 
   ngOnInit() {
     this.loadProducts()
-    this.isAdmin = this.authService.hasRole("ROLE_ADMIN")
-    this.isWorker = this.authService.hasRole("ROLE_WORKER")
+    this.isAdmin = this.authService.hasRole('ROLE_ADMIN')
+    this.isWorker = this.authService.hasRole('ROLE_WORKER')
   }
 
   loadProducts() {

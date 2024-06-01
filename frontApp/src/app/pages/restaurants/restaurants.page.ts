@@ -2,7 +2,8 @@ import { Component, inject, OnInit } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { FormsModule } from '@angular/forms'
 import {
-  IonButton, IonButtons,
+  IonButton,
+  IonButtons,
   IonContent,
   IonHeader,
   IonItem,
@@ -11,12 +12,10 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/angular/standalone'
-import {
-  Restaurant,
-  RestaurantService,
-} from '../../services/restaurant.service'
-import {AuthService} from "../../services/auth.service";
-import {RouterLink} from "@angular/router";
+import { RestaurantService } from '../../services/restaurant.service'
+import { AuthService } from '../../services/auth.service'
+import { RouterLink } from '@angular/router'
+import { Restaurant } from '../../models/restaurant.entity'
 
 @Component({
   selector: 'app-restaurants',
@@ -47,7 +46,7 @@ export class RestaurantsPage implements OnInit {
 
   ngOnInit() {
     this.loadRestaurants()
-    this.isAdmin = this.authService.hasRole("ROLE_ADMIN")
+    this.isAdmin = this.authService.hasRole('ROLE_ADMIN')
   }
 
   loadRestaurants() {

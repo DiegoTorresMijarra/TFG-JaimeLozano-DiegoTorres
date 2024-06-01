@@ -1,9 +1,10 @@
 package es.jaimelozanodiegotorres.backapp.rest.orders.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import es.jaimelozanodiegotorres.backapp.rest.orders.dto.OrderType;
 import jakarta.persistence.EntityListeners;
-import jakarta.persistence.Transient;
+import org.springframework.data.annotation.Transient;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -92,12 +93,12 @@ public class Order implements OrderType {
         this.totalQuantityProducts = orderedProducts.stream().mapToInt(OrderedProduct::getQuantity).sum();
     }
 
-    @Transient
+    @JsonIgnore
     public boolean isDeleteable(){
         return OrderState.isDeleteable(this.getState());
     }
 
-    @Transient
+    @JsonIgnore
     public boolean isUpdatable(){
         return OrderState.isUpdatable(this.getState());
     }

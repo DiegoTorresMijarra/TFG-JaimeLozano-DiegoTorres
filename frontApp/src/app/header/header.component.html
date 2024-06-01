@@ -18,12 +18,26 @@
   </ion-grid>
 
   <div class="ion-padding-end" slot="end" style="display: flex;">
-    <ion-button (click)="toggleDarkMode()" color="medium">
+    <ion-button
+      [routerLink]=""
+      color="tertiary">
+      <ion-icon slot="icon-only" name="cart-outline" color="dark"></ion-icon>
+      <ion-badge slot="end">1</ion-badge>
+    </ion-button>
+    <ion-button
+      (click)="toggleDarkMode()"
+      color="medium"
+      (keydown.enter)="toggleDarkMode()">
       <ion-icon id="iconDarkMode" slot="icon-only" name="contrast-outline" color="dark"></ion-icon>
     </ion-button>
-    <ion-button *ngIf="!isLoggedIn" [routerLink]="['/register']" fill="outline" slot="end">Register</ion-button>
+    <ion-button color="secondary"
+                [routerLink]="isLoggedIn ? ['/me'] : ['/login']">
+      <ion-icon name="person-outline" slot="icon-only"></ion-icon>
+    </ion-button>
+
+<!--    <ion-button *ngIf="!isLoggedIn" [routerLink]="['/register']" fill="outline" slot="end">Register</ion-button>-->
     <ion-button *ngIf="isLoggedIn" (click)="logout(); checkLoggedIn()" fill="outline" slot="end">Logout</ion-button>
-    <ion-button *ngIf="!isLoggedIn" [routerLink]="['/login']" fill="outline" slot="end">Login</ion-button>
+<!--    <ion-button *ngIf="!isLoggedIn" [routerLink]="['/login']" fill="outline" slot="end">Login</ion-button>-->
   </div>
 
 <!--  <ion-progress-bar type="indeterminate" *ngIf="!loaded"></ion-progress-bar> todo-->

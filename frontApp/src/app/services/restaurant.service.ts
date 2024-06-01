@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
-import {catchError, Observable, throwError} from 'rxjs'
+import { catchError, Observable, throwError } from 'rxjs'
 import { AuthService } from './auth.service'
-import {Product, ProductSaveDto} from "./product.service";
-import {Category, CategoryDto} from "./category.service";
+import { Restaurant, RestaurantDto } from '../models/restaurant.entity'
 
 @Injectable({
   providedIn: 'root',
@@ -36,55 +35,44 @@ export class RestaurantService {
   }
 
   saveRestaurant(restaurant: RestaurantDto): Observable<Restaurant> {
-    const headers = this.authService.getAuthHeaders();
+    const headers = this.authService.getAuthHeaders()
     return this.http
-      .post<Restaurant>(`${this.apiUrl}/saveRestaurant`, restaurant, { headers })
+      .post<Restaurant>(`${this.apiUrl}/saveRestaurant`, restaurant, {
+        headers,
+      })
       .pipe(
         catchError((error) => {
           // Manejo de errores
-          console.error('Error guardando producto:', error);
-          return throwError(error);
-        })
-      );
-  }
-
-  updateRestaurant(id: string,restaurant: RestaurantDto): Observable<Restaurant> {
-    const headers = this.authService.getAuthHeaders();
-    return this.http
-      .put<Restaurant>(`${this.apiUrl}/updateRestaurant/${id}`, restaurant, { headers })
-      .pipe(
-        catchError((error) => {
-          console.error('Error actualizando restaurante:', error);
-          return throwError(error);
-        })
-      );
-  }
-
-  getRestaurant(id: string): Observable<Restaurant> {
-    return this.http
-      .get<Restaurant>(`${this.apiUrl}/${id}`)
-      .pipe(
-        catchError((error) => {
-          // Manejo de errores
-          console.error('Error obteniendo restaurante:', error)
+          console.error('Error guardando producto:', error)
           return throwError(error)
         }),
       )
   }
 
-}
+  updateRestaurant(
+    id: string,
+    restaurant: RestaurantDto,
+  ): Observable<Restaurant> {
+    const headers = this.authService.getAuthHeaders()
+    return this.http
+      .put<Restaurant>(`${this.apiUrl}/updateRestaurant/${id}`, restaurant, {
+        headers,
+      })
+      .pipe(
+        catchError((error) => {
+          console.error('Error actualizando restaurante:', error)
+          return throwError(error)
+        }),
+      )
+  }
 
-export interface Restaurant {
-  id?: number
-  name: string
-  phone: string
-  address: string
-  createdAt: Date
-  updatedAt: Date
-  deletedAt: Date | null
-}
-export interface RestaurantDto {
-  name: string
-  phone: string
-  address: string
+  getRestaurant(id: string): Observable<Restaurant> {
+    return this.http.get<Restaurant>(`${this.apiUrl}/${id}`).pipe(
+      catchError((error) => {
+        // Manejo de errores
+        console.error('Error obteniendo restaurante:', error)
+        return throwError(error)
+      }),
+    )
+  }
 }

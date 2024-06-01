@@ -2,7 +2,11 @@ import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { catchError, Observable, throwError } from 'rxjs'
 import { AuthService } from './auth.service'
-import {Product} from "./product.service";
+import {
+  Evaluation,
+  EvaluationDto,
+  EvaluationResponseDto,
+} from '../models/evaluation.entity'
 
 @Injectable({
   providedIn: 'root',
@@ -16,14 +20,18 @@ export class EvaluationService {
   ) {}
 
   getEvaluations(): Observable<Evaluation[]> {
-    const headers = this.authService.getAuthHeaders();
+    const headers = this.authService.getAuthHeaders()
     return this.http.get<Evaluation[]>(`${this.apiUrl}/listAll`, { headers })
   }
 
-  getEvaluationsByProductId(id: number | undefined): Observable<EvaluationResponseDto[]> {
+  getEvaluationsByProductId(
+    id: number | undefined,
+  ): Observable<EvaluationResponseDto[]> {
     //const headers = this.authService.getAuthHeaders();
     //return this.http.get<Product[]>(`${this.apiUrl}/listAll`, { headers });
-    return this.http.get<EvaluationResponseDto[]>(`${this.apiUrl}/listAll/${id}`)
+    return this.http.get<EvaluationResponseDto[]>(
+      `${this.apiUrl}/listAll/${id}`,
+    )
   }
 
   deleteEvaluation(id: string): Observable<void> {
@@ -40,62 +48,44 @@ export class EvaluationService {
   }
 
   saveEvaluation(evaluation: EvaluationDto): Observable<Evaluation> {
-    const headers = this.authService.getAuthHeaders();
+    const headers = this.authService.getAuthHeaders()
     return this.http
-      .post<Evaluation>(`${this.apiUrl}/saveEvaluation`, evaluation, { headers })
+      .post<Evaluation>(`${this.apiUrl}/saveEvaluation`, evaluation, {
+        headers,
+      })
       .pipe(
         catchError((error) => {
-          console.error('Error guardando evaluation:', error);
-          return throwError(error);
-        })
-      );
-  }
-
-  updateEvaluation(id: string,evaluation: EvaluationDto): Observable<Evaluation> {
-    const headers = this.authService.getAuthHeaders();
-    return this.http
-      .put<Evaluation>(`${this.apiUrl}/updateEvaluation/${id}`, evaluation, { headers })
-      .pipe(
-        catchError((error) => {
-          console.error('Error actualizando valoracion:', error);
-          return throwError(error);
-        })
-      );
-  }
-
-  getEvaluation(id: string): Observable<Evaluation> {
-    const headers = this.authService.getAuthHeaders();
-    return this.http
-      .get<Evaluation>(`${this.apiUrl}/${id}`, { headers })
-      .pipe(
-        catchError((error) => {
-          // Manejo de errores
-          console.error('Error obteniendo valoracion:', error)
+          console.error('Error guardando evaluation:', error)
           return throwError(error)
         }),
       )
   }
 
-}
-export interface Evaluation {
-  id?: number
-  value: number
-  comment: string
-  createdAt: Date
-  updatedAt: Date
-  deletedAt: Date | null
-  product: Product
-  //user: User
-}
-export interface EvaluationDto{
-  value: number
-  comment: string
-  productId: number
-}
-export interface EvaluationResponseDto {
-  value: number
-  comment: string
-  productId: number
-  userName: string
-  createdAt: Date
+  updateEvaluation(
+    id: string,
+    evaluation: EvaluationDto,
+  ): Observable<Evaluation> {
+    const headers = this.authService.getAuthHeaders()
+    return this.http
+      .put<Evaluation>(`${this.apiUrl}/updateEvaluation/${id}`, evaluation, {
+        headers,
+      })
+      .pipe(
+        catchError((error) => {
+          console.error('Error actualizando valoracion:', error)
+          return throwError(error)
+        }),
+      )
+  }
+
+  getEvaluation(id: string): Observable<Evaluation> {
+    const headers = this.authService.getAuthHeaders()
+    return this.http.get<Evaluation>(`${this.apiUrl}/${id}`, { headers }).pipe(
+      catchError((error) => {
+        // Manejo de errores
+        console.error('Error obteniendo valoracion:', error)
+        return throwError(error)
+      }),
+    )
+  }
 }

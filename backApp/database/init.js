@@ -36,6 +36,7 @@ db.order.insertMany([
         totalPrice: 81.00,
         totalQuantityProducts: 5,
         isPaid: false,
+        state: 'ACCEPTED',
         createdAt: '2023-10-23T12:57:17.3411925',
         updatedAt: '2023-10-23T12:57:17.3411925',
         deletedAt: null,
@@ -55,6 +56,7 @@ db.order.insertMany([
         totalPrice: 42.0,
         totalQuantityProducts: 4,
         isPaid: false,
+        state: 'DELIVERED',
         createdAt: '2022-10-23T12:57:17.3411925',
         updatedAt: '2022-10-23T12:57:17.3411925',
         deletedAt: null

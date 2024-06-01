@@ -8,6 +8,10 @@ export const routes: Routes = [
     pathMatch: 'full',
   },
   {
+    path: 'me',
+    loadComponent: () => import('./pages/me/me.page').then((m) => m.MePage),
+  },
+  {
     path: 'login',
     loadComponent: () =>
       import('./pages/login/login.page').then((m) => m.LoginPage),
@@ -26,43 +30,61 @@ export const routes: Routes = [
   },
   {
     path: 'products/new',
-    loadComponent: () => import('./pages/products/new/new.page').then( m => m.NewPage)
+    loadComponent: () =>
+      import('./pages/products/new/new.page').then((m) => m.NewPage),
   },
   {
     path: 'restaurants/new',
-    loadComponent: () => import('./pages/restaurants/new/new.page').then( m => m.NewPage)
+    loadComponent: () =>
+      import('./pages/restaurants/new/new.page').then((m) => m.NewPage),
   },
   {
     path: 'categories',
-    loadComponent: () => import('./pages/categories/categories.page').then(m => m.CategoriesPage)
+    loadComponent: () =>
+      import('./pages/categories/categories.page').then(
+        (m) => m.CategoriesPage,
+      ),
   },
   {
     path: 'categories/new',
-    loadComponent: () => import('./pages/categories/new/new.page').then( m => m.NewPage)
+    loadComponent: () =>
+      import('./pages/categories/new/new.page').then((m) => m.NewPage),
   },
   {
     path: 'evaluations',
-    loadComponent: () => import('./pages/evaluations/evaluations.page').then( m => m.EvaluationsPage)
+    loadComponent: () =>
+      import('./pages/evaluations/evaluations.page').then(
+        (m) => m.EvaluationsPage,
+      ),
   },
   {
     path: 'evaluations/new',
-    loadComponent: () => import('./pages/evaluations/new/new.page').then( m => m.NewPage)
+    loadComponent: () =>
+      import('./pages/evaluations/new/new.page').then((m) => m.NewPage),
   },
   {
     path: 'register',
-    loadComponent: () => import('./pages/register/register.page').then( m => m.RegisterPage)
+    loadComponent: () =>
+      import('./pages/register/register.page').then((m) => m.RegisterPage),
   },
   {
     path: 'categories/:id',
-    loadComponent: () => import('./pages/categories/update/update.page').then( m => m.UpdatePage)
+    loadComponent: () =>
+      import('./pages/categories/update/update.page').then((m) => m.UpdatePage),
   },
   {
     path: 'evaluations/:id',
-    loadComponent: () => import('./pages/evaluations/update/update.page').then( m => m.UpdatePage)
+    loadComponent: () =>
+      import('./pages/evaluations/update/update.page').then(
+        (m) => m.UpdatePage,
+      ),
   },
   {
     path: 'restaurants/:id',
-    loadComponent: () => import('./pages/restaurants/update/update.page').then( m => m.UpdatePage)
+    loadComponent: () =>
+      import('./pages/restaurants/update/update.page').then(
+        (m) => m.UpdatePage,
+      ),
   },
   {
     path: 'products/:id',

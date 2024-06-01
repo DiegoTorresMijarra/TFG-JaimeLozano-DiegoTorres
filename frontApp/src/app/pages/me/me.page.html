@@ -1,0 +1,76 @@
+<ion-content [fullscreen]="true" *ngIf="user">
+  <ion-button (click)="authService.logout()"
+              (keydown.enter)="authService.logout()"
+              fill="outline" slot="end" style="position: absolute; top: 20px;  right: 20px;">
+    Logout
+  </ion-button>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Bienvenido a MacJava: {{ user.name }} {{ user.surname }}</ion-card-title>
+      <ion-card-subtitle>{{ user.roles[1]}}</ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      <p>Email: {{ user.email }}</p>
+      <p>Roles: {{ user.roles.join(', ') }}</p>
+    </ion-card-content>
+  </ion-card>
+  <ion-card *ngIf="user.orders">
+    <ion-card-header>
+      <ion-card-title>Pedidos</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col><strong>Pedido ID</strong></ion-col>
+          <ion-col><strong>Restaurante ID</strong></ion-col>
+          <ion-col><strong>Total</strong></ion-col>
+          <ion-col><strong>Estado</strong></ion-col>
+          <ion-col><strong>Fecha</strong></ion-col>
+        </ion-row>
+        <ion-row *ngFor="let order of user.orders">
+          <ion-col>{{ order.id }}</ion-col>
+          <ion-col>{{ order.restaurantId }}</ion-col>
+          <ion-col>{{ order.totalPrice | currency }}</ion-col>
+          <ion-col>{{ order.state }}</ion-col>
+          <ion-col>{{ order.createdAt | date:'short' }}</ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="user.addresses">
+    <ion-card-header>
+      <ion-card-title>Direcciones</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col><strong>Nombre</strong></ion-col>
+          <ion-col><strong>Calle</strong></ion-col>
+          <ion-col><strong>Número</strong></ion-col>
+          <ion-col><strong>Apartamento</strong></ion-col>
+          <ion-col><strong>Ciudad</strong></ion-col>
+          <ion-col><strong>Provincia</strong></ion-col>
+          <ion-col><strong>País</strong></ion-col>
+          <ion-col><strong>Código Postal</strong></ion-col>
+          <ion-col><strong>Información Extra</strong></ion-col>
+        </ion-row>
+        <ion-row *ngFor="let address of user.addresses">
+          <ion-col>{{ address.name }}</ion-col>
+          <ion-col>{{ address.street }}</ion-col>
+          <ion-col>{{ address.number }}</ion-col>
+          <ion-col>{{ address.apartment }}</ion-col>
+          <ion-col>{{ address.city }}</ion-col>
+          <ion-col>{{ address.province }}</ion-col>
+          <ion-col>{{ address.country }}</ion-col>
+          <ion-col>{{ address.postalCode }}</ion-col>
+          <ion-col>{{ address.extraInfo || 'N/A' }}</ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>
