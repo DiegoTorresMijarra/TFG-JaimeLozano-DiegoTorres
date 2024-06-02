@@ -12,14 +12,14 @@ import {
   IonToolbar
 } from '@ionic/angular/standalone';
 import {AuthService} from "../../services/auth.service";
-import {Router} from "@angular/router";
+import {Router, RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.page.html',
   styleUrls: ['./register.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonButton, IonText, IonNote, IonInput, IonLabel, IonItem, ReactiveFormsModule]
+  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonButton, IonText, IonNote, IonInput, IonLabel, IonItem, ReactiveFormsModule, RouterLink]
 })
 export class RegisterPage {
 

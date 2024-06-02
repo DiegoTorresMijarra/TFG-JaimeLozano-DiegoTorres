@@ -66,5 +66,10 @@
 
       <ion-button expand="block" type="submit" [disabled]="registerForm.invalid">Registrarse</ion-button>
     </form>
+    <ion-item lines="none" class="register-link">
+      <ion-label class="ion-text-center">
+        ¿Ya estas registrado? <a [routerLink]="['/login']" class="register-link-text">Logueate aquí</a>
+      </ion-label>
+    </ion-item>
   </ion-content>
 </ion-content>

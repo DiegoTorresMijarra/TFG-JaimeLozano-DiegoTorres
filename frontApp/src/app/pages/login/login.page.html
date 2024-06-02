@@ -23,6 +23,12 @@
     </ion-item>
 
     <ion-button expand="block" (click)="login()">Login</ion-button>
+
+    <ion-item lines="none" class="register-link">
+      <ion-label class="ion-text-center">
+        ¿No estás registrado? <a [routerLink]="['/register']" class="register-link-text">Regístrate aquí</a>
+      </ion-label>
+    </ion-item>
   </div>
 </ion-content>
 

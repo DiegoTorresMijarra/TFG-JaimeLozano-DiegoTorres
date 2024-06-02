@@ -11,7 +11,7 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/angular/standalone'
-import { Router } from '@angular/router'
+import {Router, RouterLink} from '@angular/router'
 import { AuthService } from '../../services/auth.service'
 import { AppComponent } from '../../app.component'
 
@@ -31,6 +31,7 @@ import { AppComponent } from '../../app.component'
     IonLabel,
     IonInput,
     IonButton,
+    RouterLink,
   ],
 })
 export class LoginPage {
