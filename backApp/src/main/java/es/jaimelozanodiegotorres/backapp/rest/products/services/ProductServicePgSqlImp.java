@@ -6,6 +6,7 @@ import es.jaimelozanodiegotorres.backapp.rest.category.services.CategoryServiceP
 import es.jaimelozanodiegotorres.backapp.rest.commons.services.CommonServicePgSql;
 import es.jaimelozanodiegotorres.backapp.rest.products.dto.ProductSaveDto;
 import es.jaimelozanodiegotorres.backapp.rest.products.filters.ProductFilters;
+import es.jaimelozanodiegotorres.backapp.rest.products.filters.ProductFiltersDto;
 import es.jaimelozanodiegotorres.backapp.rest.products.mapper.ProductMapper;
 import es.jaimelozanodiegotorres.backapp.rest.products.models.Product;
 import es.jaimelozanodiegotorres.backapp.rest.products.repository.ProductRepository;
@@ -53,8 +54,9 @@ public class ProductServicePgSqlImp extends CommonServicePgSql<Product, Long> {
         return update(product);
     }
 
-    public PageResponse<Product> pageAll(ProductFilters filters){
+    public PageResponse<Product> pageAll(ProductFiltersDto productFiltersDto){
         log.info("Paginando todos los productos");
+        ProductFilters filters = productFiltersDto.getProductFilters();
         Page<Product> page = repository.findAll(filters.getSpecifications(), filters.getPageable());
         return PageResponse.of(page, filters.getSortBy(), filters.getDirection());
     }

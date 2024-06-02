@@ -4,6 +4,7 @@ import es.jaimelozanodiegotorres.backapp.pagination.PageResponse;
 import es.jaimelozanodiegotorres.backapp.rest.commons.controller.CommonController;
 import es.jaimelozanodiegotorres.backapp.rest.products.dto.ProductSaveDto;
 import es.jaimelozanodiegotorres.backapp.rest.products.filters.ProductFilters;
+import es.jaimelozanodiegotorres.backapp.rest.products.filters.ProductFiltersDto;
 import es.jaimelozanodiegotorres.backapp.rest.products.models.Product;
 import es.jaimelozanodiegotorres.backapp.rest.products.services.ProductServicePgSqlImp;
 import jakarta.validation.Valid;
@@ -45,8 +46,8 @@ ProductController extends CommonController<Product, Long, ProductSaveDto> {
     }
 
     @GetMapping("pageAll")
-    public ResponseEntity<PageResponse<Product>> pageAll(@Valid ProductFilters filters) {
-        return ResponseEntity.ok(service.pageAll(filters));
+    public ResponseEntity<PageResponse<Product>> pageAll(@RequestBody @Valid ProductFiltersDto productFiltersDto) {
+        return ResponseEntity.ok(service.pageAll(productFiltersDto));
     }
 
     @Override

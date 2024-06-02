@@ -3,14 +3,18 @@ package es.jaimelozanodiegotorres.backapp.rest.commons.filters;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Pattern;
-import lombok.Getter;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 
 
-@Getter
+@SuperBuilder
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 public abstract class CommonFilters<M> {
     protected static final String REGEXP_SANITIZER = "^[\\d\\p{L}.,;:]*$";
 
