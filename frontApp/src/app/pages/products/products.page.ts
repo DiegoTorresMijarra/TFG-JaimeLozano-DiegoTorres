@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core'
-import { CommonModule } from '@angular/common'
+import { CommonModule, DatePipe, NgForOf, NgIf } from '@angular/common'
 import { FormsModule } from '@angular/forms'
 import {
   IonButton,
@@ -25,29 +25,15 @@ import { starOutline, starSharp } from 'ionicons/icons'
 import { Product } from '../../models/product.entity'
 import { EvaluationResponseDto } from '../../models/evaluation.entity'
 import { PageResponse } from '../../models/pageResponse.entity'
+import { IonicModule } from '@ionic/angular'
+import { ProductFiltersDto } from '../../models/productFiltersDto.entity'
 
 @Component({
   selector: 'app-products',
   templateUrl: './products.page.html',
   styleUrls: ['./products.page.scss'],
   standalone: true,
-  imports: [
-    IonContent,
-    IonHeader,
-    IonTitle,
-    IonToolbar,
-    CommonModule,
-    FormsModule,
-    IonItem,
-    IonLabel,
-    IonList,
-    IonButton,
-    IonButtons,
-    IonMenuButton,
-    RouterLink,
-    IonRange,
-    IonIcon,
-  ],
+  imports: [IonicModule, RouterLink, DatePipe, NgIf, NgForOf],
 })
 export class ProductsPage implements OnInit {
   public products: Product[] = []
@@ -56,23 +42,46 @@ export class ProductsPage implements OnInit {
   private evaluationService = inject(EvaluationService)
   public isAdmin: boolean = false
   public isWorker: boolean = false
+  public searchName: string = ''
+  filters: ProductFiltersDto = new ProductFiltersDto({
+    page: 0,
+    size: 2,
+    direction: 'asc',
+  })
+  loading: boolean = false
+  totalPages: number = 0
+
   constructor() {
     addIcons({ starOutline, starSharp })
   }
 
   ngOnInit() {
-    this.loadProducts()
+    this.loadMoreData()
     this.isAdmin = this.authService.hasRole('ROLE_ADMIN')
     this.isWorker = this.authService.hasRole('ROLE_WORKER')
   }
 
-  loadProducts() {
-    this.productService
-      .getProducts()
-      .subscribe((page: PageResponse<Product>) => {
-        // Actualizar la lista de productos
-        this.products = page.content
-      })
+  loadMoreData(event?: any) {
+    if (this.loading) return
+
+    this.loading = true
+
+    this.productService.getProducts(this.filters).subscribe((response) => {
+      this.products = [...this.products, ...response.content]
+      this.totalPages = response.totalPages
+      this.loading = false
+
+      if (event) {
+        event.target.complete()
+      }
+      // Si no hay más datos, deshabilitar el Infinite Scroll
+      if (this.filters.page >= this.totalPages) {
+        event.target.disabled = true
+      }
+
+      this.filters.page += 1 // Incrementar el número de página después de cargar los datos
+    })
+    console.log(this.filters)
   }
 
   deleteProduct(id: number | undefined): void {

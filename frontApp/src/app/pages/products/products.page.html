@@ -30,10 +30,16 @@
       <ion-button *ngIf="isWorker" [routerLink]="['/products', product.id]" color="tertiary" fill="clear">
         Actualizar Producto
       </ion-button>
-      <ion-button *ngIf="isAdmin" (click)="deleteProduct(product.id)" color="danger" fill="clear">
+      <ion-button *ngIf="isAdmin" (click)="deleteProduct(product.id)"
+                  (keydown.enter)="deleteProduct(product.id)"
+                  color="danger" fill="clear">
         Borrar Producto
       </ion-button>
     </ion-item>
   </ion-list>
 
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadMoreData($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>

@@ -20,7 +20,7 @@ public class ProductFiltersDto {
 
     @Min(value = 1, message = "Page size should be at least 1")
     @Max(value = 100, message = "Page size should not exceed 100")
-    private int size = 10;
+    private int size = 2;
 
     @Pattern(regexp = REGEXP_SANITIZER, message = "El nombre solo puede contener letras y dígitos")
     private String sortBy = "id";

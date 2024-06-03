@@ -1,6 +1,6 @@
-export class ProductFiltersDtoEntity {
+export class ProductFiltersDto {
   page: number = 0
-  size: number = 10
+  size: number = 5
   sortBy: string = 'id'
   direction: string = 'asc'
   name?: string
@@ -11,7 +11,7 @@ export class ProductFiltersDtoEntity {
   gluten?: boolean
   categoryId?: number
 
-  constructor(init?: Partial<ProductFiltersDtoEntity>) {
+  constructor(init?: Partial<ProductFiltersDto>) {
     Object.assign(this, init)
   }
 }
