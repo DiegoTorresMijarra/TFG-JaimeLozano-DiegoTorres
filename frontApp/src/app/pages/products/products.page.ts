@@ -26,6 +26,8 @@ import { PageResponse } from '../../models/pageResponse.entity'
 import {AnimationService} from "../../services/animation.service";
 import {ModalController} from "@ionic/angular";
 import {ProductModalComponent} from "./modal/modal.component";
+import {OfferService} from "../../services/offer.service";
+import {Offer} from "../../models/offer.entity";
 
 @Component({
   selector: 'app-products',
@@ -53,6 +55,7 @@ import {ProductModalComponent} from "./modal/modal.component";
 export class ProductsPage implements OnInit {
   public products: Product[] = []
   private productService = inject(ProductService)
+  private offerService = inject(OfferService)
   private authService = inject(AuthService)
   private animationService = inject(AnimationService)
   private evaluationService = inject(EvaluationService)
@@ -73,13 +76,32 @@ export class ProductsPage implements OnInit {
   }
 
   loadProducts() {
-    this.productService
-      .getProducts()
-      .subscribe((page: PageResponse<Product>) => {
+    this.productService.getProducts().subscribe({
+      next: (page: PageResponse<Product>) => {
         // Actualizar la lista de productos
-        this.products = page.content
-      })
+        this.products = page.content;
+
+        // Para cada producto, verifique si hay una oferta y si la hay, aplíquela al precio del producto
+        this.products.forEach((product: Product) => {
+          this.offerService.getActiveOfferByProductId(product.id).subscribe({
+            next: (offer: Offer) => {
+              if (offer) {
+                const discountAmount = product.price * (offer.descuento / 100);
+                product.priceOffer = product.price - discountAmount;
+              }
+            },
+            error: (error) => {
+              console.error('Error obteniendo oferta para el producto', product.id, error);
+            }
+          });
+        });
+      },
+      error: (error) => {
+        console.error('Error obteniendo productos', error);
+      }
+    });
   }
+
 
   deleteProduct(id: number | undefined): void {
     this.productService.deleteProduct(String(id)).subscribe({

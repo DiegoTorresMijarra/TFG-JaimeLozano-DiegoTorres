@@ -12,6 +12,7 @@ export interface Product {
   deletedAt: Date | null
   category: Category
   averageRating: number
+  priceOffer?: number
   // evaluations: Evaluation[]
 }
 

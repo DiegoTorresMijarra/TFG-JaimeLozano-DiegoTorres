@@ -15,9 +15,13 @@
       <ion-label>Nombre:</ion-label>
       <ion-text>{{ product?.name }}</ion-text>
     </ion-item>
-    <ion-item>
+    <ion-item *ngIf="product?.priceOffer">
       <ion-label>Precio:</ion-label>
-      <ion-text>{{ product?.price }}</ion-text>
+      <ion-text><del class="original-price">{{ product?.price | currency }}</del><span class="offer-price">{{ product?.priceOffer | currency }}</span></ion-text>
+    </ion-item>
+    <ion-item *ngIf="!product?.priceOffer">
+      <ion-label>Precio:</ion-label>
+      <ion-text><span class="offer-price">{{ product?.price | currency }}</span></ion-text>
     </ion-item>
     <ion-item>
       <ion-label>Stock:</ion-label>

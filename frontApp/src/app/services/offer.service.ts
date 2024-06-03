@@ -71,7 +71,7 @@ export class OfferService {
     )
   }
 
-  getActiveOfferByProductId(id: string): Observable<Offer> {
+  getActiveOfferByProductId(id: number | undefined): Observable<Offer> {
     return this.http.get<Offer>(`${this.apiUrl}/active/${id}`).pipe(
       catchError((error) => {
         // Manejo de errores

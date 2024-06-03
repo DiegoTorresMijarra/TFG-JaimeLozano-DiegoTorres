@@ -35,5 +35,16 @@
     margin-right: 2px;
   }
 }
+/* Estilos para el precio original tachado */
+.original-price {
+  text-decoration: line-through;
+  color: red; /* Opcional: puedes elegir otro color */
+}
+
+/* Estilos para el precio rebajado */
+.offer-price {
+  color: green; /* Opcional: puedes elegir otro color */
+}
+
 
 
