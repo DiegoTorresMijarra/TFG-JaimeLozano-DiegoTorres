@@ -89,9 +89,22 @@ export const routes: Routes = [
   {
     path: 'products/:id',
     loadComponent: () => import('./pages/products/update/update.page').then( m => m.UpdatePage)
-  },  {
+  },
+  {
     path: 'orders',
     loadComponent: () => import('./pages/orders/orders.page').then( m => m.OrdersPage)
+  },
+  {
+    path: 'offers',
+    loadComponent: () => import('./pages/offers/offers.page').then( m => m.OffersPage)
+  },
+  {
+    path: 'offers/new',
+    loadComponent: () => import('./pages/offers/new/new.page').then( m => m.NewPage)
+  },
+  {
+    path: 'offers/:id',
+    loadComponent: () => import('./pages/offers/update/update.page').then( m => m.UpdatePage)
   },
 
 

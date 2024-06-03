@@ -12,7 +12,7 @@
 
   <ion-list>
     <ion-item *ngFor="let restaurant of restaurants" class="product-item">
-      <ion-label>
+      <ion-label (click)="openDetailsModal(restaurant)">
         <h2>{{ restaurant.name }}</h2>
         <p>Telefono: ${{ restaurant.phone }}</p>
         <p>Direccion: {{ restaurant.address }}</p>

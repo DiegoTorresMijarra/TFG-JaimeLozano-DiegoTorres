@@ -16,6 +16,11 @@ import { RestaurantService } from '../../services/restaurant.service'
 import { AuthService } from '../../services/auth.service'
 import { RouterLink } from '@angular/router'
 import { Restaurant } from '../../models/restaurant.entity'
+import {AnimationService} from "../../services/animation.service";
+import {ModalController} from "@ionic/angular";
+import {Category} from "../../models/category.entity";
+import {CategoryModalComponent} from "../categories/category-modal/category-modal.component";
+import {RestaurantModalComponent} from "./modal/modal.component";
 
 @Component({
   selector: 'app-restaurants',
@@ -41,12 +46,17 @@ export class RestaurantsPage implements OnInit {
   public restaurants: Restaurant[] = []
   private restaurantService = inject(RestaurantService)
   private authService = inject(AuthService)
+  private animationService = inject(AnimationService)
   public isAdmin: boolean = false
-  constructor() {}
+  constructor(private modalController: ModalController) {}
 
   ngOnInit() {
     this.loadRestaurants()
     this.isAdmin = this.authService.hasRole('ROLE_ADMIN')
+  }
+
+  async openDetailsModal(restaurant: Restaurant) {
+    await this.presentModal(restaurant)
   }
 
   loadRestaurants() {
@@ -70,4 +80,17 @@ export class RestaurantsPage implements OnInit {
       },
     })
   }
+
+  async presentModal(restaurant: Restaurant) {
+    const modal = await this.modalController.create({
+      component: RestaurantModalComponent,
+      componentProps: {
+        restaurant: restaurant,
+      },
+      enterAnimation: this.animationService.enterAnimation,
+      leaveAnimation: this.animationService.leaveAnimation,
+    })
+    return await modal.present()
+  }
+
 }

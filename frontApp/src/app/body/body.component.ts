@@ -4,7 +4,8 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router'
 import {CommonModule, NgForOf} from '@angular/common'
 import { AppComponent } from '../app.component'
 import {
-  bagOutline,
+  bagOutline,pricetagOutline,
+  pricetagSharp,
   bagSharp, cubeOutline, cubeSharp, listOutline, listSharp, restaurantOutline,
   restaurantSharp, starOutline, starSharp,
 } from 'ionicons/icons'
@@ -33,10 +34,12 @@ export class BodyComponent implements OnInit, DoCheck {
     { title: 'Categorias', url: '/categories', icon: 'list', role: '' }, // Disponible para todos los usuarios
     { title: 'Valoraciones', url: '/evaluations', icon: 'star', role: 'ROLE_ADMIN' },// Solo admins
     { title: 'Pedidos', url: '/orders', icon: 'cube', role: 'ROLE_WORKER' },// workers y admins
+    { title: 'Ofertas', url: '/offers', icon: 'pricetag', role: 'ROLE_ADMIN' },
   ];
 
   constructor(private authService: AuthService) {
-    addIcons({ bagOutline, bagSharp, restaurantOutline, restaurantSharp, listOutline, listSharp, starOutline, starSharp, cubeOutline, cubeSharp })
+    addIcons({ pricetagOutline,
+      pricetagSharp,bagOutline, bagSharp, restaurantOutline, restaurantSharp, listOutline, listSharp, starOutline, starSharp, cubeOutline, cubeSharp })
   }
   ngOnInit() {
     this.rolesList = this.authService.getUserRoles();

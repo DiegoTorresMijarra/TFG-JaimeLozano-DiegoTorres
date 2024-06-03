@@ -1,0 +1,32 @@
+<ion-content [fullscreen]="true">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title size="large" color="primary">Ofertas</ion-title>
+      <ion-buttons slot="end">
+        <ion-button *ngIf="isAdmin" [routerLink]="['/offers/new']" color="success" fill="solid">
+          Nueva Oferta
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-list>
+    <ion-item *ngFor="let offer of offers" class="product-item">
+      <ion-label (click)="openDetailsModal(offer)">
+        <h2>{{ offer.product.name }}</h2>
+        <p>Descuento: {{ offer.descuento }}%</p>
+        <p>Fecha inicio: {{ offer.fechaDesde | date: 'short' }}</p>
+        <p>Fecha fin: {{ offer.fechaHasta | date: 'short' }}</p>
+        <p>Creada: {{ offer.createdAt | date: 'short' }}</p>
+        <p>Actualizada: {{ offer.updatedAt | date: 'short' }}</p>
+      </ion-label>
+      <ion-button *ngIf="isAdmin" [routerLink]="['/offers', offer.id]" color="tertiary" fill="clear">
+        Actualizar Oferta
+      </ion-button>
+      <ion-button *ngIf="isAdmin" (click)="deleteOffer(offer.id)" color="danger" fill="clear">
+        Borrar Oferta
+      </ion-button>
+    </ion-item>
+  </ion-list>
+
+</ion-content>

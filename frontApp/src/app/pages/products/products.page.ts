@@ -25,6 +25,11 @@ import { starOutline, starSharp } from 'ionicons/icons'
 import { Product } from '../../models/product.entity'
 import { EvaluationResponseDto } from '../../models/evaluation.entity'
 import { PageResponse } from '../../models/pageResponse.entity'
+import {Restaurant} from "../../models/restaurant.entity";
+import {RestaurantModalComponent} from "../restaurants/modal/modal.component";
+import {AnimationService} from "../../services/animation.service";
+import {ModalController} from "@ionic/angular";
+import {ProductModalComponent} from "./modal/modal.component";
 
 @Component({
   selector: 'app-products',
@@ -53,10 +58,11 @@ export class ProductsPage implements OnInit {
   public products: Product[] = []
   private productService = inject(ProductService)
   private authService = inject(AuthService)
+  private animationService = inject(AnimationService)
   private evaluationService = inject(EvaluationService)
   public isAdmin: boolean = false
   public isWorker: boolean = false
-  constructor() {
+  constructor(private modalController: ModalController) {
     addIcons({ starOutline, starSharp })
   }
 
@@ -64,6 +70,10 @@ export class ProductsPage implements OnInit {
     this.loadProducts()
     this.isAdmin = this.authService.hasRole('ROLE_ADMIN')
     this.isWorker = this.authService.hasRole('ROLE_WORKER')
+  }
+
+  async openDetailsModal(product: Product) {
+    await this.presentModal(product)
   }
 
   loadProducts() {
@@ -89,6 +99,18 @@ export class ProductsPage implements OnInit {
         // Manejar el error según sea necesario
       },
     })
+  }
+
+  async presentModal(product: Product) {
+    const modal = await this.modalController.create({
+      component: ProductModalComponent,
+      componentProps: {
+        product: product,
+      },
+      enterAnimation: this.animationService.enterAnimation,
+      leaveAnimation: this.animationService.leaveAnimation,
+    })
+    return await modal.present()
   }
 
   protected readonly Math = Math

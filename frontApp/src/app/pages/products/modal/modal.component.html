@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ product?.name }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismissModal()" color="light">
+        <ion-icon class="cerrar" name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-label>Nombre:</ion-label>
+      <ion-text>{{ product?.name }}</ion-text>
+    </ion-item>
+    <ion-item>
+      <ion-label>Precio:</ion-label>
+      <ion-text>{{ product?.price }}</ion-text>
+    </ion-item>
+    <ion-item>
+      <ion-label>Stock:</ion-label>
+      <ion-text>{{ product?.stock }}</ion-text>
+    </ion-item>
+    <ion-item>
+      <ion-label>Gluten:</ion-label>
+      <ion-text>{{ product?.gluten ? 'Yes' : 'No' }}</ion-text>
+    </ion-item>
+    <ion-item>
+      <ion-label>Categoria:</ion-label>
+      <ion-text>{{ product?.category?.name }}</ion-text>
+    </ion-item>
+    <ion-item class="rating">
+      <ion-label>Valoracion:</ion-label>
+      <ion-icon *ngFor="let star of [1, 2, 3, 4, 5]" [name]="star <= (product?.averageRating ?? 0) ? 'star-sharp' : 'star-outline'"></ion-icon>
+    </ion-item>
+    <ion-item>
+      <ion-label>Creado en:</ion-label>
+      <ion-text>{{ product?.createdAt | date: 'short' }}</ion-text>
+    </ion-item>
+    <ion-item>
+      <ion-label>Actualizado en:</ion-label>
+      <ion-text>{{ product?.updatedAt | date: 'short' }}</ion-text>
+    </ion-item>
+  </ion-list>
+</ion-content>

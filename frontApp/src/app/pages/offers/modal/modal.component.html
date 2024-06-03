@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Oferta de{{ offer?.product?.name }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismissModal()" color="light">
+        <ion-icon class="cerrar" name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-label>Descuento:</ion-label>
+      <ion-text>{{ offer?.descuento }}</ion-text>
+    </ion-item>
+    <ion-item>
+      <ion-label>Fecha inicio:</ion-label>
+      <ion-text>{{ offer?.fechaDesde | date: 'short' }}</ion-text>
+    </ion-item>
+    <ion-item>
+      <ion-label>Fecha final:</ion-label>
+      <ion-text>{{ offer?.fechaHasta | date: 'short' }}</ion-text>
+    </ion-item>
+    <ion-item>
+      <ion-label>Creado en:</ion-label>
+      <ion-text>{{ offer?.createdAt | date: 'short' }}</ion-text>
+    </ion-item>
+    <ion-item>
+      <ion-label>Actualizado en:</ion-label>
+      <ion-text>{{ offer?.updatedAt | date: 'short' }}</ion-text>
+    </ion-item>
+  </ion-list>
+</ion-content>

@@ -12,7 +12,7 @@
 
   <ion-list>
     <ion-item *ngFor="let product of products" class="product-item">
-      <ion-label>
+      <ion-label (click)="openDetailsModal(product)">
         <h2>{{ product.name }}</h2>
         <p>Precio: ${{ product.price }}</p>
         <p>Stock: {{ product.stock }}</p>
