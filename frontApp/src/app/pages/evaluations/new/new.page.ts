@@ -31,6 +31,7 @@ import { addIcons } from 'ionicons'
 import { starOutline, starSharp } from 'ionicons/icons'
 import { Evaluation, EvaluationDto } from '../../../models/evaluation.entity'
 import { Product } from '../../../models/product.entity'
+import { PageResponse } from '../../../models/pageResponse.entity'
 
 @Component({
   selector: 'app-new',
@@ -79,9 +80,11 @@ export class NewPage implements OnInit {
     })
   }
   loadProducts() {
-    this.productService.getProducts().subscribe((data) => {
-      this.products = data
-    })
+    this.productService
+      .getProducts()
+      .subscribe((page: PageResponse<Product>) => {
+        this.products = page.content
+      })
   }
 
   onSubmit() {

@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http'
 import { catchError, Observable, throwError } from 'rxjs'
 import { AuthService } from './auth.service'
 import { Product, ProductSaveDto } from '../models/product.entity'
+import { PageResponse } from '../models/pageResponse.entity'
+import { ProductFiltersDtoEntity } from '../models/productFiltersDto.entity'
 
 @Injectable({
   providedIn: 'root',
@@ -15,10 +17,12 @@ export class ProductService {
     private authService: AuthService,
   ) {}
 
-  getProducts(): Observable<Product[]> {
-    //const headers = this.authService.getAuthHeaders();
-    //return this.http.get<Product[]>(`${this.apiUrl}/listAll`, { headers });
-    return this.http.get<Product[]>(`${this.apiUrl}/listAll`)
+  getProducts(
+    filters?: ProductFiltersDtoEntity,
+  ): Observable<PageResponse<Product>> {
+    return this.http.post<PageResponse<Product>>(`${this.apiUrl}/pageAll`, {
+      filters,
+    })
   }
 
   deleteProduct(id: string): Observable<void> {

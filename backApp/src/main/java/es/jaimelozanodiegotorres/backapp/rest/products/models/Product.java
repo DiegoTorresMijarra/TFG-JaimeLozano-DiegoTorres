@@ -1,17 +1,21 @@
 package es.jaimelozanodiegotorres.backapp.rest.products.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import es.jaimelozanodiegotorres.backapp.rest.category.models.Category;
+import es.jaimelozanodiegotorres.backapp.rest.evaluation.models.Evaluation;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
+import org.hibernate.annotations.Formula;
 import org.hibernate.annotations.SQLDelete;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * Clase que representa el modelo de datos de un producto
@@ -77,4 +81,13 @@ public class Product {
     @ToString.Exclude
     @JoinColumn(name = "category_id")
     private Category category;
+
+//    @Schema(description = "Valoraciones del producto")
+//    @OneToMany(mappedBy = "id")
+//    @JsonManagedReference
+//    private List<Evaluation> evaluations;
+
+    @Formula(value = "(SELECT AVG(e.value) FROM EVALUATION e WHERE e.product_id = id)")
+    @Schema(description = "Calificación promedio del producto", example = "4.5")
+    private Double averageRating;
 }

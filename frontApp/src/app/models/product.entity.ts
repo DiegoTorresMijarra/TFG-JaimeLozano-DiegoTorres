@@ -1,4 +1,5 @@
 import { Category } from './category.entity'
+import { Evaluation } from './evaluation.entity'
 
 export interface Product {
   id?: number
@@ -11,7 +12,9 @@ export interface Product {
   deletedAt: Date | null
   category: Category
   averageRating: number
+  // evaluations: Evaluation[]
 }
+
 export interface ProductSaveDto {
   name: string
   price: number

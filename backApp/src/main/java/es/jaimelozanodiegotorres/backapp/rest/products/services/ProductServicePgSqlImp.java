@@ -56,7 +56,11 @@ public class ProductServicePgSqlImp extends CommonServicePgSql<Product, Long> {
 
     public PageResponse<Product> pageAll(ProductFiltersDto productFiltersDto){
         log.info("Paginando todos los productos");
-        ProductFilters filters = productFiltersDto.getProductFilters();
+        ProductFilters filters = ProductFilters.builder().build();
+
+        if(productFiltersDto != null)
+            filters = productFiltersDto.getProductFilters();
+
         Page<Product> page = repository.findAll(filters.getSpecifications(), filters.getPageable());
         return PageResponse.of(page, filters.getSortBy(), filters.getDirection());
     }

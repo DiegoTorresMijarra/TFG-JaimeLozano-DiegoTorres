@@ -20,7 +20,9 @@
         <p>Categoria: {{ product.category.name }}</p>
         <div class="rating">
           <p>Valoracion:</p>
-          <ion-icon *ngFor="let star of [1, 2, 3, 4, 5]" [name]="star <= product.averageRating ? 'star-sharp' : 'star-outline'"></ion-icon>
+          <ion-icon *ngFor="let star of [1, 2, 3, 4, 5]"
+                    [name]="star <= (product.averageRating ? product.averageRating : 5 )? 'star-sharp' : 'star-outline'">
+          </ion-icon>
         </div>
         <p>Creado: {{ product.createdAt | date: 'short' }}</p>
         <p>Actualizado: {{ product.updatedAt | date: 'short' }}</p>

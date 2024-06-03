@@ -16,20 +16,17 @@ import org.springframework.data.jpa.domain.Specification;
 @NoArgsConstructor
 @Data
 public abstract class CommonFilters<M> {
-    protected static final String REGEXP_SANITIZER = "^[\\d\\p{L}.,;:]*$";
 
-    @Min(value = 0, message = "Page number should not be less than 0")
+    @Builder.Default
     private int page = 0;
 
-    @Min(value = 1, message = "Page size should be at least 1")
-    @Max(value = 100, message = "Page size should not exceed 100")
+    @Builder.Default
     private int size = 10;
 
-//    @Pattern(regexp = "^(id|name|number)$", message = "Sort field should be 'id', 'name', or 'number'")
-    @Pattern(regexp = REGEXP_SANITIZER, message = "Sort field should only have letters and digits")
+    @Builder.Default
     private String sortBy = "id";
 
-    @Pattern(regexp = "^(asc|desc)$", message = "Direction should be 'asc' or 'desc'")
+    @Builder.Default
     private String direction = "asc";
 
     public Pageable getPageable() {

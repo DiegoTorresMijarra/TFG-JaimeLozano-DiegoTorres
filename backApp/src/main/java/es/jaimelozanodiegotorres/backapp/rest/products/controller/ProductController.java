@@ -45,8 +45,8 @@ ProductController extends CommonController<Product, Long, ProductSaveDto> {
         return service.listAll();
     }
 
-    @GetMapping("pageAll")
-    public ResponseEntity<PageResponse<Product>> pageAll(@RequestBody @Valid ProductFiltersDto productFiltersDto) {
+    @PostMapping("pageAll")
+    public ResponseEntity<PageResponse<Product>> pageAll(@RequestBody(required = false) @Valid ProductFiltersDto productFiltersDto) {
         return ResponseEntity.ok(service.pageAll(productFiltersDto));
     }
 

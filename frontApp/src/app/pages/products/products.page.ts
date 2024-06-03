@@ -24,6 +24,7 @@ import { addIcons } from 'ionicons'
 import { starOutline, starSharp } from 'ionicons/icons'
 import { Product } from '../../models/product.entity'
 import { EvaluationResponseDto } from '../../models/evaluation.entity'
+import { PageResponse } from '../../models/pageResponse.entity'
 
 @Component({
   selector: 'app-products',
@@ -66,31 +67,12 @@ export class ProductsPage implements OnInit {
   }
 
   loadProducts() {
-    this.productService.getProducts().subscribe((products: Product[]) => {
-      // Obtener las evaluaciones de cada producto
-      const evaluationsObservables = products.map((product: Product) =>
-        this.evaluationService.getEvaluationsByProductId(product.id),
-      )
-
-      // Combinar las observables de las evaluaciones
-      forkJoin(evaluationsObservables).subscribe(
-        (evaluationsLists: EvaluationResponseDto[][]) => {
-          // Calcular la media de las evaluaciones para cada producto
-          for (let i = 0; i < products.length; i++) {
-            const evaluations = evaluationsLists[i]
-            if (evaluations.length > 0) {
-              products[i].averageRating =
-                evaluations.reduce((acc, curr) => acc + curr.value, 0) /
-                evaluations.length
-            } else {
-              products[i].averageRating = 5
-            }
-          }
-          // Actualizar la lista de productos
-          this.products = products
-        },
-      )
-    })
+    this.productService
+      .getProducts()
+      .subscribe((page: PageResponse<Product>) => {
+        // Actualizar la lista de productos
+        this.products = page.content
+      })
   }
 
   deleteProduct(id: number | undefined): void {
