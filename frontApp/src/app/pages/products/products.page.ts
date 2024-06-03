@@ -19,14 +19,10 @@ import { ProductService } from '../../services/product.service'
 import { AuthService } from '../../services/auth.service'
 import { RouterLink } from '@angular/router'
 import { EvaluationService } from '../../services/evaluation.service'
-import { forkJoin } from 'rxjs'
 import { addIcons } from 'ionicons'
 import { starOutline, starSharp } from 'ionicons/icons'
 import { Product } from '../../models/product.entity'
-import { EvaluationResponseDto } from '../../models/evaluation.entity'
 import { PageResponse } from '../../models/pageResponse.entity'
-import {Restaurant} from "../../models/restaurant.entity";
-import {RestaurantModalComponent} from "../restaurants/modal/modal.component";
 import {AnimationService} from "../../services/animation.service";
 import {ModalController} from "@ionic/angular";
 import {ProductModalComponent} from "./modal/modal.component";

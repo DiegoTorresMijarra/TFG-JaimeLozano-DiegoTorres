@@ -17,6 +17,7 @@ import {ProductService} from "../../../services/product.service";
 import {OfferService} from "../../../services/offer.service";
 import {Offer, OfferDto} from "../../../models/offer.entity";
 import {Evaluation} from "../../../models/evaluation.entity";
+import {PageResponse} from "../../../models/pageResponse.entity";
 
 @Component({
   selector: 'app-update',
@@ -68,9 +69,11 @@ export class UpdatePage implements OnInit {
   }
 
   loadProducts() {
-    this.productService.getProducts().subscribe((data) => {
-      this.products = data;
-    });
+    this.productService
+      .getProducts()
+      .subscribe((page: PageResponse<Product>) => {
+        this.products = page.content
+      })
   }
 
   onSubmit() {
