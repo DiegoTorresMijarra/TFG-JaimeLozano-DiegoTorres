@@ -1,31 +1,17 @@
-import { Component, inject, OnInit } from '@angular/core'
+import { Component, inject, OnInit, ViewChild } from '@angular/core'
 import { CommonModule, DatePipe, NgForOf, NgIf } from '@angular/common'
 import { FormsModule } from '@angular/forms'
-import {
-  IonButton,
-  IonButtons,
-  IonContent,
-  IonHeader,
-  IonIcon,
-  IonItem,
-  IonLabel,
-  IonList,
-  IonMenuButton,
-  IonRange,
-  IonTitle,
-  IonToolbar,
-} from '@ionic/angular/standalone'
 import { ProductService } from '../../services/product.service'
 import { AuthService } from '../../services/auth.service'
 import { RouterLink } from '@angular/router'
 import { EvaluationService } from '../../services/evaluation.service'
 import { forkJoin } from 'rxjs'
 import { addIcons } from 'ionicons'
-import { starOutline, starSharp } from 'ionicons/icons'
+import { trashOutline, starOutline, starSharp } from 'ionicons/icons'
 import { Product } from '../../models/product.entity'
 import { EvaluationResponseDto } from '../../models/evaluation.entity'
 import { PageResponse } from '../../models/pageResponse.entity'
-import { IonicModule } from '@ionic/angular'
+import { IonicModule, IonInfiniteScroll } from '@ionic/angular'
 import { ProductFiltersDto } from '../../models/productFiltersDto.entity'
 
 @Component({
@@ -33,7 +19,7 @@ import { ProductFiltersDto } from '../../models/productFiltersDto.entity'
   templateUrl: './products.page.html',
   styleUrls: ['./products.page.scss'],
   standalone: true,
-  imports: [IonicModule, RouterLink, DatePipe, NgIf, NgForOf],
+  imports: [IonicModule, RouterLink, DatePipe, NgIf, NgForOf, FormsModule],
 })
 export class ProductsPage implements OnInit {
   public products: Product[] = []
@@ -42,7 +28,7 @@ export class ProductsPage implements OnInit {
   private evaluationService = inject(EvaluationService)
   public isAdmin: boolean = false
   public isWorker: boolean = false
-  public searchName: string = ''
+  public searchName: string | undefined = undefined
   filters: ProductFiltersDto = new ProductFiltersDto({
     page: 0,
     size: 2,
@@ -50,9 +36,10 @@ export class ProductsPage implements OnInit {
   })
   loading: boolean = false
   totalPages: number = 0
+  @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll | undefined
 
   constructor() {
-    addIcons({ starOutline, starSharp })
+    addIcons({ trashOutline, starOutline, starSharp })
   }
 
   ngOnInit() {
@@ -75,13 +62,23 @@ export class ProductsPage implements OnInit {
         event.target.complete()
       }
       // Si no hay más datos, deshabilitar el Infinite Scroll
-      if (this.filters.page >= this.totalPages) {
-        event.target.disabled = true
+      if (this.infiniteScroll && this.filters.page >= this.totalPages) {
+        this.infiniteScroll.disabled = true
       }
 
       this.filters.page += 1 // Incrementar el número de página después de cargar los datos
     })
     console.log(this.filters)
+  }
+
+  applyFilters() {
+    this.filters.page = 0
+    this.filters.name = this.searchName == '' ? undefined : this.searchName
+    this.products = []
+    if (this.infiniteScroll) {
+      this.infiniteScroll.disabled = false // Enable infinite scroll
+    }
+    this.loadMoreData()
   }
 
   deleteProduct(id: number | undefined): void {

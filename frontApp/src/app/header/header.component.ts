@@ -61,4 +61,6 @@ export class HeaderComponent implements OnInit, DoCheck {
   protected checkLoggedIn() {
     this.isLoggedIn = this.authService.isLoggedIn()
   }
+
+  protected readonly RouterLink = RouterLink
 }

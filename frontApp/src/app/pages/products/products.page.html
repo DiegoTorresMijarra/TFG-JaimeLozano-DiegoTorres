@@ -3,6 +3,7 @@
     <ion-toolbar>
       <ion-title size="large" color="primary">Productos</ion-title>
       <ion-buttons slot="end">
+        <ion-searchbar class="buscador" [(ngModel)]="searchName" (ionInput)="applyFilters()" placeholder="Buscar por nombre"></ion-searchbar>
         <ion-button *ngIf="isWorker" [routerLink]="['/products/new']" color="success" fill="solid">
           Nuevo Producto
         </ion-button>
@@ -38,7 +39,7 @@
     </ion-item>
   </ion-list>
 
-  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadMoreData($event)">
+  <ion-infinite-scroll id="infinteScroll" threshold="100px" (ionInfinite)="loadMoreData($event)">
     <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>
