@@ -11,9 +11,11 @@ import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -66,6 +68,12 @@ ProductController extends CommonController<Product, Long, ProductSaveDto> {
         return ResponseEntity.ok(service.save(dto));
     }
 
+    @PatchMapping(value = "updateProductPhoto/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PreAuthorize("hasAnyRole('WORKER','ADMIN')")
+    public ResponseEntity<Product> updateProductPhoto(@PathVariable Long id, @RequestParam("image") MultipartFile image) {
+        log.info("Actualizando imagen del producto");
+        return ResponseEntity.ok(service.updateProductPhoto(id, image));
+    }
 
     @Override
     @PutMapping("updateProduct/{id}")

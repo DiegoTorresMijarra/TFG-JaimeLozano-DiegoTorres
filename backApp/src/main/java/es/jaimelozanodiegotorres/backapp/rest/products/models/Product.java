@@ -10,12 +10,15 @@ import jakarta.validation.constraints.*;
 import lombok.*;
 import org.hibernate.annotations.Formula;
 import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Type;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 import java.util.List;
+
+import static jakarta.persistence.FetchType.LAZY;
 
 /**
  * Clase que representa el modelo de datos de un producto
@@ -90,4 +93,10 @@ public class Product {
     @Formula(value = "(SELECT AVG(e.value) FROM EVALUATION e WHERE e.product_id = id)")
     @Schema(description = "Calificación promedio del producto", example = "4.5")
     private Double averageRating;
+
+    private String imageExtension;
+
+    @Basic(fetch = FetchType.LAZY)
+    @Column(name = "image", columnDefinition = "BYTEA")
+    private byte[] image;
 }

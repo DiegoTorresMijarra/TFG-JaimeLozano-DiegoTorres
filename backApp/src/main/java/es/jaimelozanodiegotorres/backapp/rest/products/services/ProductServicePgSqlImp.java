@@ -15,6 +15,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.PreparedStatement;
 
 /**
  * Implementación de la interfaz ProductService.
@@ -64,4 +69,25 @@ public class ProductServicePgSqlImp extends CommonServicePgSql<Product, Long> {
         Page<Product> page = repository.findAll(filters.getSpecifications(), filters.getPageable());
         return PageResponse.of(page, filters.getSortBy(), filters.getDirection());
     }
+
+    public Product updateProductPhoto(Long id, MultipartFile image) {
+        log.info("Actualizando la imagen del producto con id: {}", id);
+
+        String contentType = image.getContentType();
+        if (contentType == null || !ALLOWED_IMAGE_TYPES.contains(contentType)) {
+            throw new IllegalArgumentException("Tipo de imagen invalido: " + ALLOWED_IMAGE_TYPES);
+        }
+        Product original = findById(id);
+        original.setImageExtension(contentType);
+        try {
+            InputStream inputStream = image.getInputStream();
+            byte[] imageData = inputStream.readAllBytes();
+            original.setImage(imageData);
+        } catch (IOException e) {
+            throw exceptionService.badRequestException();
+        }
+
+        return repository.save(original);
+    }
+
 }

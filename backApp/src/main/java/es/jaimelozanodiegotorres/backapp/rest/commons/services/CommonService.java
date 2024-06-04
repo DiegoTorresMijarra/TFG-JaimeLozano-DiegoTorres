@@ -5,12 +5,21 @@ import es.jaimelozanodiegotorres.backapp.rest.user.models.Role;
 import es.jaimelozanodiegotorres.backapp.rest.user.models.User;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 public abstract class CommonService {
 
     protected final ExceptionService exceptionService;
     public final String entityName;
+
+    protected static final List<String> ALLOWED_IMAGE_TYPES = Arrays.asList(
+            "image/jpeg",
+            "image/jpg",
+            "image/png",
+            "image/gif"
+    );
 
     protected CommonService(String entityName) {
         this.entityName = entityName;

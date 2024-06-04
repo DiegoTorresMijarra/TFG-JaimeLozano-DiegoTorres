@@ -7,6 +7,8 @@ export interface Product {
   price: number
   stock: number
   gluten: boolean
+  image: Uint8Array
+  imageExtension: string
   createdAt: Date
   updatedAt: Date
   deletedAt: Date | null

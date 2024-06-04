@@ -42,15 +42,17 @@ VALUES (1, 'Sin Categoria', '2023-01-01', '2023-01-01'),
 -- Crear la tabla products
 CREATE TABLE "public"."products"
 (
-    "id"          bigint    DEFAULT nextval('products_id_seq') NOT NULL,
-    "name"        character varying(255),
-    "price"       double precision,
-    "stock"       integer,
-    "gluten"      boolean,
-    "created_at"  timestamp,
-    "updated_at"  timestamp default CURRENT_TIMESTAMP,
-    "deleted_at"  timestamp default null,
-    "category_id" bigint,
+    "id"              bigint                DEFAULT nextval('products_id_seq') NOT NULL,
+    "name"            character varying(255),
+    "price"           double precision,
+    "stock"           integer,
+    "gluten"          boolean,
+    "image"           bytea                 Default NULL,
+    "image_extension" character varying(10) default null,
+    "created_at"      timestamp,
+    "updated_at"      timestamp             default CURRENT_TIMESTAMP,
+    "deleted_at"      timestamp             default null,
+    "category_id"     bigint,
     CONSTRAINT "products_pkey" PRIMARY KEY ("id"),
     CONSTRAINT "products_fk_categories" FOREIGN KEY ("category_id") REFERENCES "categories" ("id") NOT DEFERRABLE
 ) WITH (oids = false);
@@ -74,7 +76,7 @@ VALUES (1, 'Bruschetta Byte', 5.50, 100, true, '2024-06-03', '2024-06-03', 1),  
        (16, 'Burger Backend', 9.00, 50, false, '2024-06-03', '2024-06-03', 8),          -- Platos Vegetarianos
        (17, 'Wrap Web', 8.00, 70, true, '2024-06-03', '2024-06-03', 8),                 -- Platos Veganos
        (18, 'Curry Cloud', 11.00, 40, false, '2024-06-03', '2024-06-03', 8),            -- Platos Veganos
-       (19, 'Paella PHP', 13.50, 30, true, '2024-06-03', '2024-06-03', 7)             -- Especialidades de la Casa
+       (19, 'Paella PHP', 13.50, 30, true, '2024-06-03', '2024-06-03', 7) -- Especialidades de la Casa
 ;
 
 
