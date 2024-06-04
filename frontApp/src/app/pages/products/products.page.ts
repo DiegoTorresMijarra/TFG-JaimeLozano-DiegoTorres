@@ -1,5 +1,5 @@
 import { Component, inject, OnInit, ViewChild } from '@angular/core'
-import { CommonModule, DatePipe, NgForOf, NgIf } from '@angular/common'
+import {CommonModule, CurrencyPipe, DatePipe, NgForOf, NgIf} from '@angular/common'
 import { FormsModule } from '@angular/forms'
 import { ProductService } from '../../services/product.service'
 import { AuthService } from '../../services/auth.service'
@@ -9,15 +9,20 @@ import { addIcons } from 'ionicons'
 import { trashOutline, starOutline, starSharp } from 'ionicons/icons'
 import { Product } from '../../models/product.entity'
 import { PageResponse } from '../../models/pageResponse.entity'
-import { IonicModule, IonInfiniteScroll } from '@ionic/angular'
+import {IonicModule, IonInfiniteScroll, ModalController} from '@ionic/angular'
 import { ProductFiltersDto } from '../../models/productFiltersDto.entity'
+import {AnimationService} from "../../services/animation.service";
+import {ProductModalComponent} from "./modal/modal.component";
+import {OfferService} from "../../services/offer.service";
+import {Offer} from "../../models/offer.entity";
+import {Order} from "../../models/order.entity";
 
 @Component({
   selector: 'app-products',
   templateUrl: './products.page.html',
   styleUrls: ['./products.page.scss'],
   standalone: true,
-  imports: [IonicModule, RouterLink, DatePipe, NgIf, NgForOf, FormsModule],
+  imports: [IonicModule, RouterLink, DatePipe, NgIf, NgForOf, FormsModule, CurrencyPipe],
 })
 export class ProductsPage implements OnInit {
   public products: Product[] = []
@@ -38,14 +43,42 @@ export class ProductsPage implements OnInit {
   totalPages: number = 0
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll | undefined
 
-  constructor() {
+  constructor(private modalController: ModalController) {
     addIcons({ trashOutline, starOutline, starSharp })
   }
 
   ngOnInit() {
+    this.loadProducts()
     this.loadMoreData()
     this.isAdmin = this.authService.hasRole('ROLE_ADMIN')
     this.isWorker = this.authService.hasRole('ROLE_WORKER')
+  }
+
+  loadProducts() {
+    this.productService.getProducts().subscribe({
+      next: (page: PageResponse<Product>) => {
+        // Actualizar la lista de productos
+        this.products = page.content;
+
+        // Para cada producto, verifique si hay una oferta y si la hay, aplíquela al precio del producto
+        this.products.forEach((product: Product) => {
+          this.offerService.getActiveOfferByProductId(product.id).subscribe({
+            next: (offer: Offer) => {
+              if (offer) {
+                const discountAmount = product.price * (offer.descuento / 100);
+                product.priceOffer = product.price - discountAmount;
+              }
+            },
+            error: (error) => {
+              console.error('Error obteniendo oferta para el producto', product.id, error);
+            }
+          });
+        });
+      },
+      error: (error) => {
+        console.error('Error obteniendo productos', error);
+      }
+    });
   }
 
   loadMoreData(event?: any) {
@@ -95,6 +128,10 @@ export class ProductsPage implements OnInit {
         // Manejar el error según sea necesario
       },
     })
+  }
+
+  async openDetailsModal(product: Product) {
+    await this.presentModal(product)
   }
 
   async presentModal(product: Product) {
