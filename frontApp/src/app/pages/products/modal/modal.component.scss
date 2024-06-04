@@ -2,19 +2,8 @@ ion-button .cerrar {
   color: white; /* Cambia 'white' por el color deseado */
 }
 .rating {
-  display: flex;
-  align-items: center;
-  margin-top: 8px;
-
-  ion-label {
-    margin: 0;
-    margin-right: 8px;
-  }
-
   ion-icon {
-    font-size: 24px;
     color: #FFD700;
-    margin-right: 2px;
   }
 }
 /* Estilos para el precio original tachado */

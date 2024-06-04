@@ -48,37 +48,9 @@ export class ProductsPage implements OnInit {
   }
 
   ngOnInit() {
-    this.loadProducts()
     this.loadMoreData()
     this.isAdmin = this.authService.hasRole('ROLE_ADMIN')
     this.isWorker = this.authService.hasRole('ROLE_WORKER')
-  }
-
-  loadProducts() {
-    this.productService.getProducts().subscribe({
-      next: (page: PageResponse<Product>) => {
-        // Actualizar la lista de productos
-        this.products = page.content;
-
-        // Para cada producto, verifique si hay una oferta y si la hay, aplíquela al precio del producto
-        this.products.forEach((product: Product) => {
-          this.offerService.getActiveOfferByProductId(product.id).subscribe({
-            next: (offer: Offer) => {
-              if (offer) {
-                const discountAmount = product.price * (offer.descuento / 100);
-                product.priceOffer = product.price - discountAmount;
-              }
-            },
-            error: (error) => {
-              console.error('Error obteniendo oferta para el producto', product.id, error);
-            }
-          });
-        });
-      },
-      error: (error) => {
-        console.error('Error obteniendo productos', error);
-      }
-    });
   }
 
   loadMoreData(event?: any) {
@@ -90,6 +62,18 @@ export class ProductsPage implements OnInit {
       this.products = [...this.products, ...response.content]
       this.totalPages = response.totalPages
       this.loading = false
+
+      // Para cada producto, verifique si hay una oferta y si la hay, aplíquela al precio del producto
+      this.products.forEach((product: Product) => {
+        this.offerService.getActiveOfferByProductId(product.id).subscribe({
+          next: (offer: Offer) => {
+            if (offer) {
+              const discountAmount = product.price * (offer.descuento / 100);
+              product.priceOffer = product.price - discountAmount;
+            }
+          },
+        });
+      });
 
       if (event) {
         event.target.complete()
