@@ -1,56 +1,23 @@
-import { Component, inject, OnInit } from '@angular/core'
-import { CommonModule } from '@angular/common'
+import { Component, inject, OnInit, ViewChild } from '@angular/core'
+import { CommonModule, DatePipe, NgForOf, NgIf } from '@angular/common'
 import { FormsModule } from '@angular/forms'
-import {
-  IonButton,
-  IonButtons,
-  IonContent,
-  IonHeader,
-  IonIcon,
-  IonItem,
-  IonLabel,
-  IonList,
-  IonMenuButton,
-  IonRange,
-  IonTitle,
-  IonToolbar,
-} from '@ionic/angular/standalone'
 import { ProductService } from '../../services/product.service'
 import { AuthService } from '../../services/auth.service'
 import { RouterLink } from '@angular/router'
 import { EvaluationService } from '../../services/evaluation.service'
 import { addIcons } from 'ionicons'
-import { starOutline, starSharp } from 'ionicons/icons'
+import { trashOutline, starOutline, starSharp } from 'ionicons/icons'
 import { Product } from '../../models/product.entity'
 import { PageResponse } from '../../models/pageResponse.entity'
-import {AnimationService} from "../../services/animation.service";
-import {ModalController} from "@ionic/angular";
-import {ProductModalComponent} from "./modal/modal.component";
-import {OfferService} from "../../services/offer.service";
-import {Offer} from "../../models/offer.entity";
+import { IonicModule, IonInfiniteScroll } from '@ionic/angular'
+import { ProductFiltersDto } from '../../models/productFiltersDto.entity'
 
 @Component({
   selector: 'app-products',
   templateUrl: './products.page.html',
   styleUrls: ['./products.page.scss'],
   standalone: true,
-  imports: [
-    IonContent,
-    IonHeader,
-    IonTitle,
-    IonToolbar,
-    CommonModule,
-    FormsModule,
-    IonItem,
-    IonLabel,
-    IonList,
-    IonButton,
-    IonButtons,
-    IonMenuButton,
-    RouterLink,
-    IonRange,
-    IonIcon,
-  ],
+  imports: [IonicModule, RouterLink, DatePipe, NgIf, NgForOf, FormsModule],
 })
 export class ProductsPage implements OnInit {
   public products: Product[] = []
@@ -61,47 +28,58 @@ export class ProductsPage implements OnInit {
   private evaluationService = inject(EvaluationService)
   public isAdmin: boolean = false
   public isWorker: boolean = false
-  constructor(private modalController: ModalController) {
-    addIcons({ starOutline, starSharp })
+  public searchName: string | undefined = undefined
+  filters: ProductFiltersDto = new ProductFiltersDto({
+    page: 0,
+    size: 2,
+    direction: 'asc',
+  })
+  loading: boolean = false
+  totalPages: number = 0
+  @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll | undefined
+
+  constructor() {
+    addIcons({ trashOutline, starOutline, starSharp })
   }
 
   ngOnInit() {
-    this.loadProducts()
+    this.loadMoreData()
     this.isAdmin = this.authService.hasRole('ROLE_ADMIN')
     this.isWorker = this.authService.hasRole('ROLE_WORKER')
   }
 
-  async openDetailsModal(product: Product) {
-    await this.presentModal(product)
-  }
+  loadMoreData(event?: any) {
+    if (this.loading) return
 
-  loadProducts() {
-    this.productService.getProducts().subscribe({
-      next: (page: PageResponse<Product>) => {
-        // Actualizar la lista de productos
-        this.products = page.content;
+    this.loading = true
 
-        // Para cada producto, verifique si hay una oferta y si la hay, aplíquela al precio del producto
-        this.products.forEach((product: Product) => {
-          this.offerService.getActiveOfferByProductId(product.id).subscribe({
-            next: (offer: Offer) => {
-              if (offer) {
-                const discountAmount = product.price * (offer.descuento / 100);
-                product.priceOffer = product.price - discountAmount;
-              }
-            },
-            error: (error) => {
-              console.error('Error obteniendo oferta para el producto', product.id, error);
-            }
-          });
-        });
-      },
-      error: (error) => {
-        console.error('Error obteniendo productos', error);
+    this.productService.getProducts(this.filters).subscribe((response) => {
+      this.products = [...this.products, ...response.content]
+      this.totalPages = response.totalPages
+      this.loading = false
+
+      if (event) {
+        event.target.complete()
       }
-    });
+      // Si no hay más datos, deshabilitar el Infinite Scroll
+      if (this.infiniteScroll && this.filters.page >= this.totalPages) {
+        this.infiniteScroll.disabled = true
+      }
+
+      this.filters.page += 1 // Incrementar el número de página después de cargar los datos
+    })
+    console.log(this.filters)
   }
 
+  applyFilters() {
+    this.filters.page = 0
+    this.filters.name = this.searchName == '' ? undefined : this.searchName
+    this.products = []
+    if (this.infiniteScroll) {
+      this.infiniteScroll.disabled = false // Enable infinite scroll
+    }
+    this.loadMoreData()
+  }
 
   deleteProduct(id: number | undefined): void {
     this.productService.deleteProduct(String(id)).subscribe({

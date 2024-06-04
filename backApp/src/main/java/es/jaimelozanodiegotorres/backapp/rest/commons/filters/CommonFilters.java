@@ -21,7 +21,7 @@ public abstract class CommonFilters<M> {
     private int page = 0;
 
     @Builder.Default
-    private int size = 10;
+    private int size = 2;
 
     @Builder.Default
     private String sortBy = "id";

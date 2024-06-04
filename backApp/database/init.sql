@@ -11,8 +11,8 @@ DROP TABLE IF EXISTS "offers";
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS "user_roles";
 
-CREATE SEQUENCE products_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 START 6 CACHE 1;
-CREATE SEQUENCE categories_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 START 4 CACHE 1;
+CREATE SEQUENCE products_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 START 21 CACHE 1;
+CREATE SEQUENCE categories_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 START 9 CACHE 1;
 CREATE SEQUENCE evaluation_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 START 6 CACHE 1;
 CREATE SEQUENCE offers_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 START 3 CACHE 1;
 
@@ -30,8 +30,13 @@ CREATE TABLE "public"."categories"
 -- Insertar la tabla categories
 INSERT INTO "categories" ("id", "name", "created_at", "updated_at")
 VALUES (1, 'Sin Categoria', '2023-01-01', '2023-01-01'),
-       (2, 'categoria2', '2023-01-02', '2023-01-02'),
-       (3, 'categoria3', '2023-01-03', '2023-01-03')
+       (2, 'Platos Principales', '2024-06-03', '2024-06-03'),
+       (3, 'Postres', '2024-06-03', '2024-06-03'),
+       (4, 'Bebidas', '2024-06-03', '2024-06-03'),
+       (5, 'Aperitivos', '2024-06-03', '2024-06-03'),
+       (6, 'Sopas y Ensaladas', '2024-06-03', '2024-06-03'),
+       (7, 'Especialidades de la Casa', '2024-06-03', '2024-06-03'),
+       (8, 'Platos Veganos', '2024-06-03', '2024-06-03')
 ;
 
 -- Crear la tabla products
@@ -51,12 +56,27 @@ CREATE TABLE "public"."products"
 ) WITH (oids = false);
 -- Insertar la tabla products
 INSERT INTO "products" ("id", "name", "price", "stock", "gluten", "created_at", "updated_at", "category_id")
-VALUES (1, 'Producto1', 10.50, 100, true, '2023-01-01', '2023-01-01', 1),
-       (2, 'Producto2', 15.75, 50, false, '2023-01-02', '2023-01-02', 2),
-       (3, 'Producto3', 20.00, 75, true, '2023-01-03', '2023-01-03', 3),
-       (4, 'Producto4', 8.99, 120, false, '2023-01-04', '2023-01-04', 1),
-       (5, 'Producto5', 25.50, 200, true, '2023-01-05', '2023-01-05', 2)
+VALUES (1, 'Bruschetta Byte', 5.50, 100, true, '2024-06-03', '2024-06-03', 1),          -- Entrantes
+       (2, 'Calamares Compilados', 8.75, 50, false, '2024-06-03', '2024-06-03', 1),     -- Entrantes
+       (3, 'Sopa de Código', 6.00, 75, false, '2024-06-03', '2024-06-03', 6),           -- Sopas y Ensaladas
+       (4, 'Ensalada César en C++', 7.99, 120, false, '2024-06-03', '2024-06-03', 6),   -- Sopas y Ensaladas
+       (5, 'Hamburguesa MacJava', 10.50, 100, true, '2024-06-03', '2024-06-03', 2),     -- Platos Principales
+       (6, 'Pizza Python', 12.00, 80, false, '2024-06-03', '2024-06-03', 2),            -- Platos Principales
+       (7, 'Taco TensorFlow', 9.75, 60, true, '2024-06-03', '2024-06-03', 2),           -- Platos Principales
+       (8, 'Sushi SQL', 14.00, 40, false, '2024-06-03', '2024-06-03', 2),               -- Platos Principales
+       (9, 'Postre JSON', 5.00, 50, true, '2024-06-03', '2024-06-03', 3),               -- Postres
+       (10, 'Tarta de Chocolate HTTP', 6.50, 30, false, '2024-06-03', '2024-06-03', 3), -- Postres
+       (11, 'Batido Binary', 4.25, 70, true, '2024-06-03', '2024-06-03', 4),            -- Bebidas
+       (12, 'Café Java', 2.50, 100, false, '2024-06-03', '2024-06-03', 4),              -- Bebidas
+       (13, 'Aperitivo AJAX', 3.00, 90, true, '2024-06-03', '2024-06-03', 5),           -- Aperitivos
+       (14, 'Tapas TCP/IP', 4.75, 80, false, '2024-06-03', '2024-06-03', 5),            -- Aperitivos
+       (15, 'Falafel Frontend', 7.00, 60, true, '2024-06-03', '2024-06-03', 8),         -- Platos Vegetarianos
+       (16, 'Burger Backend', 9.00, 50, false, '2024-06-03', '2024-06-03', 8),          -- Platos Vegetarianos
+       (17, 'Wrap Web', 8.00, 70, true, '2024-06-03', '2024-06-03', 8),                 -- Platos Veganos
+       (18, 'Curry Cloud', 11.00, 40, false, '2024-06-03', '2024-06-03', 8),            -- Platos Veganos
+       (19, 'Paella PHP', 13.50, 30, true, '2024-06-03', '2024-06-03', 7)             -- Especialidades de la Casa
 ;
+
 
 CREATE SEQUENCE restaurants_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 START 4 CACHE 1;
 -- Crear la tabla restaurants

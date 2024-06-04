@@ -4,7 +4,7 @@ import { catchError, Observable, throwError } from 'rxjs'
 import { AuthService } from './auth.service'
 import { Product, ProductSaveDto } from '../models/product.entity'
 import { PageResponse } from '../models/pageResponse.entity'
-import { ProductFiltersDtoEntity } from '../models/productFiltersDto.entity'
+import { ProductFiltersDto } from '../models/productFiltersDto.entity'
 
 @Injectable({
   providedIn: 'root',
@@ -17,12 +17,11 @@ export class ProductService {
     private authService: AuthService,
   ) {}
 
-  getProducts(
-    filters?: ProductFiltersDtoEntity,
-  ): Observable<PageResponse<Product>> {
-    return this.http.post<PageResponse<Product>>(`${this.apiUrl}/pageAll`, {
+  getProducts(filters?: ProductFiltersDto): Observable<PageResponse<Product>> {
+    return this.http.post<PageResponse<Product>>(
+      `${this.apiUrl}/pageAll`,
       filters,
-    })
+    )
   }
 
   deleteProduct(id: string): Observable<void> {
