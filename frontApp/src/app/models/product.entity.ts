@@ -25,3 +25,16 @@ export interface ProductSaveDto {
   gluten: boolean
   categoryId: number
 }
+
+export function getProductUrl(product: Product): string {
+  return product.image && product.imageExtension
+    ? 'data:' + product.imageExtension + ';base64,' + product.image
+    : '/assets/products/default.jpg'
+}
+
+export const ValidImageExtensions: Set<string> = new Set([
+  'image/jpeg',
+  'image/jpg',
+  'image/png',
+  'image/gif',
+])

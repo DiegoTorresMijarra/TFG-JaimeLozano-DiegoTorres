@@ -1,5 +1,11 @@
 import { Component, inject, OnInit, ViewChild } from '@angular/core'
-import {CommonModule, CurrencyPipe, DatePipe, NgForOf, NgIf} from '@angular/common'
+import {
+  CommonModule,
+  CurrencyPipe,
+  DatePipe,
+  NgForOf,
+  NgIf,
+} from '@angular/common'
 import { FormsModule } from '@angular/forms'
 import { ProductService } from '../../services/product.service'
 import { AuthService } from '../../services/auth.service'
@@ -7,22 +13,30 @@ import { RouterLink } from '@angular/router'
 import { EvaluationService } from '../../services/evaluation.service'
 import { addIcons } from 'ionicons'
 import { trashOutline, starOutline, starSharp } from 'ionicons/icons'
-import { Product } from '../../models/product.entity'
+import { Product, getProductUrl } from '../../models/product.entity'
 import { PageResponse } from '../../models/pageResponse.entity'
-import {IonicModule, IonInfiniteScroll, ModalController} from '@ionic/angular'
+import { IonicModule, IonInfiniteScroll, ModalController } from '@ionic/angular'
 import { ProductFiltersDto } from '../../models/productFiltersDto.entity'
-import {AnimationService} from "../../services/animation.service";
-import {ProductModalComponent} from "./modal/modal.component";
-import {OfferService} from "../../services/offer.service";
-import {Offer} from "../../models/offer.entity";
-import {Order} from "../../models/order.entity";
+import { AnimationService } from '../../services/animation.service'
+import { ProductModalComponent } from './modal/modal.component'
+import { OfferService } from '../../services/offer.service'
+import { Offer } from '../../models/offer.entity'
+import { Order } from '../../models/order.entity'
 
 @Component({
   selector: 'app-products',
   templateUrl: './products.page.html',
   styleUrls: ['./products.page.scss'],
   standalone: true,
-  imports: [IonicModule, RouterLink, DatePipe, NgIf, NgForOf, FormsModule, CurrencyPipe],
+  imports: [
+    IonicModule,
+    RouterLink,
+    DatePipe,
+    NgIf,
+    NgForOf,
+    FormsModule,
+    CurrencyPipe,
+  ],
 })
 export class ProductsPage implements OnInit {
   public products: Product[] = []
@@ -68,12 +82,12 @@ export class ProductsPage implements OnInit {
         this.offerService.getActiveOfferByProductId(product.id).subscribe({
           next: (offer: Offer) => {
             if (offer) {
-              const discountAmount = product.price * (offer.descuento / 100);
-              product.priceOffer = product.price - discountAmount;
+              const discountAmount = product.price * (offer.descuento / 100)
+              product.priceOffer = product.price - discountAmount
             }
           },
-        });
-      });
+        })
+      })
 
       if (event) {
         event.target.complete()
@@ -131,4 +145,5 @@ export class ProductsPage implements OnInit {
   }
 
   protected readonly Math = Math
+  protected readonly getProductUrl = getProductUrl
 }

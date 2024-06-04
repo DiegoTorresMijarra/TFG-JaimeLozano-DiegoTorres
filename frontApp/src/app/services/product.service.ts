@@ -75,4 +75,23 @@ export class ProductService {
       }),
     )
   }
+
+  updateProductPhoto(id: number, image: File): Observable<Product> {
+    let headers = this.authService.getAuthHeaders()
+    headers = headers.delete('Content-Type')
+
+    const formData = new FormData()
+    formData.append('image', image, image.name)
+
+    return this.http
+      .patch<Product>(`${this.apiUrl}/updateProductPhoto/${id}`, formData, {
+        headers,
+      })
+      .pipe(
+        catchError((error) => {
+          console.error('Error actualizando imagen del producto:', error)
+          return throwError(error)
+        }),
+      )
+  }
 }

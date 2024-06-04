@@ -14,9 +14,7 @@
   <ion-list>
     <ion-item *ngFor="let product of products" class="product-item">
       <ion-thumbnail>
-        <ion-img [src]="(product.image&&product.imageExtension)?
-          'data:' + product.imageExtension + ';base64,' + product.image :
-          '/assets/products/default.jpg'">
+        <ion-img [src]="getProductUrl(product)" alt="{{'image_' + product.id}}">
         </ion-img>
       </ion-thumbnail>
       <ion-label (click)="openDetailsModal(product)">
@@ -47,6 +45,9 @@
                   (keydown.enter)="deleteProduct(product.id)"
                   color="danger" fill="clear">
         Borrar Producto
+      </ion-button>
+      <ion-button *ngIf="isAdmin" [routerLink]="['/products/patchImage', product.id]" color="warning" fill="clear">
+        Actualizar Imagen Producto
       </ion-button>
     </ion-item>
   </ion-list>
