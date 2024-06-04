@@ -17,6 +17,10 @@ export class ProductService {
     private authService: AuthService,
   ) {}
 
+  getProductsList(): Observable<Product[]> {
+    return this.http.get<Product[]>(`${this.apiUrl}/listAll`)
+  }
+
   getProducts(filters?: ProductFiltersDto): Observable<PageResponse<Product>> {
     return this.http.post<PageResponse<Product>>(
       `${this.apiUrl}/pageAll`,

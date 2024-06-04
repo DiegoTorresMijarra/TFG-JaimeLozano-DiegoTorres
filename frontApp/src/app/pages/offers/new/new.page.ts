@@ -51,9 +51,9 @@ export class NewPage implements OnInit {
 
   loadProducts() {
     this.productService
-      .getProducts()
-      .subscribe((page: PageResponse<Product>) => {
-        this.products = page.content
+      .getProductsList()
+      .subscribe((products: Product[]) => {
+        this.products = products
       })
   }
 
