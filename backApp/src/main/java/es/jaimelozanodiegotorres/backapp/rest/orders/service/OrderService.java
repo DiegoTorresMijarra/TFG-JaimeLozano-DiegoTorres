@@ -1,5 +1,9 @@
 package es.jaimelozanodiegotorres.backapp.rest.orders.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import es.jaimelozanodiegotorres.backapp.config.websocket.WebSocketConfig;
+import es.jaimelozanodiegotorres.backapp.config.websocket.WebSocketHandler;
 import es.jaimelozanodiegotorres.backapp.rest.addresses.models.Addresses;
 import es.jaimelozanodiegotorres.backapp.rest.addresses.services.AddressesServicePgSqlImpl;
 import es.jaimelozanodiegotorres.backapp.rest.commons.services.CommonServiceMongo;
@@ -11,6 +15,9 @@ import es.jaimelozanodiegotorres.backapp.rest.orders.models.Order;
 import es.jaimelozanodiegotorres.backapp.rest.orders.models.OrderState;
 import es.jaimelozanodiegotorres.backapp.rest.orders.models.OrderedProduct;
 import es.jaimelozanodiegotorres.backapp.rest.orders.repository.OrderRepository;
+import es.jaimelozanodiegotorres.backapp.rest.orders.websocket.Notificacion;
+import es.jaimelozanodiegotorres.backapp.rest.orders.websocket.OrderMapperNotificacion;
+import es.jaimelozanodiegotorres.backapp.rest.orders.websocket.OrderResponseNotificacion;
 import es.jaimelozanodiegotorres.backapp.rest.products.repository.ProductRepository;
 import es.jaimelozanodiegotorres.backapp.rest.restaurants.servicios.RestaurantServicePgSqlImpl;
 import es.jaimelozanodiegotorres.backapp.rest.user.service.UserServicePgSql;
@@ -27,11 +34,16 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
+import static es.jaimelozanodiegotorres.backapp.rest.orders.websocket.OrderMapperNotificacion.toResponse;
+
 @Service
 @CacheConfig(cacheNames = {"orders"})
 @Slf4j
 public class OrderService extends CommonServiceMongo<Order, ObjectId> {
     OrderMapper mapper;
+    private final ObjectMapper map;
+    private final WebSocketConfig webSocketConfig;
+    private WebSocketHandler webSocketService;
     private final ProductRepository productRepository;
     private final UserServicePgSql userService;
     private final RestaurantServicePgSqlImpl restaurantService;
@@ -39,13 +51,16 @@ public class OrderService extends CommonServiceMongo<Order, ObjectId> {
 
 
     @Autowired
-    public OrderService(OrderRepository repository, ProductRepository productRepository, UserServicePgSql userService, RestaurantServicePgSqlImpl restaurantService, AddressesServicePgSqlImpl addressesService){
+    public OrderService(OrderRepository repository, ProductRepository productRepository, UserServicePgSql userService, RestaurantServicePgSqlImpl restaurantService, AddressesServicePgSqlImpl addressesService, WebSocketConfig webSocketConfig){
         super(repository);
+        map = new ObjectMapper();
+        this.webSocketConfig = webSocketConfig;
         this.productRepository = productRepository;
         this.userService = userService;
         this.restaurantService = restaurantService;
         this.addressesService = addressesService;
         this.mapper = OrderMapper.INSTANCE;
+        webSocketService = webSocketConfig.webSocketFunkosHandler();
     }
 
     public Page<Order> pageAll(Pageable pageable) {
@@ -61,7 +76,9 @@ public class OrderService extends CommonServiceMongo<Order, ObjectId> {
 
         checkOrderIds(dto);
         checkOrderedProducts(dto);
-        return save(mapper.dtoToModel(dto));
+        Order order = mapper.dtoToModel(dto);
+        onChange(Notificacion.Tipo.CREATE, order);
+        return save(order);
     }
 
     public Order update(ObjectId objectId, OrderDto dto) {
@@ -75,8 +92,9 @@ public class OrderService extends CommonServiceMongo<Order, ObjectId> {
         checkOrderIds(dto);
         var original = findById(objectId);
         isUpdatable(original);
-
-        return update(mapper.updateModel(original, dto));
+        Order order = mapper.updateModel(original, dto);
+        onChange(Notificacion.Tipo.UPDATE, order);
+        return update(order);
     }
 
     /**
@@ -182,7 +200,7 @@ public class OrderService extends CommonServiceMongo<Order, ObjectId> {
         original.setDeletedAt(LocalDateTime.now());
 
         repository.save(original);
-
+        onChange(Notificacion.Tipo.DELETE, original);
         return true;
     }
 
@@ -211,5 +229,38 @@ public class OrderService extends CommonServiceMongo<Order, ObjectId> {
                     "No se puede cambiar el estado del pedido: "
                             + order.getId() + " con estado " + order.getState()
             );
+    }
+
+
+    public void onChange(Notificacion.Tipo tipo, Order data) {
+
+        if (webSocketService == null) {
+            webSocketService = this.webSocketConfig.webSocketFunkosHandler();
+        }
+
+        try {
+            Notificacion<OrderResponseNotificacion> notificacion = new Notificacion<>(
+                    "ORDERS",
+                    tipo,
+                    OrderMapperNotificacion.toResponse(data),
+                    LocalDateTime.now().toString()
+            );
+
+            String json = map.writeValueAsString((notificacion));
+
+
+            // Enviamos el mensaje a los clientes ws con un hilo, si hay muchos clientes, puede tardar
+            // no bloqueamos el hilo principal que atiende las peticiones http
+            Thread senderThread = new Thread(() -> {
+                try {
+                    webSocketService.sendMessage(json);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
+            senderThread.start();
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
     }
 }
