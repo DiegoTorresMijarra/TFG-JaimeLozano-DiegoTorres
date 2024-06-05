@@ -16,3 +16,52 @@ ion-button .cerrar {
 .offer-price {
   color: green; /* Opcional: puedes elegir otro color */
 }
+
+.selectorQuantity {
+  width: 100%;
+  padding: 10px 0;
+}
+
+.selectorQuantity ion-item {
+  --padding-start: 0;
+  --inner-padding-end: 0;
+  --inner-padding-start: 0;
+  --inner-padding-top: 0;
+  --inner-padding-bottom: 0;
+}
+
+.selectorQuantity ion-label {
+  margin-left: 15px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.selectorQuantity ion-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.selectorQuantity ion-button {
+  --padding-start: 8px;
+  --padding-end: 8px;
+  --padding-top: 8px;
+  --padding-bottom: 8px;
+}
+
+.selectorQuantity .quantity {
+  width: 50px;
+  height: 20px;
+  text-align: center;
+  font-size: 16px;
+  --padding-start: 8px;
+  --padding-end: 8px;
+}
+
+.selectorQuantity ion-button[type="submit"] {
+  margin-top: 15px;
+  --background: coral;
+  --color: white;
+  font-size: 16px;
+  font-weight: bold;
+}

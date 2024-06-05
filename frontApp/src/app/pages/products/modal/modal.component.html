@@ -5,25 +5,25 @@
       <ion-button (click)="dismissModal()" color="light">
         <ion-icon class="cerrar" name="close-outline"></ion-icon>
       </ion-button>
-      <form (ngSubmit)="addToCart()">
-        <ion-item>
-          <ion-label>Cantidad:</ion-label>
-          <ion-buttons slot="end">
-            <ion-button (click)="decreaseQuantity()">-</ion-button>
-            <ion-input [value]="quantity" readonly></ion-input>
-            <ion-button (click)="increaseQuantity()">+</ion-button>
-          </ion-buttons>
-        </ion-item>
-        <ion-button expand="block" type="submit">Agregar al carrito</ion-button>
-      </form>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-item-divider>
-    <ion-label>Producto:</ion-label>
+    <form class="selectorQuantity" (ngSubmit)="addToCart()">
+      <ion-item>
+        <ion-label>Cantidad:</ion-label>
+        <ion-buttons slot="end">
+          <ion-button (click)="decreaseQuantity()" color="primary" fill="solid">-</ion-button>
+          <ion-input class="quantity" [value]="quantity" readonly></ion-input>
+          <ion-button (click)="increaseQuantity()" color="primary" fill="solid">+</ion-button>
+        </ion-buttons>
+      </ion-item>
+      <ion-button expand="block" type="submit">Agregar al carrito</ion-button>
+    </form>
   </ion-item-divider>
+
   <ion-list>
     <ion-item>
       <ion-label>Nombre:</ion-label>

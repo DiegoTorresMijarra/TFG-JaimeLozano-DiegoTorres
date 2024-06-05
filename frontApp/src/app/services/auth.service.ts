@@ -4,6 +4,7 @@ import { Observable, map } from 'rxjs'
 import { Router } from '@angular/router'
 import { jwtDecode } from 'jwt-decode'
 import { UserSignUpRequest } from '../models/user.entity'
+import { CartService } from './cart.service'
 
 @Injectable({
   providedIn: 'root',
@@ -15,6 +16,7 @@ export class AuthService {
   constructor(
     private router: Router,
     private http: HttpClient,
+    private cartService: CartService,
   ) {}
 
   login(username: string, password: string): Observable<string> {
@@ -47,6 +49,7 @@ export class AuthService {
 
   logout(): void {
     localStorage.removeItem(this.tokenKey)
+    this.cartService.clearCart()
     this.router.navigate(['/login'])
   }
 
