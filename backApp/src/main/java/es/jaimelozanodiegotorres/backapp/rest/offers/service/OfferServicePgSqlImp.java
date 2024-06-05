@@ -54,6 +54,6 @@ public class OfferServicePgSqlImp extends CommonServicePgSql<Offer, Long> {
 
     public Offer findActivasByProductId(Long productId) {
         log.info("Buscando la oferta activa de un producto");
-        return ((OfferRepository)repository).findActivasByProduct(productId).orElseThrow(()-> exceptionService.notFoundException(productId.toString()));
+        return ((OfferRepository)repository).findActivasByProduct(productId);
     }
 }

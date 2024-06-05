@@ -15,6 +15,6 @@ public interface OfferRepository extends CommonRepository<Offer,Long>{
         return "offers";
     }
 
-    @Query("SELECT w FROM OFFERS w WHERE w.product.id = :productId AND w.fechaDesde <= CURRENT_TIMESTAMP AND w.fechaHasta >= CURRENT_TIMESTAMP")
-    public Optional<Offer> findActivasByProduct(Long productId);
+    @Query("SELECT w FROM OFFERS w WHERE w.product.id = :productId AND w.fechaDesde <= CURRENT_TIMESTAMP AND w.fechaHasta >= CURRENT_TIMESTAMP AND w.deletedAt IS NULL")
+    public Offer findActivasByProduct(Long productId);
 }
