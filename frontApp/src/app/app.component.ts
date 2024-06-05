@@ -27,6 +27,7 @@ import {
 import { HeaderComponent } from './header/header.component'
 import { BodyComponent } from './body/body.component'
 import { FooterComponent } from './footer/footer.component'
+import { WebSocketService } from './services/websocketOrders.service'
 
 @Component({
   selector: 'app-root',
@@ -59,6 +60,10 @@ import { FooterComponent } from './footer/footer.component'
     RouterOutlet,
   ],
 })
-export class AppComponent {
-  constructor() {}
+export class AppComponent implements OnInit {
+  constructor(private wsService: WebSocketService) {}
+
+  ngOnInit(): void {
+    this.wsService.connect()
+  }
 }

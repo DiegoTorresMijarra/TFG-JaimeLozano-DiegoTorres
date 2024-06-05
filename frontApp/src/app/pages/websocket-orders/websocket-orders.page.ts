@@ -24,6 +24,10 @@ export class WebsocketOrdersPage implements OnInit {
   constructor(private wsService: WebSocketService) {}
 
   ngOnInit(): void {
+    const localStorageNotifications = localStorage.getItem('notifications')
+    if (localStorageNotifications) {
+      this.notifications = JSON.parse(localStorageNotifications)
+    }
     this.wsService.getMessages().subscribe((message: Notification) => {
       if (message.entity === 'ORDERS') {
         this.notifications.push(message)
