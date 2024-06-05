@@ -17,10 +17,10 @@
 
   <div class="ion-padding-end" slot="end" style="display: flex;">
     <ion-button
-      [routerLink]=""
+      [routerLink]="'/cart'"
       color="tertiary">
       <ion-icon slot="icon-only" name="cart-outline" color="dark"></ion-icon>
-      <ion-badge slot="end">1</ion-badge>
+      <ion-badge slot="end">{{cart.totalQuantity || 0}}</ion-badge>
     </ion-button>
     <ion-button color="secondary"
                 [routerLink]="isLoggedIn ? ['/me'] : ['/login']">

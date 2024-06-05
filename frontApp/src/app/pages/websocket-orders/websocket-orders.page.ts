@@ -1,12 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { FormsModule } from '@angular/forms'
-import {
-  IonContent,
-  IonHeader,
-  IonTitle,
-  IonToolbar,
-} from '@ionic/angular/standalone'
 import { WebSocketService } from '../../services/websocketOrders.service'
 import { Notification } from '../../models/notification.entity'
 import { IonicModule } from '@ionic/angular'

@@ -156,6 +156,10 @@ export const routes: Routes = [
     canActivate: [roleGuard],
     data: { expectedRole: 'ROLE_WORKER' },
   },
+  {
+    path: 'cart',
+    loadComponent: () => import('./pages/cart/cart.page').then( m => m.CartPage)
+  },
 ]
 
 @NgModule({

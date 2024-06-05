@@ -2,7 +2,7 @@ import { Category } from './category.entity'
 import { Evaluation } from './evaluation.entity'
 
 export interface Product {
-  id?: number
+  id: number
   name: string
   price: number
   stock: number

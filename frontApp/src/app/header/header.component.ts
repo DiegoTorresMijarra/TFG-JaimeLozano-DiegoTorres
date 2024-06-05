@@ -4,8 +4,15 @@ import { FormsModule } from '@angular/forms'
 import { NgIf } from '@angular/common'
 import { RouterLink } from '@angular/router'
 import { AuthService } from '../services/auth.service'
-import { contrastOutline, personOutline, cartOutline } from 'ionicons/icons'
+import {
+  contrastOutline,
+  personOutline,
+  cartOutline,
+  cart,
+} from 'ionicons/icons'
 import { addIcons } from 'ionicons'
+import { Cart } from '../models/cart.entity'
+import { CartService } from '../services/cart.service'
 
 @Component({
   selector: 'app-header',
@@ -17,9 +24,16 @@ import { addIcons } from 'ionicons'
 export class HeaderComponent implements OnInit, DoCheck {
   darkMode: boolean | undefined
   public isLoggedIn: boolean = false
+  public cart: Cart = { lineas: [], totalPrice: 0, totalQuantity: 0 }
 
-  constructor(protected authService: AuthService) {
+  constructor(
+    protected authService: AuthService,
+    private cartService: CartService,
+  ) {
     this.checkLoggedIn()
+    this.cartService.cart$.subscribe((cart) => {
+      this.cart = cart
+    })
   }
 
   ngOnInit(): void {
