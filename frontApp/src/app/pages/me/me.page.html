@@ -28,6 +28,7 @@
           <ion-col><strong>Total</strong></ion-col>
           <ion-col><strong>Estado</strong></ion-col>
           <ion-col><strong>Fecha</strong></ion-col>
+          <ion-col><strong>Acciones</strong></ion-col>
         </ion-row>
         <ion-row *ngFor="let order of user.orders">
           <ion-col>{{ order.id }}</ion-col>
@@ -35,6 +36,11 @@
           <ion-col>{{ order.totalPrice | currency }}</ion-col>
           <ion-col>{{ order.state }}</ion-col>
           <ion-col>{{ order.createdAt | date:'short' }}</ion-col>
+          <ion-col>
+            <ion-button fill="clear" (click)="goToEvaluationPage(order)">
+              <ion-icon name="star-sharp" class="golden-star"></ion-icon>
+            </ion-button>
+          </ion-col>
         </ion-row>
       </ion-grid>
     </ion-card-content>

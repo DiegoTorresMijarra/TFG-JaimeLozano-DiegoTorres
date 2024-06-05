@@ -160,6 +160,12 @@ export const routes: Routes = [
     path: 'cart',
     loadComponent: () => import('./pages/cart/cart.page').then( m => m.CartPage)
   },
+  {
+    path: 'updateEvaluations',
+    loadComponent: () => import('./pages/evaluations/me/me.page').then(m => m.MePage)
+  }
+
+
 ]
 
 @NgModule({
