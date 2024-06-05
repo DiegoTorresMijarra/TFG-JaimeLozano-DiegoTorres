@@ -1,0 +1,27 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>websocketOrders</ion-title>
+    <ion-buttons slot="end">
+      <ion-searchbar #searchTerm class="buscador" placeholder="Id Restaurante"></ion-searchbar>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-list>
+    <div *ngIf="notifications.length === 0">
+      <ion-item>
+        <ion-label>No hay notificaciones nuevas</ion-label>
+      </ion-item>
+    </div>
+    <div *ngFor="let notification of notifications">
+      <ion-item  *ngIf="!searchTerm || searchTerm.value === '' || searchTerm.value === notification.data.restaurantId ">
+        <ion-label>
+          <h2>Order ID: {{ notification.data.orderId }}</h2>
+          <p>Restaurant ID: {{ notification.data.restaurantId }}</p>
+          <p>Type: {{ notification.type }}</p>
+        </ion-label>
+      </ion-item>
+    </div>
+  </ion-list>
+</ion-content>

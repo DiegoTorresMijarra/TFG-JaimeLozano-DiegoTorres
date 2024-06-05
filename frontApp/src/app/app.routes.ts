@@ -119,10 +119,10 @@ export const routes: Routes = [
       import('./pages/offers/update/update.page').then((m) => m.UpdatePage),
   },
   {
-    path: 'update-image',
+    path: 'websocket-orders',
     loadComponent: () =>
-      import('./pages/products/update-image/update-image.page').then(
-        (m) => m.UpdateImagePage,
+      import('./pages/websocket-orders/websocket-orders.page').then(
+        (m) => m.WebsocketOrdersPage,
       ),
   },
 ]

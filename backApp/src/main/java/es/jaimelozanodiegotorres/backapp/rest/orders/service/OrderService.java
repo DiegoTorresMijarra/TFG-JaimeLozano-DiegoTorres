@@ -34,8 +34,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
-import static es.jaimelozanodiegotorres.backapp.rest.orders.websocket.OrderMapperNotificacion.toResponse;
-
 @Service
 @CacheConfig(cacheNames = {"orders"})
 @Slf4j
@@ -60,7 +58,7 @@ public class OrderService extends CommonServiceMongo<Order, ObjectId> {
         this.restaurantService = restaurantService;
         this.addressesService = addressesService;
         this.mapper = OrderMapper.INSTANCE;
-        webSocketService = webSocketConfig.webSocketFunkosHandler();
+        webSocketService = webSocketConfig.webSocketOrdersHandler();
     }
 
     public Page<Order> pageAll(Pageable pageable) {
@@ -235,7 +233,7 @@ public class OrderService extends CommonServiceMongo<Order, ObjectId> {
     public void onChange(Notificacion.Tipo tipo, Order data) {
 
         if (webSocketService == null) {
-            webSocketService = this.webSocketConfig.webSocketFunkosHandler();
+            webSocketService = this.webSocketConfig.webSocketOrdersHandler();
         }
 
         try {
