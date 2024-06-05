@@ -34,7 +34,7 @@ export class BodyComponent implements OnInit, DoCheck {
     { title: 'Categorias', url: '/categories', icon: 'list', role: '' }, // Disponible para todos los usuarios
     { title: 'Valoraciones', url: '/evaluations', icon: 'star', role: 'ROLE_ADMIN' },// Solo admins
     { title: 'Pedidos', url: '/orders', icon: 'cube', role: 'ROLE_WORKER' },// workers y admins
-    { title: 'Ofertas', url: '/offers', icon: 'pricetag', role: 'ROLE_ADMIN' },
+    { title: 'Ofertas', url: '/offers', icon: 'pricetag', role: 'ROLE_WORKER' },
   ];
 
   constructor(private authService: AuthService) {
