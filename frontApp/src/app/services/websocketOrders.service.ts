@@ -55,4 +55,9 @@ export class WebSocketService {
   getMessages() {
     return this.messages.asObservable()
   }
+
+  clearNotifications() {
+    this.notifications = []
+    localStorage.removeItem('notifications')
+  }
 }

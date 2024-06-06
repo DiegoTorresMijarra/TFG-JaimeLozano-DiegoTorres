@@ -4,7 +4,7 @@
               fill="outline" slot="end" style="position: absolute; top: 20px;  right: 20px;">
     Logout
   </ion-button>
-  <ion-card>
+  <ion-card  class="personal">
     <ion-card-header>
       <ion-card-title>Bienvenido a MacJava: {{ user.name }} {{ user.surname }}</ion-card-title>
       <ion-card-subtitle>{{ user.roles[1]}}</ion-card-subtitle>
@@ -15,11 +15,11 @@
       <p>Roles: {{ user.roles.join(', ') }}</p>
     </ion-card-content>
   </ion-card>
+
   <ion-card *ngIf="user.orders">
     <ion-card-header>
       <ion-card-title>Pedidos</ion-card-title>
     </ion-card-header>
-
     <ion-card-content>
       <ion-grid>
         <ion-row>
@@ -28,13 +28,13 @@
           <ion-col><strong>Total</strong></ion-col>
           <ion-col><strong>Estado</strong></ion-col>
           <ion-col><strong>Fecha</strong></ion-col>
-          <ion-col><strong>Acciones</strong></ion-col>
+          <ion-col><strong>Valorar:</strong></ion-col>
         </ion-row>
-        <ion-row *ngFor="let order of user.orders">
+        <ion-row *ngFor="let order of user.orders | paginate:currentOrderPage:pageOrderSize">
           <ion-col>{{ order.id }}</ion-col>
           <ion-col>{{ order.restaurantId }}</ion-col>
           <ion-col>{{ order.totalPrice | currency }}</ion-col>
-          <ion-col>{{ order.state }}</ion-col>
+          <ion-col  class="{{order.state.toLowerCase()}}">{{ order.state }}</ion-col>
           <ion-col>{{ order.createdAt | date:'short' }}</ion-col>
           <ion-col>
             <ion-button fill="clear" (click)="goToEvaluationPage(order)">
@@ -44,39 +44,61 @@
         </ion-row>
       </ion-grid>
     </ion-card-content>
+    <ion-footer>
+      <ion-toolbar>
+        <ion-title class="ion-align-items-start" slot="start">Pagina: {{ currentOrderPage }} de {{ Math.ceil(user.orders.length / pageOrderSize) }}</ion-title>
+        <ion-buttons slot="end">
+          <ion-button [disabled]="currentOrderPage <= 1" (click)="changeOrderPage(currentOrderPage - 1)">
+            Anterior
+          </ion-button>
+          <ion-button [disabled]="(user.orders.length / pageOrderSize) <= currentOrderPage" (click)="changeOrderPage(currentOrderPage + 1)">
+            Siguiente
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-footer>
   </ion-card>
 
-  <ion-card *ngIf="user.addresses">
+  <ion-card *ngIf="user.addresses" id="addresses">
     <ion-card-header>
-      <ion-card-title>Direcciones</ion-card-title>
+      <ion-toolbar>
+        <ion-title size="large">Direcciones</ion-title>
+        <ion-buttons slot="end">
+          <ion-button [routerLink]="['/addresses/new']" color="success" fill="solid">
+            Nueva Direccion
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
     </ion-card-header>
-
     <ion-card-content>
-      <ion-grid>
-        <ion-row>
-          <ion-col><strong>Nombre</strong></ion-col>
-          <ion-col><strong>Calle</strong></ion-col>
-          <ion-col><strong>Número</strong></ion-col>
-          <ion-col><strong>Apartamento</strong></ion-col>
-          <ion-col><strong>Ciudad</strong></ion-col>
-          <ion-col><strong>Provincia</strong></ion-col>
-          <ion-col><strong>País</strong></ion-col>
-          <ion-col><strong>Código Postal</strong></ion-col>
-          <ion-col><strong>Información Extra</strong></ion-col>
-        </ion-row>
-        <ion-row *ngFor="let address of user.addresses">
-          <ion-col>{{ address.name }}</ion-col>
-          <ion-col>{{ address.street }}</ion-col>
-          <ion-col>{{ address.number }}</ion-col>
-          <ion-col>{{ address.apartment }}</ion-col>
-          <ion-col>{{ address.city }}</ion-col>
-          <ion-col>{{ address.province }}</ion-col>
-          <ion-col>{{ address.country }}</ion-col>
-          <ion-col>{{ address.postalCode }}</ion-col>
-          <ion-col>{{ address.extraInfo || 'N/A' }}</ion-col>
-        </ion-row>
-      </ion-grid>
+      <ion-list class="ion-margin-top muestrario">
+        <ion-item class="muestra ion-align-items-center" lines="full" *ngFor="let address of user.addresses | paginate:currentAddressesPage:pageAddressesSize">
+          <ion-label class="descripcion">
+            <h2 class="titulo">{{address.name}}</h2>
+            <p>{{address.street}}, Numero: {{address.number}}, {{address.city}},
+              {{address.postalCode}} {{address.province}}</p>
+          </ion-label>
+          <ion-buttons class="buttons" style="display: flex" slot="end">
+            <ion-button color="primary" size="large" fill="solid">Detalles</ion-button>
+            <ion-button color="warning" size="large" fill="solid">Actualizar</ion-button>
+            <ion-button color="danger" size="large" fill="solid">Borrar</ion-button>
+          </ion-buttons>
+        </ion-item>
+      </ion-list>
     </ion-card-content>
+    <ion-footer>
+      <ion-toolbar>
+        <ion-title class="ion-align-items-start" slot="start">Página: {{ currentAddressesPage }} de {{ Math.ceil(user.addresses.length / pageAddressesSize) }}</ion-title>
+        <ion-buttons slot="end">
+          <ion-button [disabled]="currentAddressesPage <= 1" (click)="changeAddressesPage(currentAddressesPage - 1)">
+            Anterior
+          </ion-button>
+          <ion-button [disabled]="currentAddressesPage >= user.addresses.length / pageAddressesSize" (click)="changeAddressesPage(currentAddressesPage + 1)">
+            Siguiente
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-footer>
   </ion-card>
 
   <ion-card *ngIf="user.roles.indexOf('ADMIN') !== -1 || user.roles.indexOf('WORKER') !== -1 ">
