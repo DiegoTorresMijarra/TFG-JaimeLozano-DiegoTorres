@@ -1,57 +1,100 @@
 .product-item {
   display: flex;
   flex-direction: column;
-  border-bottom: 1px solid #dcdcdc;
-  padding: 16px 0;
+  align-items: center; /* Alinea verticalmente el contenido */
+  border-bottom: 1px solid #f0f0f0; /* Cambiado el color del borde */
+  padding: 20px 0; /* Aumentado el espacio de relleno */
 }
 
 .product-item h2 {
-  font-size: 18px;
-  margin: 0;
+  font-size: 22px; /* Aumentado el tamaño del título */
+  margin: 12px 0; /* Ajustado el margen superior e inferior */
   color: var(--ion-color-primary);
+  font-weight: bold; /* Añadido negrita para destacar */
 }
 
 .product-item p {
-  margin: 4px 0;
-  color: #555;
+  margin: 8px 0; /* Ajustado el espacio entre párrafos */
+  color: #888; /* Cambiado el color del texto */
 }
 
 .product-item p span {
   font-weight: bold;
 }
+
 .rating {
   display: flex;
   align-items: center;
-  margin-top: 8px;
+  margin-top: 12px; /* Aumentado el espacio superior */
 
   p {
     margin: 0;
-    margin-right: 8px;
+    margin-right: 12px; /* Aumentado el espacio a la derecha */
+    color: #aaa; /* Cambiado el color del texto */
   }
 
   ion-icon {
-    font-size: 24px;
+    font-size: 24px; /* Tamaño del icono */
     color: #FFD700;
-    margin-right: 2px;
+    margin-right: 6px; /* Ajustado el espacio a la derecha */
   }
 }
-/* Estilos para el precio original tachado */
+
 .original-price {
   text-decoration: line-through;
-  color: red; /* Opcional: puedes elegir otro color */
+  color: #fffbfb; /* Cambiado el color del precio original */
 }
 
-/* Estilos para el precio rebajado */
 .offer-price {
-  color: green; /* Opcional: puedes elegir otro color */
+  color: #4CAF50; /* Cambiado el color del precio de oferta */
+  font-weight: bold; /* Añadida negrita para destacar */
 }
-
 
 .options {
-  margin: 0;
+  margin: 10px 0; /* Aumentado el espacio entre elementos */
   display: flex;
+  justify-content: space-between; /* Alineados los elementos a los extremos */
 }
 
 .buscador {
   text-align: left;
+  margin-bottom: 20px; /* Añadido espacio inferior */
 }
+
+/* Estilos para los botones */
+ion-button {
+  --border-radius: 25px; /* Redondeado los bordes de los botones */
+  --background: var(--ion-color-primary); /* Color de fondo del botón */
+  --color: #fff; /* Color del texto del botón */
+  --padding-start: 20px; /* Aumentado el espacio interno izquierdo */
+  --padding-end: 20px; /* Aumentado el espacio interno derecho */
+}
+
+ion-button:hover {
+  --background: #4285F4; /* Cambiado el color de fondo al pasar el ratón */
+}
+
+ion-button[fill="clear"] {
+  --background: transparent; /* Botones transparentes */
+  --color: var(--ion-color-primary); /* Color de texto */
+  --border-width: 1px; /* Ancho del borde */
+  --border-color: var(--ion-color-primary); /* Color del borde */
+}
+
+ion-button[fill="clear"]:hover {
+  --background: rgba(0, 0, 0, 0.1); /* Color de fondo al pasar el ratón */
+}
+.product-item ion-thumbnail {
+  width: 80px; /* Ajusta el tamaño de la miniatura según sea necesario */
+  height: 80px;
+  border-radius: 50%; /* Hace que la imagen sea redonda */
+  overflow: hidden; /* Oculta cualquier parte de la imagen que esté fuera del radio */
+}
+
+.product-item ion-thumbnail img {
+  width: 100%; /* Ajusta el tamaño de la imagen para que ocupe toda la miniatura */
+  height: auto;
+}
+
+
+
