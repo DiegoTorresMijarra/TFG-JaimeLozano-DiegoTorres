@@ -18,9 +18,8 @@ import { RouterLink } from '@angular/router'
 import { Restaurant } from '../../models/restaurant.entity'
 import {AnimationService} from "../../services/animation.service";
 import {ModalController} from "@ionic/angular";
-import {Category} from "../../models/category.entity";
-import {CategoryModalComponent} from "../categories/category-modal/category-modal.component";
 import {RestaurantModalComponent} from "./modal/modal.component";
+import {Platform} from "@angular/cdk/platform";
 
 @Component({
   selector: 'app-restaurants',
@@ -48,7 +47,7 @@ export class RestaurantsPage implements OnInit {
   private authService = inject(AuthService)
   private animationService = inject(AnimationService)
   public isAdmin: boolean = false
-  constructor(private modalController: ModalController) {}
+  constructor(private modalController: ModalController,private platform: Platform) {}
 
   ngOnInit() {
     this.loadRestaurants()
@@ -91,6 +90,20 @@ export class RestaurantsPage implements OnInit {
       leaveAnimation: this.animationService.leaveAnimation,
     })
     return await modal.present()
+  }
+
+  openGoogleMaps(address: string) {
+    // URL base de Google Maps
+    let googleMapsUrl = 'https://www.google.com/maps/search/?api=1&query=';
+
+    // Reemplazar los espacios en la dirección con '+'
+    let formattedAddress = address.replace(/ /g, '+');
+
+    // Combinar la URL base con la dirección formateada
+    let finalUrl = googleMapsUrl + formattedAddress;
+
+    // Abrir enlace en el navegador
+    window.open(finalUrl, '_blank');
   }
 
 }
