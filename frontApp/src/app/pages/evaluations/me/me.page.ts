@@ -16,6 +16,7 @@ import {EvaluationService} from "../../../services/evaluation.service";
 import {Order} from "../../../models/order.entity";
 import {EvaluationDto} from "../../../models/evaluation.entity";
 import {OrderedProduct} from "../../../models/orderedProduct.entity";
+import {catchError, forkJoin, Observable} from "rxjs";
 
 @Component({
   selector: 'app-me',
@@ -65,16 +66,40 @@ export class MePage implements OnInit{
     return this.evaluationForm.get('evaluations') as FormArray;
   }
 
+  getEvaluationFormGroup(index: number): FormGroup {
+    return this.evaluationForms.at(index) as FormGroup;
+  }
+
   onSubmit() {
     if (this.evaluationForm.valid) {
-      const evaluationDto: EvaluationDto[] = this.evaluationForms.getRawValue().map((evalForm: any) => ({
+      const evaluationDtos: EvaluationDto[] = this.evaluationForms.getRawValue().map((evalForm: any) => ({
         productId: evalForm.productId,
         value: evalForm.value,
         comment: evalForm.comment
       }));
-      // Mostrar las valoraciones
-      evaluationDto.forEach(evaluation => {
-        console.log(`Producto ID: ${evaluation.productId}, Valoración: ${evaluation.value}, Comentario: ${evaluation.comment}`);
+
+      const saveObservables: Observable<any>[] = evaluationDtos.map(dto =>
+        this.evaluationService.saveEvaluation(dto).pipe(
+          catchError((error) => {
+            console.error('Error guardando evaluation:', error);
+            throw error;
+          })
+        )
+      );
+
+      forkJoin(saveObservables).subscribe({
+        next: results => {
+          console.log('Todas las evaluaciones fueron guardadas exitosamente', results);
+          // Aquí podrías navegar a otra página o mostrar un mensaje de éxito
+        },
+        error: error => {
+          console.error('Error guardando algunas evaluaciones:', error);
+          // Aquí podrías manejar el error de manera más específica
+        },
+        complete: () => {
+          console.log('Proceso de guardar evaluaciones completado.');
+          this.router.navigate(['/me'])
+        }
       });
     }
   }

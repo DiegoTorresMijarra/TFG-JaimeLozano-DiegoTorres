@@ -17,7 +17,7 @@
             <ion-col><strong>Pedido ID: {{ evaluationForm.get('orderId')?.value }}</strong></ion-col>
           </ion-row>
 
-          <ion-row *ngFor="let evalForm of evaluationForms.controls; let i = index" [formGroup]="evaluationForm">
+          <ion-row *ngFor="let evalForm of evaluationForms.controls; let i = index" [formGroup]="getEvaluationFormGroup(i)">
             <ion-col size="12">
               <ion-item>
                 <ion-label position="stacked">Producto ID: {{ evalForm.get('productId')?.value }}</ion-label>
