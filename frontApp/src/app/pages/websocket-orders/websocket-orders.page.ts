@@ -4,13 +4,14 @@ import { FormsModule } from '@angular/forms'
 import { WebSocketService } from '../../services/websocketOrders.service'
 import { Notification } from '../../models/notification.entity'
 import { IonicModule } from '@ionic/angular'
+import { RouterLink } from '@angular/router'
 
 @Component({
   selector: 'app-websocket-orders',
   templateUrl: './websocket-orders.page.html',
   styleUrls: ['./websocket-orders.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, IonicModule],
+  imports: [CommonModule, FormsModule, IonicModule, RouterLink],
 })
 export class WebsocketOrdersPage implements OnInit {
   notifications: Notification[] = []

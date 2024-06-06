@@ -9,6 +9,7 @@ export interface OrderData {
   orderId: string
   restaurantId: string
   clientId: string
-  fecha_cre: string
-  fecha_act: string
+  addressId: string
+  createdAt: string
+  updatedAt: string
 }

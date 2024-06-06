@@ -19,6 +19,7 @@
         <ion-label>
           <h2>Order ID: {{ notification.data.orderId }}</h2>
           <p>Restaurant ID: {{ notification.data.restaurantId }}</p>
+          <p>Address ID: <a [routerLink]="['/addresses/details/' + notification.data.addressId]">{{ notification.data.addressId }}</a></p>
           <p>Type: {{ notification.type }}</p>
         </ion-label>
       </ion-item>

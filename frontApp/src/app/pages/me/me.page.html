@@ -79,9 +79,15 @@
               {{address.postalCode}} {{address.province}}</p>
           </ion-label>
           <ion-buttons class="buttons" style="display: flex" slot="end">
-            <ion-button color="primary" size="large" fill="solid">Detalles</ion-button>
-            <ion-button color="warning" size="large" fill="solid">Actualizar</ion-button>
-            <ion-button color="danger" size="large" fill="solid">Borrar</ion-button>
+
+            <ion-button [routerLink]="['/addresses/details/' + address.id]"
+              color="primary" size="large" fill="solid">Detalles</ion-button>
+
+            <ion-button [routerLink]="['/addresses/update/' + address.id]"
+              color="warning" size="large" fill="solid">Actualizar</ion-button>
+
+            <ion-button (click)="deleteAddress(address.id)"
+              color="danger" size="large" fill="solid">Borrar</ion-button>
           </ion-buttons>
         </ion-item>
       </ion-list>

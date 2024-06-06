@@ -1,6 +1,6 @@
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router'
 import { NgModule } from '@angular/core'
-import {roleGuard} from "./guards/role.guard";
+import { roleGuard } from './guards/role.guard'
 
 export const routes: Routes = [
   {
@@ -158,14 +158,35 @@ export const routes: Routes = [
   },
   {
     path: 'cart',
-    loadComponent: () => import('./pages/cart/cart.page').then( m => m.CartPage)
+    loadComponent: () =>
+      import('./pages/cart/cart.page').then((m) => m.CartPage),
   },
   {
     path: 'updateEvaluations',
-    loadComponent: () => import('./pages/evaluations/me/me.page').then(m => m.MePage)
-  }
-
-
+    loadComponent: () =>
+      import('./pages/evaluations/me/me.page').then((m) => m.MePage),
+  },
+  {
+    path: 'addresses/new',
+    loadComponent: () =>
+      import('./pages/addresses/new-address/new-address.page').then(
+        (m) => m.NewAddressPage,
+      ),
+  },
+  {
+    path: 'addresses/update/:id',
+    loadComponent: () =>
+      import('./pages/addresses/update-address/update-address.page').then(
+        (m) => m.UpdateAddressPage,
+      ),
+  },
+  {
+    path: 'addresses/details/:id',
+    loadComponent: () =>
+      import('./pages/addresses/details/details.page').then(
+        (m) => m.DetailsPage,
+      ),
+  },
 ]
 
 @NgModule({

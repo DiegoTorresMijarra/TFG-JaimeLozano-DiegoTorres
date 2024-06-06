@@ -9,6 +9,7 @@ import { UserService } from '../../services/user.service'
 import { addIcons } from 'ionicons'
 import { starOutline, starSharp } from 'ionicons/icons'
 import { PaginatePipe } from '../../pipes/paginate.pipe'
+import { AddressesService } from '../../services/addresses.service'
 
 @Component({
   selector: 'app-login',
@@ -38,6 +39,7 @@ export class MePage implements OnInit {
     protected authService: AuthService,
     private appComponent: AppComponent,
     private userService: UserService,
+    private addressService: AddressesService,
   ) {
     addIcons({ starOutline, starSharp })
   }
@@ -45,8 +47,11 @@ export class MePage implements OnInit {
   ngOnInit(): void {
     this.userService.meDetails().subscribe((data) => {
       this.user = data
+      if (!this.user) {
+        console.error('Prueba más tarde')
+        this.router.navigate(['/'])
+      }
     })
-    if (!this.user) throw new Error('Prueba más tarde')
   }
   goToEvaluationPage(order: any) {
     const navigationExtras: NavigationExtras = {
@@ -63,6 +68,21 @@ export class MePage implements OnInit {
 
   changeAddressesPage(page: number): void {
     this.currentAddressesPage = page
+  }
+
+  deleteAddress(id: string | undefined): void {
+    this.addressService.deleteAddress(String(id)).subscribe({
+      next: () => {
+        if (!this.user?.addresses) throw new Error()
+        console.log('Categoria borrado correctamente')
+        this.user.addresses = this.user?.addresses.filter(
+          (address) => address.id !== id,
+        )
+      },
+      error: (error) => {
+        console.error('Error deleting product:', error)
+      },
+    })
   }
 
   protected readonly Math = Math

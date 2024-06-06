@@ -10,6 +10,7 @@ public class OrderMapperNotificacion {
                 order.getId(),
                 order.getRestaurantId().toString(),
                 order.getUserId().toString(),
+                order.getAddressesId().toString(),
                 order.getCreatedAt().toString(),
                 order.getUpdatedAt().toString());
     }

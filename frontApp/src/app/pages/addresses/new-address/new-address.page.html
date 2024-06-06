@@ -1,0 +1,97 @@
+<ion-content [fullscreen]="true">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title color="primary" size="large">Nueva Dirección</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <form [formGroup]="addressForm" (ngSubmit)="onSubmit()">
+    <ion-item>
+      <ion-label position="floating">Nombre de la Dirección</ion-label>
+      <ion-input formControlName="name" type="text"></ion-input>
+    </ion-item>
+    <ion-text class="error" color="danger" *ngIf="addressForm.get('name')?.touched && addressForm.get('name')?.errors">
+      <ion-note *ngIf="addressForm.get('name')?.errors?.['required']">El nombre no puede estar vacío.</ion-note>
+      <ion-note *ngIf="addressForm.get('name')?.errors?.['maxlength']">El nombre no puede tener más de 100 caracteres.</ion-note>
+      <ion-note *ngIf="addressForm.get('name')?.errors?.['pattern']">El campo solo puede contener letras y números.</ion-note>
+    </ion-text>
+    <ion-item>
+      <ion-label position="floating">País</ion-label>
+      <ion-input formControlName="country" type="text"></ion-input>
+    </ion-item>
+    <ion-text class="error" color="danger" *ngIf="addressForm.get('country')?.touched && addressForm.get('country')?.errors">
+      <ion-note *ngIf="addressForm.get('country')?.errors?.['required']">El país no puede estar vacío.</ion-note>
+      <ion-note *ngIf="addressForm.get('country')?.errors?.['maxlength']">El país no puede tener más de 50 caracteres.</ion-note>
+      <ion-note *ngIf="addressForm.get('country')?.errors?.['pattern']">El campo solo puede contener letras y números.</ion-note>
+    </ion-text>
+
+    <ion-item>
+      <ion-label position="floating">Provincia</ion-label>
+      <ion-input formControlName="province" type="text"></ion-input>
+    </ion-item>
+    <ion-text class="error" color="danger" *ngIf="addressForm.get('province')?.touched && addressForm.get('province')?.errors">
+      <ion-note *ngIf="addressForm.get('province')?.errors?.['required']">La provincia no puede estar vacía.</ion-note>
+      <ion-note *ngIf="addressForm.get('province')?.errors?.['maxlength']">La provincia no puede tener más de 50 caracteres.</ion-note>
+      <ion-note *ngIf="addressForm.get('province')?.errors?.['pattern']">El campo solo puede contener letras y números.</ion-note>
+    </ion-text>
+
+    <ion-item>
+      <ion-label position="floating">Ciudad</ion-label>
+      <ion-input formControlName="city" type="text"></ion-input>
+    </ion-item>
+    <ion-text class="error" color="danger" *ngIf="addressForm.get('city')?.touched && addressForm.get('city')?.errors">
+      <ion-note *ngIf="addressForm.get('city')?.errors?.['required']">La ciudad no puede estar vacía.</ion-note>
+      <ion-note *ngIf="addressForm.get('city')?.errors?.['maxlength']">La ciudad no puede tener más de 50 caracteres.</ion-note>
+      <ion-note *ngIf="addressForm.get('city')?.errors?.['pattern']">El campo solo puede contener letras y números.</ion-note>
+    </ion-text>
+
+    <ion-item>
+      <ion-label position="floating">Calle</ion-label>
+      <ion-input formControlName="street" type="text"></ion-input>
+    </ion-item>
+    <ion-text class="error" color="danger" *ngIf="addressForm.get('street')?.touched && addressForm.get('street')?.errors">
+      <ion-note *ngIf="addressForm.get('street')?.errors?.['required']">La calle no puede estar vacía.</ion-note>
+      <ion-note *ngIf="addressForm.get('street')?.errors?.['maxlength']">La calle no puede tener más de 100 caracteres.</ion-note>
+      <ion-note *ngIf="addressForm.get('street')?.errors?.['pattern']">El campo solo puede contener letras y números.</ion-note>
+    </ion-text>
+
+    <ion-item>
+      <ion-label position="floating">Número</ion-label>
+      <ion-input formControlName="number" type="text"></ion-input>
+    </ion-item>
+    <ion-text class="error" color="danger" *ngIf="addressForm.get('number')?.touched && addressForm.get('number')?.errors">
+      <ion-note *ngIf="addressForm.get('number')?.errors?.['required']">El número no puede estar vacío.</ion-note>
+      <ion-note *ngIf="addressForm.get('number')?.errors?.['maxlength']">El número no puede tener más de 10 caracteres.</ion-note>
+      <ion-note *ngIf="addressForm.get('number')?.errors?.['pattern']">El campo solo puede contener letras y números.</ion-note>
+    </ion-text>
+
+    <ion-item>
+      <ion-label position="floating">Apartamento</ion-label>
+      <ion-input formControlName="apartment" type="text"></ion-input>
+    </ion-item>
+    <ion-text class="error" color="danger" *ngIf="addressForm.get('apartment')?.touched && addressForm.get('apartment')?.errors">
+      <ion-note *ngIf="addressForm.get('apartment')?.errors?.['maxlength']">El apartamento no puede tener más de 50 caracteres.</ion-note>
+      <ion-note *ngIf="addressForm.get('apartment')?.errors?.['pattern']">El campo solo puede contener letras y números.</ion-note>
+    </ion-text>
+
+    <ion-item>
+      <ion-label position="floating">Código Postal</ion-label>
+      <ion-input formControlName="postalCode" type="text"></ion-input>
+    </ion-item>
+    <ion-text class="error" color="danger" *ngIf="addressForm.get('postalCode')?.touched && addressForm.get('postalCode')?.errors">
+      <ion-note *ngIf="addressForm.get('postalCode')?.errors?.['required']">El código postal no puede estar vacío.</ion-note>
+      <ion-note *ngIf="addressForm.get('postalCode')?.errors?.['pattern']">El código postal debe tener 5 dígitos.</ion-note>
+    </ion-text>
+
+    <ion-item>
+      <ion-label position="floating">Información Adicional</ion-label>
+      <ion-input formControlName="extraInfo" type="text"></ion-input>
+    </ion-item>
+    <ion-text class="error" color="danger" *ngIf="addressForm.get('extraInfo')?.touched && addressForm.get('extraInfo')?.errors">
+      <ion-note *ngIf="addressForm.get('extraInfo')?.errors?.['maxlength']">La información adicional no puede tener más de 255 caracteres.</ion-note>
+      <ion-note *ngIf="addressForm.get('extraInfo')?.errors?.['pattern']">El campo solo puede contener letras y números.</ion-note>
+    </ion-text>
+
+    <ion-button expand="block" type="submit" [disabled]="addressForm.invalid">Guardar Dirección</ion-button>
+  </form>
+</ion-content>

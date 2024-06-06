@@ -99,7 +99,6 @@ export class ProductsPage implements OnInit {
 
       this.filters.page += 1 // Incrementar el número de página después de cargar los datos
     })
-    console.log(this.filters)
   }
 
   applyFilters() {
