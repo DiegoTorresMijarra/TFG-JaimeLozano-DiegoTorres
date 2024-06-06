@@ -19,3 +19,26 @@
 .product-item p span {
   font-weight: bold;
 }
+/* Estilos para los botones */
+ion-button {
+  --border-radius: 25px; /* Redondeado los bordes de los botones */
+  --background: var(--ion-color-primary); /* Color de fondo del botón */
+  --color: #fff; /* Color del texto del botón */
+  --padding-start: 20px; /* Aumentado el espacio interno izquierdo */
+  --padding-end: 20px; /* Aumentado el espacio interno derecho */
+}
+
+ion-button:hover {
+  --background: #4285F4; /* Cambiado el color de fondo al pasar el ratón */
+}
+
+ion-button[fill="clear"] {
+  --background: transparent; /* Botones transparentes */
+  --color: var(--ion-color-primary); /* Color de texto */
+  --border-width: 1px; /* Ancho del borde */
+  --border-color: var(--ion-color-primary); /* Color del borde */
+}
+
+ion-button[fill="clear"]:hover {
+  --background: rgba(0, 0, 0, 0.1); /* Color de fondo al pasar el ratón */
+}
