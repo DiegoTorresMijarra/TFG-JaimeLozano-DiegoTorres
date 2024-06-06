@@ -13,6 +13,7 @@ export interface Order {
   createdAt: Date
   updatedAt: Date
   deletedAt: Date | null
+  restaurantName?: string
 }
 
 export enum OrderState {

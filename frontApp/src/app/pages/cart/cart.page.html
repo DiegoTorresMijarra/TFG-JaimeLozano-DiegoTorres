@@ -15,7 +15,7 @@
           <p>Subtotal: {{ linea.subtotal }}</p>
         </ion-label>
         <ion-thumbnail slot="start">
-          <ion-img [src]="'data:image/png;base64,' + linea.product.image"></ion-img>
+          <ion-img [src]="getProductUrl(linea.product)"></ion-img>
         </ion-thumbnail>
         <ion-button color="danger" (click)="removeLine(linea.product.id)" >Eliminar</ion-button>
       </ion-item>

@@ -127,6 +127,11 @@ export const routes: Routes = [
     data: { expectedRole: 'ROLE_WORKER' },
   },
   {
+    path: 'orders/details/:id',
+    loadComponent: () =>
+      import('./pages/orders/details/details.page').then((m) => m.DetailsPage),
+  },
+  {
     path: 'offers',
     loadComponent: () =>
       import('./pages/offers/offers.page').then((m) => m.OffersPage),

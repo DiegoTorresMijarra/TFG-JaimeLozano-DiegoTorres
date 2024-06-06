@@ -1,0 +1,33 @@
+<ion-content [fullscreen]="true">
+  <ion-toolbar>
+    <ion-title>Detalles del pedido: </ion-title>
+  </ion-toolbar>
+  <ion-item *ngIf="order; else noOrder" class="product-item">
+    <ion-label>
+      <h2>Pedido: {{ order.id }}</h2>
+      <p>Usuario: {{ order.userId }}</p>
+      <p>Restaurante: {{ order.restaurantId }}</p>
+      <p>Direccion: <a [routerLink]="['/addresses/details/' + order.addressesId]">{{ order.addressesId }}</a></p>
+      <ion-item *ngFor="let orderedProduct of order.orderedProducts" class="product-item">
+        <ion-thumbnail slot="start">
+          <ion-img [src]="getProductUrl(orderedProduct.product)"></ion-img>
+        </ion-thumbnail>
+        <ion-label>
+          <h2>{{ orderedProduct.product?.name}}</h2>
+          <p>Precio del producto: {{ orderedProduct.productPrice}}€</p>
+          <p>Cantidad: {{ orderedProduct.quantity}}</p>
+          <p>Precio Total: {{ orderedProduct.totalPrice}}€</p>
+        </ion-label>
+      </ion-item>
+      <p>Cantidad Total: {{ order.totalQuantityProducts }}</p>
+      <p>Precio Total: {{ order.totalPrice }}€</p>
+      <p>Pagado: {{ order.isPaid ? 'Si' : 'No' }}</p>
+      <p>Estado: {{ order.state }}</p>
+      <p>Creado: {{ order.createdAt | date: 'short' }}</p>
+      <p>Actualizado: {{order.updatedAt | date: 'short' }}</p>
+    </ion-label>
+  </ion-item>
+  <ng-template #noOrder>
+    <p>Ha ocurrido algo inesperado pruebe más tarde</p>
+  </ng-template>
+</ion-content>

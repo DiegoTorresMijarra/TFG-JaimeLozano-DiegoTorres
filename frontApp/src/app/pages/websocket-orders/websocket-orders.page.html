@@ -17,7 +17,9 @@
     <div *ngFor="let notification of notifications">
       <ion-item  *ngIf="!searchTerm || searchTerm.value === '' || searchTerm.value === notification.data.restaurantId ">
         <ion-label>
-          <h2>Order ID: {{ notification.data.orderId }}</h2>
+          <h2>Order ID:
+            <a [routerLink]="['/orders/details/' + notification.data.orderId]">{{ notification.data.orderId }}</a>
+          </h2>
           <p>Restaurant ID: {{ notification.data.restaurantId }}</p>
           <p>Address ID: <a [routerLink]="['/addresses/details/' + notification.data.addressId]">{{ notification.data.addressId }}</a></p>
           <p>Type: {{ notification.type }}</p>

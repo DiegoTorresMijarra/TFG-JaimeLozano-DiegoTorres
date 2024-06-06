@@ -26,8 +26,8 @@ export interface ProductSaveDto {
   categoryId: number
 }
 
-export function getProductUrl(product: Product): string {
-  return product.image && product.imageExtension
+export function getProductUrl(product?: Product): string {
+  return product && product.image && product.imageExtension
     ? 'data:' + product.imageExtension + ';base64,' + product.image
     : '/assets/products/default.jpg'
 }

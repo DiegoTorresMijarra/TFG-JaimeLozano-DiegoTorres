@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms'
 import { IonicModule } from '@ionic/angular'
 import { Cart } from '../../models/cart.entity'
 import { CartService } from '../../services/cart.service'
+import { getProductUrl } from '../../models/product.entity'
 
 @Component({
   selector: 'app-cart',
@@ -26,4 +27,6 @@ export class CartPage implements OnInit {
   removeLine(productId?: number) {
     if (productId) this.cartService.removeFromCart(productId)
   }
+
+  protected readonly getProductUrl = getProductUrl
 }
