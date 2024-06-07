@@ -9,7 +9,8 @@ import {
 import { routes } from './app/app.routes'
 import { AppComponent } from './app/app.component'
 import { environment } from './environments/environment'
-import { HttpClientModule } from '@angular/common/http'
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http'
+import {HttpErrorService} from "./app/interceptors/http-error.service";
 
 if (environment.production) {
   enableProdMode()
@@ -21,5 +22,6 @@ bootstrapApplication(AppComponent, {
     provideIonicAngular(),
     provideRouter(routes),
     importProvidersFrom(HttpClientModule),
+    { provide: HTTP_INTERCEPTORS, useClass: HttpErrorService, multi: true },
   ],
 })

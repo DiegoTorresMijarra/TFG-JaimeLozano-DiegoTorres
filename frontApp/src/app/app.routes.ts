@@ -1,6 +1,9 @@
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router'
 import { NgModule } from '@angular/core'
 import { roleGuard } from './guards/role.guard'
+import {Error404Component} from "./pages/error/error404/error404.component";
+import {Error403Component} from "./pages/error/error403/error403.component";
+import {Error400Component} from "./pages/error/error400/error400.component";
 
 export const routes: Routes = [
   {
@@ -8,6 +11,10 @@ export const routes: Routes = [
     redirectTo: 'products',
     pathMatch: 'full',
   },
+  // Rutas para los errores
+  { path: 'error/400', component: Error400Component },
+  { path: 'error/403', component: Error403Component },
+  { path: 'error/404', component: Error404Component },
   {
     path: 'me',
     loadComponent: () => import('./pages/me/me.page').then((m) => m.MePage),
@@ -191,6 +198,8 @@ export const routes: Routes = [
       import('./pages/addresses/details/details.page').then(
         (m) => m.DetailsPage,
       ),
+    canActivate: [roleGuard],
+    data: { expectedRole: 'ROLE_USER' },
   },
 ]
 

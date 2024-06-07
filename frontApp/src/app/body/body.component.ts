@@ -11,6 +11,8 @@ import {
 } from 'ionicons/icons'
 import { addIcons } from 'ionicons'
 import {AuthService} from "../services/auth.service";
+import {HTTP_INTERCEPTORS} from "@angular/common/http";
+import {HttpErrorService} from "../interceptors/http-error.service";
 
 @Component({
   selector: 'app-body',
