@@ -1,21 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core'
-import { ModalController } from '@ionic/angular'
+import { IonicModule, ModalController } from '@ionic/angular'
 import { addIcons } from 'ionicons'
 import { closeOutline, closeSharp } from 'ionicons/icons'
-import {
-  IonButton,
-  IonButtons,
-  IonContent,
-  IonHeader,
-  IonIcon,
-  IonItem,
-  IonItemDivider,
-  IonLabel,
-  IonList,
-  IonText,
-  IonTitle,
-  IonToolbar,
-} from '@ionic/angular/standalone'
 import { CommonModule } from '@angular/common'
 import { FormsModule } from '@angular/forms'
 import { RouterLink } from '@angular/router'
@@ -26,23 +12,7 @@ import { Order } from '../../../models/order.entity'
   templateUrl: './modal.component.html',
   styleUrls: ['./modal.component.scss'],
   standalone: true,
-  imports: [
-    IonContent,
-    IonHeader,
-    IonTitle,
-    IonToolbar,
-    CommonModule,
-    FormsModule,
-    IonButton,
-    IonButtons,
-    IonItem,
-    IonLabel,
-    IonList,
-    RouterLink,
-    IonIcon,
-    IonText,
-    IonItemDivider,
-  ],
+  imports: [CommonModule, FormsModule, RouterLink, IonicModule],
 })
 export class OrderModalComponent {
   showProducts: boolean = false

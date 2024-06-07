@@ -35,7 +35,7 @@
         </ion-item>
         <ion-item>
           <ion-label>Pagado</ion-label>
-          <ion-toggle formControlName="isPaid" [checked]="order?.isPaid ?? false"></ion-toggle>
+          <ion-toggle formControlName="isPaid" [checked]="order.isPaid"></ion-toggle>
         </ion-item>
         <ion-button expand="block" type="submit" color="primary" fill="solid" [disabled]="orderForm!.invalid">Actualizar Pedido</ion-button>
       </form>

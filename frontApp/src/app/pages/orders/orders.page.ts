@@ -1,47 +1,21 @@
 import { Component, inject, OnInit } from '@angular/core'
-import { CommonModule } from '@angular/common'
+import { CommonModule, DatePipe, NgForOf } from '@angular/common'
 import { FormsModule } from '@angular/forms'
-import {
-  IonButton,
-  IonButtons,
-  IonContent,
-  IonHeader,
-  IonIcon,
-  IonItem,
-  IonItemDivider,
-  IonLabel,
-  IonList,
-  IonTitle,
-  IonToolbar,
-} from '@ionic/angular/standalone'
 import { OrderService } from '../../services/orders.service'
-import { ModalController } from '@ionic/angular'
+import { IonicModule, ModalController } from '@ionic/angular'
 import { AnimationService } from '../../services/animation.service'
 import { OrderModalComponent } from './modal/modal.component'
 import { RestaurantService } from '../../services/restaurant.service'
 import { ProductService } from '../../services/product.service'
 import { Order } from '../../models/order.entity'
+import { RouterLink } from '@angular/router'
 
 @Component({
   selector: 'app-orders',
   templateUrl: './orders.page.html',
   styleUrls: ['./orders.page.scss'],
   standalone: true,
-  imports: [
-    IonContent,
-    IonHeader,
-    IonTitle,
-    IonToolbar,
-    CommonModule,
-    FormsModule,
-    IonButton,
-    IonButtons,
-    IonIcon,
-    IonItem,
-    IonLabel,
-    IonList,
-    IonItemDivider,
-  ],
+  imports: [IonicModule, RouterLink, DatePipe, NgForOf],
 })
 export class OrdersPage implements OnInit {
   public orders: Order[] = []

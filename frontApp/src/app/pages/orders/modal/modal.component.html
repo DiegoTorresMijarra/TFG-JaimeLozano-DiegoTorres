@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Pedido: {{ order?.id }}</ion-title>
+    <ion-title>Pedido: <a [routerLink]="['/orders/details/' + order?.id]" (click)="dismissModal()">{{ order?.id }}</a></ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="dismissModal()" color="light">
         <ion-icon class="cerrar" name="close-outline"></ion-icon>
