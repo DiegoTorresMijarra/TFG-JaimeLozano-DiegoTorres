@@ -72,7 +72,7 @@ public class RestaurantServicePgSqlImpl extends CommonServicePgSql<Restaurant, L
      * @param dto RestauranteDTO con la informacion del restaurante a guardar
      * @return Restaurante guardado
      */
-    @CachePut
+    @CachePut(key = "#result.id")
     public Restaurant save(RestaurantDto dto) {
         return save(mapper.dtoToModel(dto));
     }
@@ -83,7 +83,7 @@ public class RestaurantServicePgSqlImpl extends CommonServicePgSql<Restaurant, L
      * @param restaurantDTO RestauranteDTO con la información a actualizar
      * @return Restaurante actualizado
      */
-    @CachePut
+    @CachePut(key = "#result.id")
     @Transactional
     public Restaurant update(Long id, RestaurantDto restaurantDTO) {
         Restaurant original = findById(id);
