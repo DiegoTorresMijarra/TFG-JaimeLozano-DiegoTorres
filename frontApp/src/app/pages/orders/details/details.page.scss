@@ -1,0 +1,81 @@
+
+.pending {
+  color: orange;
+  font-weight: bold;
+}
+
+.accepted {
+  color: green;
+  font-weight: bold;
+}
+
+.rejected {
+  color: red;
+  font-weight: bold;
+}
+
+.delivered {
+  color: blue;
+  font-weight: bold;
+}
+
+.canceled {
+  color: gray;
+  font-weight: bold;
+}
+
+.deleted {
+  color: black;
+  font-weight: bold;
+}
+
+ion-item.product-item {
+  --padding-start: 10px;
+  --padding-end: 10px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+ion-label {
+  h2 {
+    font-size: 1.2em;
+    margin-bottom: 0.5em;
+  }
+  p {
+    margin: 0;
+    font-size: 0.9em;
+    color: #666;
+  }
+}
+
+  ion-buttons {
+    --background: var(--ion-color-secondary);
+  }
+
+  ion-buttons.form-buttons {
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    margin-top: 20px;
+  }
+
+  ion-item {
+    width: 100%;
+    --padding-start: 0;
+  }
+
+  ion-button {
+    width: 100%;
+    margin-top: 15px;
+  }
+
+  ion-toast {
+    --background: #2dd36f;
+    --color: #fff;
+    text-align: center;
+  }
+
+

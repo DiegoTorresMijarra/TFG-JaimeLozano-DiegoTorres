@@ -21,13 +21,34 @@
       </ion-item>
       <p>Cantidad Total: {{ order.totalQuantityProducts }}</p>
       <p>Precio Total: {{ order.totalPrice }}€</p>
-      <p>Pagado: {{ order.isPaid ? 'Si' : 'No' }}</p>
-      <p>Estado: {{ order.state }}</p>
       <p>Creado: {{ order.createdAt | date: 'short' }}</p>
       <p>Actualizado: {{order.updatedAt | date: 'short' }}</p>
     </ion-label>
+    <ion-buttons>
+      <form [formGroup]="orderForm!" (ngSubmit)="patchOrder()">
+        <ion-item>
+          <ion-label position="floating">Estado</ion-label>
+          <ion-select formControlName="state" >
+            <ion-select-option *ngFor="let state of Object.values(OrderState)"
+                               [value]="state" class="{{state.toLowerCase()}}">{{ state }}</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label>Pagado</ion-label>
+          <ion-toggle formControlName="isPaid" [checked]="order?.isPaid ?? false"></ion-toggle>
+        </ion-item>
+        <ion-button expand="block" type="submit" color="primary" fill="solid" [disabled]="orderForm!.invalid">Actualizar Pedido</ion-button>
+      </form>
+    </ion-buttons>
   </ion-item>
   <ng-template #noOrder>
     <p>Ha ocurrido algo inesperado pruebe más tarde</p>
   </ng-template>
+  <ion-toast
+    [isOpen]="isToastOpen"
+    message="Pedido actualizado"
+    duration="2000"
+    color="success"
+    position="top">
+  </ion-toast>
 </ion-content>

@@ -30,4 +30,36 @@ export class OrderService {
       }),
     )
   }
+
+  updateIsPaidById(id: string, isPaid: boolean): Observable<Order> {
+    const headers = this.authService.getAuthHeaders()
+    return this.http
+      .patch<Order>(
+        `${this.apiUrl}/updateIsPaid/${id}?isPaid=${isPaid}`,
+        {},
+        { headers },
+      )
+      .pipe(
+        catchError((error) => {
+          console.error('Error obteniendo pedido:', error)
+          return throwError(error)
+        }),
+      )
+  }
+
+  patchStateById(id: string, state: string): Observable<Order> {
+    const headers = this.authService.getAuthHeaders()
+    return this.http
+      .patch<Order>(
+        `${this.apiUrl}/patchState/${id}?state=${state}`,
+        {},
+        { headers },
+      )
+      .pipe(
+        catchError((error) => {
+          console.error('Error obteniendo pedido:', error)
+          return throwError(error)
+        }),
+      )
+  }
 }

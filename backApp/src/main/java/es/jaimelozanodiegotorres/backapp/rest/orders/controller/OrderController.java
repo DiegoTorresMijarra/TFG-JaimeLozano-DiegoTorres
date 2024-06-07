@@ -128,7 +128,7 @@ public class OrderController extends CommonController<Order, ObjectId, OrderDto>
     }
 
     @Transactional
-    @PutMapping ("/updateIsPaid/{id}")
+    @PatchMapping ("/updateIsPaid/{id}")
     @PreAuthorize("hasAnyRole('WORKER','ADMIN')")
     public ResponseEntity<Order> updateIsPaidById(
             @PathVariable (value = "id")  ObjectId id,
