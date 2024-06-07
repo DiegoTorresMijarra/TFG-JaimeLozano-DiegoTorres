@@ -3,6 +3,7 @@ package es.jaimelozanodiegotorres.backapp.rest.commons.services;
 import es.jaimelozanodiegotorres.backapp.rest.commons.exceptions.ExceptionService;
 import es.jaimelozanodiegotorres.backapp.rest.user.models.Role;
 import es.jaimelozanodiegotorres.backapp.rest.user.models.User;
+import org.aspectj.weaver.ast.Var;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.Arrays;
@@ -27,8 +28,9 @@ public abstract class CommonService {
     }
 
     protected User getLoggedUser() {
+        var user = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        return (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return (User) user;
     }
 
     protected UUID getLoggedUserId() {
@@ -54,5 +56,11 @@ public abstract class CommonService {
         User user = getLoggedUser();
 
         return user.getRoles().contains(Role.ADMIN);
+    }
+
+    protected boolean verifyWorker(){
+        User user = getLoggedUser();
+
+        return user.getRoles().contains(Role.ADMIN) || user.getRoles().contains(Role.WORKER);
     }
 }

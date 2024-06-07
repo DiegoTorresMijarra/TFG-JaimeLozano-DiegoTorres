@@ -23,6 +23,17 @@ public class AddressesServicePgSqlImpl extends CommonServicePgSql<Addresses, UUI
         addressesMapper = AddressesMapper.INSTANCE;
     }
 
+    @Override
+    public Addresses findById(UUID id) throws RuntimeException {
+
+        Addresses res = super.findById(id);
+
+        if(!verifyWorker())
+            verifyLogguedSameUser(res.getUserId());
+
+        return res;
+    }
+
     public Addresses save(AddressSaveDto dto) {
         Addresses entity = addressesMapper.dtoToModel(dto);
 
