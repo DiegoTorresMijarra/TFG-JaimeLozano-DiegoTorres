@@ -8,13 +8,14 @@
   </ion-header>
 
   <ion-list>
-    <ion-item *ngFor="let order of orders" class="product-item">
-      <ion-label (click)="openDetailsModal(order)">
-        <h2>Pedido: {{ order.id }}</h2>
+    <ion-item *ngFor="let order of orders | paginate:currentOrderPage:pageOrderSize" class="order-item"
+              (click)="openDetailsModal(order)">
+      <ion-label>
+        <h2>Pedido: <a [routerLink]="['/orders/details/' + order.id]">{{ order.id }}</a></h2>
         <p>Usuario: {{ order.userId }}</p>
         <p>Restaurante: {{ getRestaurantName(order.restaurantId) }}</p>
         <p>Direccion: {{ order.addressesId }}</p>
-        <ion-item *ngFor="let orderedProduct of order.orderedProducts" class="product-item">
+        <ion-item *ngFor="let orderedProduct of order.orderedProducts" class="order-item">
             <ion-label>
               <h2>{{ getProductName(orderedProduct.productId) }}</h2>
               <p>Precio del producto: ${{ orderedProduct.productPrice}}</p>
@@ -31,5 +32,17 @@
       </ion-label>
     </ion-item>
   </ion-list>
-
+  <ion-footer>
+    <ion-toolbar>
+      <ion-title class="ion-align-items-start" slot="start">Pagina: {{ currentOrderPage }} de {{ Math.ceil(orders.length / pageOrderSize) }}</ion-title>
+      <ion-buttons slot="end">
+        <ion-button [disabled]="currentOrderPage <= 1" (click)="changeOrderPage(currentOrderPage - 1)">
+          Anterior
+        </ion-button>
+        <ion-button [disabled]="(orders.length / pageOrderSize) <= currentOrderPage" (click)="changeOrderPage(currentOrderPage + 1)">
+          Siguiente
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-footer>
 </ion-content>

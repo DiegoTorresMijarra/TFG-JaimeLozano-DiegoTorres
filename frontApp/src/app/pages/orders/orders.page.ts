@@ -9,13 +9,14 @@ import { RestaurantService } from '../../services/restaurant.service'
 import { ProductService } from '../../services/product.service'
 import { Order } from '../../models/order.entity'
 import { RouterLink } from '@angular/router'
+import { PaginatePipe } from '../../pipes/paginate.pipe'
 
 @Component({
   selector: 'app-orders',
   templateUrl: './orders.page.html',
   styleUrls: ['./orders.page.scss'],
   standalone: true,
-  imports: [IonicModule, RouterLink, DatePipe, NgForOf],
+  imports: [IonicModule, RouterLink, DatePipe, NgForOf, PaginatePipe],
 })
 export class OrdersPage implements OnInit {
   public orders: Order[] = []
@@ -25,6 +26,9 @@ export class OrdersPage implements OnInit {
   private restaurantService = inject(RestaurantService)
   private orderService = inject(OrderService)
   private animationService = inject(AnimationService)
+
+  currentOrderPage: number = 1
+  pageOrderSize: number = 4
 
   constructor(private modalController: ModalController) {}
 
@@ -98,4 +102,10 @@ export class OrdersPage implements OnInit {
   getRestaurantName(restaurantId: number): string {
     return this.restaurantNames[restaurantId]
   }
+
+  changeOrderPage(page: number): void {
+    this.currentOrderPage = page
+  }
+
+  protected readonly Math = Math
 }

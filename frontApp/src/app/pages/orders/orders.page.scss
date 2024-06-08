@@ -1,22 +1,22 @@
-.product-item {
+.order-item {
   display: flex;
   flex-direction: column;
   border-bottom: 1px solid #dcdcdc;
   padding: 16px 0;
 }
 
-.product-item h2 {
+.order-item h2 {
   font-size: 18px;
   margin: 0;
   color: var(--ion-color-primary);
 }
 
-.product-item p {
+.order-item p {
   margin: 4px 0;
   color: #555;
 }
 
-.product-item p span {
+.order-item p span {
   font-weight: bold;
 }
 /* Estilos para los botones */
@@ -42,3 +42,25 @@ ion-button[fill="clear"] {
 ion-button[fill="clear"]:hover {
   --background: rgba(0, 0, 0, 0.1); /* Color de fondo al pasar el ratón */
 }
+
+@media (min-width: 0px) {
+  ion-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+  }
+  .order-item {
+    width: 90%;
+    ion-item {
+      width: 100%;
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .order-item {
+    width: 45%;
+  }
+}
+
+
