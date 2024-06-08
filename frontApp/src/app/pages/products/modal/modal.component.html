@@ -44,19 +44,11 @@
     </ion-item>
     <ion-item>
       <ion-label>Gluten:</ion-label>
-      <ion-text>{{ product?.gluten ? 'Yes' : 'No' }}</ion-text>
+      <ion-text>{{ product?.gluten ? 'Si' : 'No' }}</ion-text>
     </ion-item>
     <ion-item>
       <ion-label>Categoria:</ion-label>
       <ion-text>{{ product?.category?.name }}</ion-text>
-    </ion-item>
-    <ion-item>
-      <ion-label>Creado en:</ion-label>
-      <ion-text>{{ product?.createdAt | date: 'short' }}</ion-text>
-    </ion-item>
-    <ion-item>
-      <ion-label>Actualizado en:</ion-label>
-      <ion-text>{{ product?.updatedAt | date: 'short' }}</ion-text>
     </ion-item>
   </ion-list>
   <ion-item-divider>

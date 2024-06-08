@@ -50,7 +50,7 @@ export class ProductsPage implements OnInit {
   public searchName: string | undefined = undefined
   filters: ProductFiltersDto = new ProductFiltersDto({
     page: 0,
-    size: 2,
+    size: 4,
     direction: 'asc',
   })
   loading: boolean = false

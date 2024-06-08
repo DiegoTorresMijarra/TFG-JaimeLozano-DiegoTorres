@@ -11,45 +11,53 @@
     </ion-toolbar>
   </ion-header>
 
-  <ion-list>
-    <ion-item *ngFor="let product of products" class="product-item">
-      <ion-thumbnail>
-        <ion-img [src]="getProductUrl(product)" alt="{{'image_' + product.id}}">
-        </ion-img>
-      </ion-thumbnail>
-      <ion-label (click)="openDetailsModal(product)">
+  <ion-list id="catalogo">
+    <ion-item-group *ngFor="let product of products" class="product-item">
+      <ion-item-divider>
         <h2>{{ product.name }}</h2>
-        <p *ngIf="product.priceOffer">
-          Precio: <del class="original-price">{{ product.price | currency }}</del>
-          <span class="offer-price">  {{ product.priceOffer | currency }}</span>
-        </p>
-        <p *ngIf="!product.priceOffer">
-          Precio: <span class="offer-price">{{ product.price | currency }}</span>
-        </p>
-        <p>Stock: {{ product.stock }}</p>
-        <p>Gluten: {{ product.gluten ? 'Yes' : 'No' }}</p>
-        <p>Categoria: {{ product.category.name }}</p>
-        <div class="rating">
-          <p>Valoracion:</p>
-          <ion-icon *ngFor="let star of [1, 2, 3, 4, 5]"
-                    [name]="star <= (product.averageRating ? product.averageRating : 5 )? 'star-sharp' : 'star-outline'">
-          </ion-icon>
-        </div>
-        <p>Creado: {{ product.createdAt | date: 'short' }}</p>
-        <p>Actualizado: {{ product.updatedAt | date: 'short' }}</p>
-      </ion-label>
-      <ion-button *ngIf="isWorker" [routerLink]="['/products', product.id]" color="tertiary" fill="clear">
-        Actualizar Producto
-      </ion-button>
-      <ion-button *ngIf="isAdmin" (click)="deleteProduct(product.id)"
-                  (keydown.enter)="deleteProduct(product.id)"
-                  color="danger" fill="clear">
-        Borrar Producto
-      </ion-button>
-      <ion-button *ngIf="isAdmin" [routerLink]="['/products/patchImage', product.id]" color="warning" fill="clear">
-        Actualizar Imagen Producto
-      </ion-button>
-    </ion-item>
+      </ion-item-divider>
+      <ion-item class="product-data" (click)="openDetailsModal(product)">
+        <ion-thumbnail slot="end">
+          <ion-img [src]="getProductUrl(product)" alt="{{'image_' + product.id}}">
+          </ion-img>
+        </ion-thumbnail>
+        <ion-label>
+          <p *ngIf="product.priceOffer">
+            Precio: <del class="original-price">{{ product.price | currency }}</del>
+            <span class="offer-price">  {{ product.priceOffer | currency }}</span>
+          </p>
+          <p *ngIf="!product.priceOffer">
+            Precio: <span class="offer-price">{{ product.price | currency }}</span>
+          </p>
+          <p>Stock: {{ product.stock }}</p>
+          <p>Gluten: {{ product.gluten ? 'Si' : 'No' }}</p>
+          <p>Categoria: {{ product.category.name }}</p>
+          <div class="rating">
+            <ion-icon *ngFor="let star of [1, 2, 3, 4, 5]"
+                      [name]="star <= (product.averageRating ? product.averageRating : 5 )? 'star-sharp' : 'star-outline'">
+            </ion-icon>
+          </div>
+          <p *ngIf="isWorker">Creado: {{ product.createdAt | date: 'short' }}</p>
+          <p *ngIf="isWorker">Actualizado: {{ product.updatedAt | date: 'short' }}</p>
+        </ion-label>
+      </ion-item>
+      <ion-item *ngIf="isWorker">
+        <ion-buttons class="actions">
+          <ion-button [routerLink]="['/products', product.id]" color="tertiary" fill="clear">
+            Actualizar
+          </ion-button>
+          <ion-button *ngIf="isAdmin" (click)="deleteProduct(product.id)"
+                      (keydown.enter)="deleteProduct(product.id)"
+                      color="danger" fill="clear">
+            Borrar
+          </ion-button>
+          <ion-button *ngIf="isAdmin" [routerLink]="['/products/patchImage', product.id]" color="warning" fill="clear">
+            Actualizar Imagen
+          </ion-button>
+        </ion-buttons>
+      </ion-item>
+    </ion-item-group>
+
   </ion-list>
 
   <ion-infinite-scroll id="infinteScroll" threshold="100px" (ionInfinite)="loadMoreData($event)">

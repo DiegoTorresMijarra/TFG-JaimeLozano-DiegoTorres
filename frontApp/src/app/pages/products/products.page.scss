@@ -1,3 +1,9 @@
+#catalogo {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
 .product-item {
   display: flex;
   flex-direction: column;
@@ -34,9 +40,8 @@
   }
 
   ion-icon {
-    font-size: 24px; /* Tamaño del icono */
     color: #FFD700;
-    margin-right: 6px; /* Ajustado el espacio a la derecha */
+    margin-right: 6px;
   }
 }
 
@@ -84,15 +89,39 @@ ion-button[fill="clear"]:hover {
   --background: rgba(0, 0, 0, 0.1); /* Color de fondo al pasar el ratón */
 }
 .product-item ion-thumbnail {
-  width: 80px; /* Ajusta el tamaño de la miniatura según sea necesario */
-  height: 80px;
-  border-radius: 50%; /* Hace que la imagen sea redonda */
-  overflow: hidden; /* Oculta cualquier parte de la imagen que esté fuera del radio */
+  width: 50%;
+  height: 80%;
+  border-radius: 50%;
+  overflow: hidden;
 }
 
 .product-item ion-thumbnail img {
   width: 100%; /* Ajusta el tamaño de la imagen para que ocupe toda la miniatura */
   height: auto;
+}
+
+@media (min-width: 0px) {
+  .product-item {
+    width: 90%;
+    ion-item {
+      width: 100%;
+    }
+  }
+  .actions {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    overflow-x: auto;
+  }
+  .product-data::part(native) {
+    max-height: 200px;
+  }
+}
+
+@media (min-width: 768px) {
+  .product-item {
+    width: 45%;
+  }
 }
 
 
