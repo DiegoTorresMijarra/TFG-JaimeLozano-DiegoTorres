@@ -1,18 +1,14 @@
 <!-- cart.component.html -->
 
 <ion-content [fullscreen]="true">
-  <ion-header>
-    <ion-toolbar>
-      <ion-title>Carrito de Compra</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-toolbar>
+    <ion-title>Carrito de Compra</ion-title>
+  </ion-toolbar>
   <div *ngIf="cart.lineas.length > 0; else emptyCart">
     <ion-card>
-      <ion-card-header>
-        <ion-toolbar>
-          <ion-title size="large">Productos</ion-title>
-        </ion-toolbar>
-      </ion-card-header>
+      <ion-toolbar>
+        <ion-title size="large">Productos</ion-title>
+      </ion-toolbar>
       <ion-card-content>
         <ion-list id="carrito">
           <ion-item *ngFor="let linea of cart.lineas">
@@ -36,16 +32,14 @@
 
 
     <ion-card *ngIf="user && user.addresses" id="addresses">
-      <ion-card-header>
-        <ion-toolbar>
-          <ion-title size="large">Direcciones</ion-title>
-          <ion-buttons slot="end">
-            <ion-button [routerLink]="['/addresses/new']" color="success" fill="solid">
-              Nueva Direccion
-            </ion-button>
-          </ion-buttons>
-        </ion-toolbar>
-      </ion-card-header>
+      <ion-toolbar>
+        <ion-title size="large">Direcciones</ion-title>
+        <ion-buttons slot="end">
+          <ion-button [routerLink]="['/addresses/new']" color="success" fill="solid">
+            Nueva Direccion
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
       <ion-card-content>
         <ion-list class="ion-margin-top muestrario">
           <ion-item class="muestra ion-align-items-center" lines="full"
@@ -85,11 +79,9 @@
       </ion-footer>
     </ion-card>
     <ion-card>
-      <ion-card-header>
-        <ion-toolbar>
-          <ion-title size="large">Datos del pedido:</ion-title>
-        </ion-toolbar>
-      </ion-card-header>
+      <ion-toolbar>
+        <ion-title size="large">Datos del pedido:</ion-title>
+      </ion-toolbar>
       <ion-card-content>
         <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
           <ion-list id="formCompra" >
