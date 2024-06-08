@@ -26,6 +26,7 @@ export class ProductModalComponent implements OnInit {
   public evaluations: EvaluationResponseDto[] = []
   private evaluationService = inject(EvaluationService)
   quantity: number = 1
+  cartQuantity: number = 0
   @Input() product: Product | undefined
 
   constructor(
@@ -33,6 +34,11 @@ export class ProductModalComponent implements OnInit {
     private cartService: CartService,
   ) {
     addIcons({ closeOutline, closeSharp, starOutline, starSharp })
+    this.cartQuantity =
+      this.cartService
+        .getCart()
+        .lineas.find((line) => line.product.id === this.product?.id)
+        ?.quantity ?? 0
   }
 
   ngOnInit() {
@@ -52,13 +58,7 @@ export class ProductModalComponent implements OnInit {
   increaseQuantity() {
     if (!this.product) throw new Error()
 
-    let cartQuantity =
-      this.cartService
-        .getCart()
-        .lineas.find((line) => line.product.id === this.product?.id)
-        ?.quantity ?? 0
-
-    const maxQuantity = this.product.stock - cartQuantity
+    const maxQuantity = this.product.stock - this.cartQuantity
     if (this.quantity < maxQuantity) {
       this.quantity += 1
     }

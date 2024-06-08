@@ -53,6 +53,7 @@ export class MePage implements OnInit {
       }
     })
   }
+
   goToEvaluationPage(order: any) {
     const navigationExtras: NavigationExtras = {
       state: {

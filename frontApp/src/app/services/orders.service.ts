@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { catchError, Observable, throwError } from 'rxjs'
 import { AuthService } from './auth.service'
-import { Order } from '../models/order.entity'
+import { Order, OrderDto } from '../models/order.entity'
 
 @Injectable({
   providedIn: 'root',
@@ -58,6 +58,17 @@ export class OrderService {
       .pipe(
         catchError((error) => {
           console.error('Error obteniendo pedido:', error)
+          return throwError(error)
+        }),
+      )
+  }
+  saveOrder(orderDto: OrderDto): Observable<Order> {
+    const headers = this.authService.getAuthHeaders()
+    return this.http
+      .post<Order>(`${this.apiUrl}/saveOrder`, orderDto, { headers })
+      .pipe(
+        catchError((error) => {
+          console.error('Error guardando pedido:', error)
           return throwError(error)
         }),
       )

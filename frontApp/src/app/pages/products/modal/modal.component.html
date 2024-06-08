@@ -11,7 +11,7 @@
 
 <ion-content>
   <ion-item-divider>
-    <form class="selectorQuantity" (ngSubmit)="addToCart()">
+    <form class="selectorQuantity" (ngSubmit)="addToCart()" *ngIf="product!.stock - cartQuantity >= 1; else noStock">
       <ion-item>
         <ion-label>Cantidad:</ion-label>
         <ion-buttons slot="end">
@@ -22,6 +22,7 @@
       </ion-item>
       <ion-button expand="block" type="submit">Agregar al carrito</ion-button>
     </form>
+    <ng-template #noStock> <ion-text class="noStock"> No hay más stock de este producto actualmente </ion-text> </ng-template>
   </ion-item-divider>
 
   <ion-list>

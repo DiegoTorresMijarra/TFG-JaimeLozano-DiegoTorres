@@ -70,7 +70,7 @@ public class OrderService extends CommonServiceMongo<Order, ObjectId> {
     public Order save(OrderDto dto) {
         log.info("Guardando order : {}", dto);
 
-         dto.setUserId(getLoggedUserId());//todo: commonserviceApp con los metodos
+         dto.setUserId(getLoggedUserId()); //todo: commonserviceApp con los metodos
 
         checkOrderIds(dto);
         checkOrderedProducts(dto);

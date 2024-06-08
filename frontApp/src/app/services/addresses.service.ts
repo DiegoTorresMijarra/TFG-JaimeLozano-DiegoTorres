@@ -61,7 +61,9 @@ export class AddressesService {
   }
 
   getAddress(id: string): Observable<Address> {
-    return this.http.get<Address>(`${this.apiUrl}/${id}`).pipe(
+    const headers = this.authService.getAuthHeaders()
+
+    return this.http.get<Address>(`${this.apiUrl}/${id}`, { headers }).pipe(
       catchError((error) => {
         console.error('Error obteniendo dirección:', error)
         return throwError(error)

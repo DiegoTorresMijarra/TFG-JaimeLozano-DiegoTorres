@@ -16,6 +16,13 @@ export interface Order {
   restaurantName?: string
 }
 
+export interface OrderDto {
+  userId?: string
+  restaurantId: number
+  addressesId: string
+  orderedProducts: OrderedProduct[]
+}
+
 export enum OrderState {
   PENDING = 'PENDING',
   ACCEPTED = 'ACCEPTED',
