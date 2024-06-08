@@ -10,8 +10,10 @@
     </ion-toolbar>
 
     <ion-card-content>
-      <p>Email: {{ user.email }}</p>
-      <p>Roles: {{ user.roles.join(', ') }}</p>
+      <ion-list>
+        <p>Email: {{ user.email }}</p>
+        <p>Roles: {{ user.roles.join(', ') }}</p>
+      </ion-list>
     </ion-card-content>
   </ion-card>
 
@@ -20,28 +22,31 @@
       <ion-title>Pedidos</ion-title>
     </ion-toolbar>
     <ion-card-content>
-      <ion-grid>
-        <ion-row>
-          <ion-col><strong>Pedido ID</strong></ion-col>
-          <ion-col><strong>Restaurante ID</strong></ion-col>
-          <ion-col><strong>Total</strong></ion-col>
-          <ion-col><strong>Estado</strong></ion-col>
-          <ion-col><strong>Fecha</strong></ion-col>
-          <ion-col><strong>Valorar:</strong></ion-col>
-        </ion-row>
-        <ion-row *ngFor="let order of user.orders | paginate:currentOrderPage:pageOrderSize">
-          <ion-col>{{ order.id }}</ion-col>
-          <ion-col>{{ order.restaurantId }}</ion-col>
-          <ion-col>{{ order.totalPrice | currency }}</ion-col>
-          <ion-col  class="{{order.state.toLowerCase()}}">{{ order.state }}</ion-col>
-          <ion-col>{{ order.createdAt | date:'short' }}</ion-col>
-          <ion-col>
-            <ion-button fill="clear" (click)="goToEvaluationPage(order)">
-              <ion-icon name="star-sharp" class="golden-star"></ion-icon>
-            </ion-button>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
+      <ion-list>
+        <ion-grid>
+          <ion-row>
+            <ion-col><strong>Pedido ID</strong></ion-col>
+            <ion-col><strong>Restaurante ID</strong></ion-col>
+            <ion-col><strong>Total</strong></ion-col>
+            <ion-col><strong>Estado</strong></ion-col>
+            <ion-col><strong>Fecha</strong></ion-col>
+            <ion-col><strong>Valorar:</strong></ion-col>
+          </ion-row>
+          <ion-row *ngFor="let order of user.orders | paginate:currentOrderPage:pageOrderSize">
+            <ion-col>{{ order.id }}</ion-col>
+            <ion-col>{{ order.restaurantId }}</ion-col>
+            <ion-col>{{ order.totalPrice | currency }}</ion-col>
+            <ion-col  class="{{order.state.toLowerCase()}}">{{ order.state }}</ion-col>
+            <ion-col>{{ order.createdAt | date:'short' }}</ion-col>
+            <ion-col>
+              <ion-button fill="clear" (click)="goToEvaluationPage(order)">
+                <ion-icon name="star-sharp" class="golden-star"></ion-icon>
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-list>
+
     </ion-card-content>
     <ion-footer>
       <ion-toolbar>
