@@ -19,7 +19,6 @@ import {
   ValidImageExtensions,
 } from '../../../models/product.entity'
 import { IonicModule } from '@ionic/angular'
-import { IonHeader } from '@ionic/angular/standalone' // Importa UserService
 
 @Component({
   selector: 'app-update-image',
@@ -103,4 +102,5 @@ export class UpdateImagePage implements OnInit {
 
   protected readonly getProductUrl = getProductUrl
   protected readonly ValidImageExtensions = ValidImageExtensions
+  protected readonly JSON = JSON
 }

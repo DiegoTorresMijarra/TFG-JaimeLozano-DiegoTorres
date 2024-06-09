@@ -1,38 +1,17 @@
 import { Component } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { FormsModule } from '@angular/forms'
-import {
-  IonButton,
-  IonContent,
-  IonHeader,
-  IonInput,
-  IonItem,
-  IonLabel,
-  IonTitle,
-  IonToolbar,
-} from '@ionic/angular/standalone'
-import {Router, RouterLink} from '@angular/router'
+import { Router, RouterLink } from '@angular/router'
 import { AuthService } from '../../services/auth.service'
 import { AppComponent } from '../../app.component'
+import { IonicModule } from '@ionic/angular'
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
   standalone: true,
-  imports: [
-    IonContent,
-    IonHeader,
-    IonTitle,
-    IonToolbar,
-    CommonModule,
-    FormsModule,
-    IonItem,
-    IonLabel,
-    IonInput,
-    IonButton,
-    RouterLink,
-  ],
+  imports: [CommonModule, FormsModule, RouterLink, IonicModule],
 })
 export class LoginPage {
   username: string | undefined

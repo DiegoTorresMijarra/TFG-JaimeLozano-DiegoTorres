@@ -20,6 +20,12 @@ import { OrderService } from '../../services/orders.service'
 import { OrderedProduct } from '../../models/orderedProduct.entity'
 import { Restaurant } from '../../models/restaurant.entity'
 import { RestaurantService } from '../../services/restaurant.service'
+import { MaskitoDirective } from '@maskito/angular'
+import {
+  MaskitoOptions,
+  MaskitoElementPredicate,
+  maskitoTransform,
+} from '@maskito/core'
 
 @Component({
   selector: 'app-cart',
@@ -33,6 +39,7 @@ import { RestaurantService } from '../../services/restaurant.service'
     PaginatePipe,
     RouterLink,
     ReactiveFormsModule,
+    MaskitoDirective,
   ],
 })
 export class CartPage implements OnInit {
@@ -56,7 +63,7 @@ export class CartPage implements OnInit {
     this.formGroup = this.fb.group({
       cardNumber: [
         '',
-        [Validators.required, Validators.pattern('^[0-9]{16}$')],
+        [Validators.required, Validators.pattern('^[0-9 ]{19}$')],
       ],
       restaurant: ['', Validators.required],
     })
@@ -121,4 +128,19 @@ export class CartPage implements OnInit {
 
   protected readonly getProductUrl = getProductUrl
   protected readonly Math = Math
+
+  readonly cardMask: MaskitoOptions = {
+    mask: [
+      ...Array(4).fill(/\d/),
+      ' ',
+      ...Array(4).fill(/\d/),
+      ' ',
+      ...Array(4).fill(/\d/),
+      ' ',
+      ...Array(4).fill(/\d/),
+    ],
+  }
+
+  readonly maskPredicate: MaskitoElementPredicate = async (el) =>
+    (el as HTMLIonInputElement).getInputElement()
 }

@@ -111,9 +111,9 @@
   </ion-card>
 
   <ion-card *ngIf="user.roles.indexOf('ADMIN') !== -1 || user.roles.indexOf('WORKER') !== -1 ">
-    <ion-card-header>
-      <ion-card-title>Consulta los Pedidos:</ion-card-title>
-    </ion-card-header>
+    <ion-toolbar>
+      <ion-title>Consulta los Pedidos:</ion-title>
+    </ion-toolbar>
     <ion-button [routerLink]="['/websocket-orders']" color="primary" fill="clear">
       WebSocket
     </ion-button>

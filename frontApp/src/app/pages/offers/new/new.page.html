@@ -1,61 +1,59 @@
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" class="ion-padding">
   <ion-header>
     <ion-toolbar>
       <ion-title color="primary" size="large">Nueva Oferta</ion-title>
     </ion-toolbar>
   </ion-header>
+  <form [formGroup]="offerForm" (ngSubmit)="onSubmit()">
 
-  <ion-content class="ion-padding">
-    <form [formGroup]="offerForm" (ngSubmit)="onSubmit()">
+    <ion-item>
+      <ion-label position="floating">Producto</ion-label>
+      <ion-select formControlName="productId">
+        <ion-select-option *ngFor="let product of products" [value]="product.id">
+          {{ product.name }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-text color="danger" *ngIf="offerForm.get('productId')?.touched && offerForm.get('productId')?.errors?.['positive']">
+      <ion-note *ngIf="offerForm.get('productId')?.errors?.['positive']">El id del producto debe ser mayor que 0.</ion-note>
+    </ion-text>
 
-      <ion-item>
-        <ion-label position="floating">Producto</ion-label>
-        <ion-select formControlName="productId">
-          <ion-select-option *ngFor="let product of products" [value]="product.id">
-            {{ product.name }}
-          </ion-select-option>
-        </ion-select>
-      </ion-item>
-      <ion-text color="danger" *ngIf="offerForm.get('productId')?.touched && offerForm.get('productId')?.errors?.['positive']">
-        <ion-note *ngIf="offerForm.get('productId')?.errors?.['positive']">El id del producto debe ser mayor que 0.</ion-note>
-      </ion-text>
+    <ion-item>
+      <ion-label position="floating">Descuento (%)</ion-label>
+      <ion-input formControlName="descuento" type="number" min="0" max="100"></ion-input>
+    </ion-item>
+    <ion-text color="danger" *ngIf="offerForm.get('descuento')?.touched && offerForm.get('descuento')?.errors?.['max']">
+      <ion-note *ngIf="offerForm.get('descuento')?.errors?.['max']">El descuento no puede ser mayor que 100.</ion-note>
+    </ion-text>
+    <ion-text color="danger" *ngIf="offerForm.get('descuento')?.touched && offerForm.get('descuento')?.errors?.['min']">
+      <ion-note *ngIf="offerForm.get('descuento')?.errors?.['min']">El descuento no puede ser negativo.</ion-note>
+    </ion-text>
 
-      <ion-item>
-        <ion-label position="floating">Descuento (%)</ion-label>
-        <ion-input formControlName="descuento" type="number" min="0" max="100"></ion-input>
-      </ion-item>
-      <ion-text color="danger" *ngIf="offerForm.get('descuento')?.touched && offerForm.get('descuento')?.errors?.['max']">
-        <ion-note *ngIf="offerForm.get('descuento')?.errors?.['max']">El descuento no puede ser mayor que 100.</ion-note>
-      </ion-text>
-      <ion-text color="danger" *ngIf="offerForm.get('descuento')?.touched && offerForm.get('descuento')?.errors?.['min']">
-        <ion-note *ngIf="offerForm.get('descuento')?.errors?.['min']">El descuento no puede ser negativo.</ion-note>
-      </ion-text>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="6">
+          <ion-item class="center-label">
+            <ion-label position="floating">Fecha inicio</ion-label>
+            <ion-datetime formControlName="fechaDesde" class="align-right small-datetime"></ion-datetime>
+          </ion-item>
+          <ion-text color="danger" *ngIf="offerForm.get('fechaDesde')?.touched && offerForm.get('fechaDesde')?.errors?.['required']">
+            <ion-note *ngIf="offerForm.get('fechaDesde')?.errors?.['required']">La fecha de inicio no puede estar vacía.</ion-note>
+          </ion-text>
+        </ion-col>
 
-      <ion-grid>
-        <ion-row>
-          <ion-col size="6">
-            <ion-item class="center-label">
-              <ion-label position="floating">Fecha inicio</ion-label>
-              <ion-datetime formControlName="fechaDesde" class="align-right small-datetime"></ion-datetime>
-            </ion-item>
-            <ion-text color="danger" *ngIf="offerForm.get('fechaDesde')?.touched && offerForm.get('fechaDesde')?.errors?.['required']">
-              <ion-note *ngIf="offerForm.get('fechaDesde')?.errors?.['required']">La fecha de inicio no puede estar vacía.</ion-note>
-            </ion-text>
-          </ion-col>
+        <ion-col size="6">
+          <ion-item class="center-label">
+            <ion-label position="floating">Fecha fin</ion-label>
+            <ion-datetime formControlName="fechaHasta" class="align-right small-datetime" [min]="offerForm.get('fechaDesde')?.value"></ion-datetime>
+          </ion-item>
+          <ion-text color="danger" *ngIf="offerForm.get('fechaHasta')?.touched && offerForm.get('fechaHasta')?.errors?.['required']">
+            <ion-note *ngIf="offerForm.get('fechaHasta')?.errors?.['required']">La fecha de fin no puede estar vacía.</ion-note>
+          </ion-text>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
 
-          <ion-col size="6">
-            <ion-item class="center-label">
-              <ion-label position="floating">Fecha fin</ion-label>
-              <ion-datetime formControlName="fechaHasta" class="align-right small-datetime" [min]="offerForm.get('fechaDesde')?.value"></ion-datetime>
-            </ion-item>
-            <ion-text color="danger" *ngIf="offerForm.get('fechaHasta')?.touched && offerForm.get('fechaHasta')?.errors?.['required']">
-              <ion-note *ngIf="offerForm.get('fechaHasta')?.errors?.['required']">La fecha de fin no puede estar vacía.</ion-note>
-            </ion-text>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
+    <ion-button expand="block" type="submit" [disabled]="offerForm.invalid">Guardar Oferta</ion-button>
+  </form>
 
-      <ion-button expand="block" type="submit" [disabled]="offerForm.invalid">Guardar Oferta</ion-button>
-    </form>
-  </ion-content>
 </ion-content>

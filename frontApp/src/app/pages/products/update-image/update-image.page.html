@@ -24,8 +24,11 @@
       <ion-label >Seleccionar Imagen</ion-label>
       <input type="file" (change)="handleFileInput($event)" accept="{{ValidImageExtensions.toString()}}">
     </ion-item>
+    <ion-text color="danger" *ngIf="imageForm.get('image')?.touched && imageForm.get('image')?.errors?.['required']">
+      <ion-note>La imagen es obligatoria.</ion-note>
+    </ion-text>
     <ion-text color="danger" *ngIf="imageForm.get('image')?.touched && imageForm.get('image')?.errors?.['invalidMimeType']">
-      <ion-note>Solo se permiten imágenes JPEG y PNG.</ion-note>
+      <ion-note>Solo se permiten imágenes JPEG, JPG, PNG y GIF.</ion-note>
     </ion-text>
     <ion-button expand="block" type="submit" [disabled]="imageForm.invalid">Actualizar Imagen</ion-button>
   </form>
