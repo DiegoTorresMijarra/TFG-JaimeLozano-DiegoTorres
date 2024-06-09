@@ -36,27 +36,22 @@ public abstract class CommonService {
     protected UUID getLoggedUserId() {
         User user = getLoggedUser();
 
-        if (user == null)
-            return null;
-
         return user.getId();
     }
 
     protected void verifyLogguedSameUser(User user){
-        if(!user.getId().equals(getLoggedUserId()))
-            throw exceptionService.badRequestException("El usuario que accede no es el mismo que al que pertenece la entidad");
+        if(!user.getId().equals(getLoggedUserId())) throw exceptionService.badRequestException("El usuario que accede no es el mismo que al que pertenece la entidad");
     }
 
     protected void verifyLogguedSameUser(UUID userId){
-        if(!userId.equals(getLoggedUserId()))
-            throw exceptionService.badRequestException("El usuario que accede no es el mismo que al que pertenece la entidad");
+        if(!userId.equals(getLoggedUserId())) throw exceptionService.badRequestException("El usuario que accede no es el mismo que al que pertenece la entidad");
     }
 
-    protected boolean verifyAdmin(){
-        User user = getLoggedUser();
-
-        return user.getRoles().contains(Role.ADMIN);
-    }
+//    protected boolean verifyAdmin(){
+//        User user = getLoggedUser();
+//
+//        return user.getRoles().contains(Role.ADMIN);
+//    }
 
     protected boolean verifyWorker(){
         User user = getLoggedUser();

@@ -127,6 +127,7 @@ public class RestaurantController extends CommonController<Restaurant, Long, Res
     @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Restaurante a guardar", required=true)
     @PostMapping("/saveRestaurant")
     @PreAuthorize("hasRole('ADMIN')")
+    @ResponseStatus(HttpStatus.CREATED)
     @Override
     public ResponseEntity<Restaurant> save(@Valid @RequestBody RestaurantDto dto){
         log.info("Listando todos los restaurantes");
@@ -171,6 +172,7 @@ public class RestaurantController extends CommonController<Restaurant, Long, Res
     })
     @DeleteMapping("deleteRestaurant/{id}")
     @PreAuthorize("hasRole('ADMIN')")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @Override
     public ResponseEntity<Boolean> deleteById(@PathVariable Long id){
         log.info("Eliminando Restaurante con id: {}", id);

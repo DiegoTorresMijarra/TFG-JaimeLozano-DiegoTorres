@@ -11,6 +11,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.*;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.test.context.support.WithMockUser;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -33,14 +34,9 @@ class RestaurantServicePgSqlImplTest {
             .updatedAt(LocalDateTime.now())
             .build();
 
-    private final Restaurant res2 = Restaurant.builder()
+    private final Restaurant res2 = res1.toBuilder()
             .id(2L)
             .name("Restaurante 2")
-            .phone(String.valueOf(123456789))
-            .address("address2")
-            .deletedAt(null)
-            .createdAt(LocalDateTime.now())
-            .updatedAt(LocalDateTime.now())
             .build();
 
     private final RestaurantDto newDto = RestaurantDto.builder()
@@ -51,7 +47,12 @@ class RestaurantServicePgSqlImplTest {
 
     @Mock
     private RestaurantRepository repository;
+
+    @Mock
+    private CommonRepository<Restaurant, Long> commonRepository;
+
     private final RestaurantMapper mapper = RestaurantMapper.INSTANCE;
+
     @InjectMocks
     RestaurantServicePgSqlImpl service;
 
@@ -87,6 +88,19 @@ class RestaurantServicePgSqlImplTest {
     }
 
     @Test
+    void listAll() {
+        List<Restaurant> expList = Arrays.asList(res1, res2);
+        when(repository.findByDeletedAtIsNull()).thenReturn(expList);
+        List<Restaurant> res = service.listAll();
+        assertAll("pageAll",
+                () -> assertNotNull(res),
+                () -> assertFalse(res.isEmpty()),
+                () -> assertEquals(2 , res.size())
+        );
+        verify(repository, times(1)).findByDeletedAtIsNull();
+    }
+
+    @Test
     void save() {
         Restaurant newRes = mapper.dtoToModel(newDto);
         when(repository.save(any(Restaurant.class))).thenReturn(newRes);
@@ -113,6 +127,20 @@ class RestaurantServicePgSqlImplTest {
                 () -> assertEquals(res1.getId(), result.getId()),
                 () -> verify(repository, times(1)).findByIdAndDeletedAtIsNull(res1.getId()),
                 () -> verify(repository, times(1)).save(updatedRestau)
+        );
+    }
+
+    @Test
+    void delete() {
+        when(repository.findByIdAndDeletedAtIsNull(res1.getId())).thenReturn(Optional.of(res1));
+        doNothing().when(repository).deleteById(res1.getId());
+
+        boolean result = service.deleteById(res1.getId());
+
+        assertAll("Delete",
+                () -> assertTrue(result),
+                () -> verify(repository, times(1)).findByIdAndDeletedAtIsNull(res1.getId()),
+                () -> verify(repository, times(1)).deleteById(res1.getId())
         );
     }
 }

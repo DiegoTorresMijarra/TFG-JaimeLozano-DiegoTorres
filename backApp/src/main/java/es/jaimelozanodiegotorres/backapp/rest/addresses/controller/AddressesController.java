@@ -47,13 +47,14 @@ public class AddressesController extends CommonController<Addresses, UUID, Addre
     @PostMapping("saveAddress")
     public ResponseEntity<Addresses> save(@RequestBody @Valid AddressSaveDto dto) {
         log.info("Guardando direccion");
-        return ResponseEntity.ok(addressesService.save(dto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(addressesService.save(dto));
     }
 
     @Override
     @PutMapping("updateAddress/{uuid}")
     public ResponseEntity<Addresses> update(@PathVariable  UUID uuid, @RequestBody @Valid AddressSaveDto dto) {
         log.info("Actualizando la direccion con id: {}", uuid.toString());
+
         return ResponseEntity.ok(addressesService.update(uuid, dto));
     }
 
@@ -62,6 +63,7 @@ public class AddressesController extends CommonController<Addresses, UUID, Addre
     @DeleteMapping("deleteAddress/{uuid}")
     public ResponseEntity<Boolean> deleteById(@PathVariable UUID uuid) {
         log.info("Borreando la direccion con id: {}", uuid.toString());
-        return ResponseEntity.ok(addressesService.deleteById(uuid));
+        addressesService.deleteById(uuid);
+        return ResponseEntity.noContent().build();
     }
 }
