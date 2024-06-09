@@ -88,6 +88,7 @@ ion-button[fill="clear"] {
 ion-button[fill="clear"]:hover {
   --background: rgba(0, 0, 0, 0.1); /* Color de fondo al pasar el ratón */
 }
+
 .product-item ion-thumbnail {
   width: 50%;
   height: 80%;
@@ -96,7 +97,7 @@ ion-button[fill="clear"]:hover {
 }
 
 .product-item ion-thumbnail img {
-  width: 100%; /* Ajusta el tamaño de la imagen para que ocupe toda la miniatura */
+  width: 100%;
   height: auto;
 }
 
@@ -107,6 +108,10 @@ ion-button[fill="clear"]:hover {
       width: 100%;
     }
   }
+  .product-item ion-thumbnail {
+    max-width: 200px;
+  }
+
   .actions {
     width: 100%;
     display: flex;
@@ -116,6 +121,7 @@ ion-button[fill="clear"]:hover {
   .product-data::part(native) {
     max-height: 200px;
   }
+
 }
 
 @media (min-width: 768px) {

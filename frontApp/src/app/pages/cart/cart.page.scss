@@ -138,6 +138,10 @@ ion-content {
     flex-wrap: wrap;
     flex-direction: row;
   }
+  
+  ion-card {
+    --background: none;
+  }
 
   .personal ion-card-content {
     padding-top: 10px;
