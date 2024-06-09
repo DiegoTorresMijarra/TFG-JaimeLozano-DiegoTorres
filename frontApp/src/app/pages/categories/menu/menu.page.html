@@ -1,0 +1,42 @@
+<ion-content [fullscreen]="true">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title size="large" color="primary">Categorías</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-segment [(ngModel)]="selectedCategoryId" (ionChange)="onCategoryChange($event)">
+    <ion-segment-button class="ion-margin-horizontal" *ngFor="let category of categories" [value]="category.id">
+      {{ category.name }}
+    </ion-segment-button>
+  </ion-segment>
+
+  <ion-list id="catalogo">
+    <ion-item-group *ngFor="let product of products" class="product-item">
+      <ion-item-divider>
+        <h2>{{ product.name }}</h2>
+      </ion-item-divider>
+      <ion-item class="product-data" (click)="openDetailsModal(product)">
+        <ion-thumbnail slot="end">
+          <ion-img [src]="getProductUrl(product)" alt="{{'image_' + product.id}}"></ion-img>
+        </ion-thumbnail>
+        <ion-label>
+          <p *ngIf="product.priceOffer">
+            Precio: <del class="original-price">{{ product.price | currency }}</del>
+            <span class="offer-price"> {{ product.priceOffer | currency }}</span>
+          </p>
+          <p *ngIf="!product.priceOffer">
+            Precio: <span class="offer-price">{{ product.price | currency }}</span>
+          </p>
+          <p>Stock: {{ product.stock }}</p>
+          <p>Gluten: {{ product.gluten ? 'Si' : 'No' }}</p>
+          <p>Categoria: {{ product.category.name }}</p>
+        </ion-label>
+      </ion-item>
+    </ion-item-group>
+  </ion-list>
+
+  <ion-infinite-scroll id="infinteScroll" threshold="100px" (ionInfinite)="loadMoreData($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Cargando más datos..."></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

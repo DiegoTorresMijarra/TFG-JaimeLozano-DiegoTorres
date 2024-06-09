@@ -201,6 +201,10 @@ export const routes: Routes = [
     canActivate: [roleGuard],
     data: { expectedRole: 'ROLE_USER' },
   },
+  {
+    path: 'menu',
+    loadComponent: () => import('./pages/categories/menu/menu.page').then( m => m.MenuPage)
+  },
 ]
 
 @NgModule({
