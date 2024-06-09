@@ -5,9 +5,9 @@
   <ion-item *ngIf="order; else noOrder" class="product-item">
     <ion-label>
       <h2>Pedido: {{ order.id }}</h2>
-      <p>Usuario: {{ order.userId }}</p>
-      <p>Restaurante: {{ order.restaurantId }}</p>
-      <p>Direccion: <a [routerLink]="['/addresses/details/' + order.addressesId]">{{ order.addressesId }}</a></p>
+      <p>Usuario: {{ userNames }}</p>
+      <p>Restaurante: {{ restaurantNames }}</p>
+      <p>Direccion: <a [routerLink]="['/addresses/details/' + order.addressesId]">{{ addresesNames }}</a></p>
       <ion-item *ngFor="let orderedProduct of order.orderedProducts" class="product-item">
         <ion-thumbnail slot="start">
           <ion-img [src]="getProductUrl(orderedProduct.product)"></ion-img>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import {Component, inject, OnInit} from '@angular/core'
 import { CommonModule } from '@angular/common'
 import {
   FormBuilder,
@@ -13,6 +13,9 @@ import { OrderService } from '../../../services/orders.service'
 import { ProductService } from '../../../services/product.service'
 import { OrderedProduct } from '../../../models/orderedProduct.entity'
 import { getProductUrl, Product } from '../../../models/product.entity'
+import {AddressesService} from "../../../services/addresses.service";
+import {UserService} from "../../../services/user.service";
+import {RestaurantService} from "../../../services/restaurant.service";
 
 @Component({
   selector: 'app-details',
@@ -31,6 +34,12 @@ export class DetailsPage implements OnInit {
   order: Order | null = null
   orderForm: FormGroup
   isToastOpen = false
+  public restaurantNames: string | undefined
+  public userNames: string | undefined
+  public addresesNames: string | undefined
+  private addressService = inject(AddressesService)
+  private userService = inject(UserService)
+  private restaurantService = inject(RestaurantService)
 
   constructor(
     private route: ActivatedRoute,
@@ -60,6 +69,9 @@ export class DetailsPage implements OnInit {
         this.router.navigate(['/'])
       }
       this.loadProductDetails()
+      this.getUser(data.userId)
+      this.getRestaurante(data.restaurantId)
+      this.getAddress(data.addressesId)
       this.orderForm.patchValue({
         state: this.order.state,
         isPaid: this.order.isPaid,
@@ -80,6 +92,49 @@ export class DetailsPage implements OnInit {
           }
         })
     })
+  }
+
+  getRestaurante(restaurantId: number): void {
+    if (!this.restaurantNames) {
+      const restaurantIdStr = restaurantId.toString()
+      this.restaurantService.getRestaurant(restaurantIdStr).subscribe({
+        next: (restaurant) => {
+          this.restaurantNames = restaurant.name
+        },
+        error: (err) => {
+          console.error('Error:', err)
+          this.restaurantNames = 'Error al obtener el nombre'
+        },
+      })
+    }
+  }
+
+  getAddress(addressId: string): void {
+    if (!this.addresesNames) {
+      this.addressService.getAddress(addressId).subscribe({
+        next: (address) => {
+          this.addresesNames = address.name
+        },
+        error: (err) => {
+          console.error('Error:', err)
+          this.addresesNames = 'Error al obtener el nombre'
+        },
+      })
+    }
+  }
+
+  getUser(userId: string): void {
+    if (!this.userNames) {
+      this.userService.getUser(userId).subscribe({
+        next: (user) => {
+          this.userNames = user.name
+        },
+        error: (err) => {
+          console.error('Error:', err)
+          this.userNames = 'Error al obtener el nombre'
+        },
+      })
+    }
   }
 
   patchOrder() {

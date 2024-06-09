@@ -10,6 +10,8 @@ import { ProductService } from '../../services/product.service'
 import { Order } from '../../models/order.entity'
 import { RouterLink } from '@angular/router'
 import { PaginatePipe } from '../../pipes/paginate.pipe'
+import {UserService} from "../../services/user.service";
+import {AddressesService} from "../../services/addresses.service";
 
 @Component({
   selector: 'app-orders',
@@ -22,6 +24,10 @@ export class OrdersPage implements OnInit {
   public orders: Order[] = []
   public restaurantNames: { [key: number]: string } = {}
   public productsNames: { [key: number]: string } = {}
+  public userNames: { [key: string]: string } = {}
+  public addresesNames: { [key: string]: string } = {}
+  private addressService = inject(AddressesService)
+  private userService = inject(UserService)
   private productService = inject(ProductService)
   private restaurantService = inject(RestaurantService)
   private orderService = inject(OrderService)
@@ -39,6 +45,8 @@ export class OrdersPage implements OnInit {
     this.orderService.getOrders().subscribe((data) => {
       this.orders = data
       this.orders.forEach((order) => this.getRestaurante(order.restaurantId))
+      this.orders.forEach((order) => this.getAddress(order.addressesId))
+      this.orders.forEach((order) => this.getUser(order.userId))
       this.orders.forEach((order) =>
         order.orderedProducts.forEach((product) =>
           this.getProduct(product.productId),
@@ -58,6 +66,8 @@ export class OrdersPage implements OnInit {
         order: order,
         restaurantNames: this.restaurantNames,
         productsNames: this.productsNames,
+        userNames: this.userNames,
+        addresesNames: this.addresesNames,
       },
       enterAnimation: this.animationService.enterAnimation,
       leaveAnimation: this.animationService.leaveAnimation,
@@ -75,6 +85,34 @@ export class OrdersPage implements OnInit {
         error: (err) => {
           console.error('Error:', err)
           this.restaurantNames[restaurantId] = 'Error al obtener el nombre'
+        },
+      })
+    }
+  }
+
+  getAddress(addressId: string): void {
+    if (!this.addresesNames[addressId]) {
+      this.addressService.getAddress(addressId).subscribe({
+        next: (address) => {
+          this.addresesNames[addressId] = address.name
+        },
+        error: (err) => {
+          console.error('Error:', err)
+          this.addresesNames[addressId] = 'Error al obtener el nombre'
+        },
+      })
+    }
+  }
+
+  getUser(userId: string): void {
+    if (!this.userNames[userId]) {
+      this.userService.getUser(userId).subscribe({
+        next: (user) => {
+          this.userNames[userId] = user.name
+        },
+        error: (err) => {
+          console.error('Error:', err)
+          this.userNames[userId] = 'Error al obtener el nombre'
         },
       })
     }
@@ -101,6 +139,14 @@ export class OrdersPage implements OnInit {
 
   getRestaurantName(restaurantId: number): string {
     return this.restaurantNames[restaurantId]
+  }
+
+  getAddressName(addressId: string): string {
+    return this.addresesNames[addressId]
+  }
+
+  getUserName(userId: string): string {
+    return this.userNames[userId]
   }
 
   changeOrderPage(page: number): void {

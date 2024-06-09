@@ -58,7 +58,7 @@ public class UserController extends CommonController<User, UUID, UserDto> {
 
     @Override
     @GetMapping("{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('WORKER')")
     public ResponseEntity<User> findById(@PathVariable UUID id) {
         log.info("Buscando usuario con id: {}", id);
         return ResponseEntity.ok(service.findById(id));

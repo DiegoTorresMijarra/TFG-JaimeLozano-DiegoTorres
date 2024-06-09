@@ -19,3 +19,16 @@ export interface UserSignUpRequest {
   password: string
   passwordRepeat: string
 }
+
+export interface User {
+  id?: string
+  name: string
+  surname: string
+  username: string
+  email: string
+  password: string
+  orders: Order[]
+  createdAt: Date
+  updatedAt: Date
+  deletedAt: Date | null
+}

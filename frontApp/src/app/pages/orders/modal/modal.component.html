@@ -13,7 +13,7 @@
   <ion-list>
     <ion-item>
       <ion-label>Usuario:</ion-label>
-      <ion-text>{{ order?.userId }}</ion-text>
+      <ion-text>{{ getUserName(order?.userId) }}</ion-text>
     </ion-item>
     <ion-item>
       <ion-label>Restaurante:</ion-label>
@@ -21,7 +21,7 @@
     </ion-item>
     <ion-item>
       <ion-label>Direccion:</ion-label>
-      <ion-text>{{ order?.addressesId }}</ion-text>
+      <ion-text><a [routerLink]="['/addresses/details/' + order?.addressesId]">{{ getAddress(order?.addressesId) }}</a></ion-text>
     </ion-item>
     <ion-item-divider>
       <ion-label>Productos:</ion-label>

@@ -19,6 +19,8 @@ export class OrderModalComponent {
   @Input() order: Order | undefined
   @Input() restaurantNames: { [key: number]: string } = {}
   @Input() productsNames: { [key: number]: string } = {}
+  @Input() userNames: { [key: string]: string } = {}
+  @Input() addresesNames: { [key: string]: string } = {}
 
   constructor(private modalController: ModalController) {
     addIcons({ closeOutline, closeSharp })
@@ -44,7 +46,24 @@ export class OrderModalComponent {
     if (productId !== undefined) {
       return this.productsNames[productId]
     } else {
-      return 'Sin restaurante'
+      return 'Sin producto'
     }
   }
+
+  getUserName(userId: string | undefined): string {
+    if (userId !== undefined) {
+      return this.userNames[userId]
+    } else {
+      return 'Sin usuario'
+    }
+  }
+
+  getAddress(addresId: string | undefined): string {
+    if (addresId !== undefined) {
+      return this.addresesNames[addresId]
+    } else {
+      return 'Sin direccion'
+    }
+  }
+
 }

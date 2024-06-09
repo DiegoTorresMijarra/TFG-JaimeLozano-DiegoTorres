@@ -12,9 +12,9 @@
               (click)="openDetailsModal(order)">
       <ion-label>
         <h2>Pedido: <a [routerLink]="['/orders/details/' + order.id]">{{ order.id }}</a></h2>
-        <p>Usuario: {{ order.userId }}</p>
+        <p>Usuario: {{ getUserName(order.userId) }}</p>
         <p>Restaurante: {{ getRestaurantName(order.restaurantId) }}</p>
-        <p>Direccion: {{ order.addressesId }}</p>
+        <p>Direccion: {{ getAddressName(order.addressesId) }}</p>
         <ion-item *ngFor="let orderedProduct of order.orderedProducts" class="order-item">
             <ion-label>
               <h2>{{ getProductName(orderedProduct.productId) }}</h2>
