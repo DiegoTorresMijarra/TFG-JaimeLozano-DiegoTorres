@@ -50,18 +50,19 @@ public class EvaluationController extends CommonController<Evaluation, Long, Eva
         log.info("Listando todas las valoraciones de un producto");
         return service.findByProductId(id);
     }
-
+/**
     @GetMapping("pageAll")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<PageResponse<Evaluation>> pageAll(@Valid EvaluationFilters filters) {
         return ResponseEntity.ok(service.pageAll(filters));
     }
-
+    */
+/**
     @GetMapping("pageAll/{id}")
     public ResponseEntity<PageResponse<Evaluation>> pageAllByProductId(@PathVariable Long id,@Valid EvaluationFilters filters) {
         return ResponseEntity.ok(service.findByProductId(id, filters));
     }
-
+*/
     @Override
     @GetMapping("{id}")
     @PreAuthorize("hasRole('USER')")
@@ -72,11 +73,10 @@ public class EvaluationController extends CommonController<Evaluation, Long, Eva
 
 
     @PostMapping("saveEvaluation")
-    @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<Evaluation> save(@RequestBody @Valid EvaluationDto dto) {
         log.info("Guardando valoracion");
-        return ResponseEntity.ok(service.save(dto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.save(dto));
     }
 
     @Override
@@ -90,9 +90,9 @@ public class EvaluationController extends CommonController<Evaluation, Long, Eva
     @Override
     @DeleteMapping("deleteEvaluation/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Boolean> deleteById(@PathVariable Long id) {
         log.info("Borrando valoracion con id {}", id);
-        return ResponseEntity.ok(service.deleteById(id));
+        service.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 }

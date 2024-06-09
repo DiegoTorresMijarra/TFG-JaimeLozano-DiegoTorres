@@ -58,19 +58,20 @@ public class EvaluationServicePgSqlImp extends CommonServicePgSql<Evaluation, Lo
 
         return update(evaluation);
     }
-
+/**
     public PageResponse<Evaluation> pageAll(EvaluationFilters filters){
         log.info("Paginando todas las valoraciones");
         Page<Evaluation> page = repository.findAll(filters.getSpecifications(), filters.getPageable());
         return PageResponse.of(page, filters.getSortBy(), filters.getDirection());
     }
-
+ */
+/**
     public PageResponse<Evaluation> findByProductId(Long productId, EvaluationFilters filters) {
         log.info("Buscando todas las valoraciones paginadas de un producto");
         Page<Evaluation> page = ((EvaluationRepository)repository).findByProductId(productId, filters.getSpecifications(), filters.getPageable()).orElseThrow(()-> exceptionService.notFoundException(productId.toString()));
         return PageResponse.of(page, filters.getSortBy(), filters.getDirection());
     }
-
+*/
     public List<EvaluationResponseDto> findByProductId(Long productId) {
         log.info("Buscando todas las valoraciones de un producto");
 
