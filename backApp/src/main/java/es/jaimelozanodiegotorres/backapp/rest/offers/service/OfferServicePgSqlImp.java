@@ -45,12 +45,12 @@ public class OfferServicePgSqlImp extends CommonServicePgSql<Offer, Long> {
         offer.setProduct(product);
         return update(offer);
     }
-
-    public PageResponse<Offer> pageAll(OfferFilters filters){
-        log.info("Paginando todas las ofertas");
-        Page<Offer> page = repository.findAll(filters.getSpecifications(), filters.getPageable());
-        return PageResponse.of(page, filters.getSortBy(), filters.getDirection());
-    }
+//
+//    public PageResponse<Offer> pageAll(OfferFilters filters){
+//        log.info("Paginando todas las ofertas");
+//        Page<Offer> page = repository.findAll(filters.getSpecifications(), filters.getPageable());
+//        return PageResponse.of(page, filters.getSortBy(), filters.getDirection());
+//    }
 
     public Offer findActivasByProductId(Long productId) {
         log.info("Buscando la oferta activa de un producto");

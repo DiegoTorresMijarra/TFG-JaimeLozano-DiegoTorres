@@ -1,5 +1,6 @@
 package es.jaimelozanodiegotorres.backapp.rest.restaurants.servicios;
 
+import es.jaimelozanodiegotorres.backapp.rest.commons.repository.CommonRepository;
 import es.jaimelozanodiegotorres.backapp.rest.restaurants.dto.RestaurantDto;
 import es.jaimelozanodiegotorres.backapp.rest.restaurants.mapper.RestaurantMapper;
 import es.jaimelozanodiegotorres.backapp.rest.restaurants.modelos.Restaurant;

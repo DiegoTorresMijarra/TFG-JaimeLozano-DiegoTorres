@@ -60,7 +60,7 @@ public class OfferController extends CommonController<Offer, Long, OfferDto>{
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Offer> save(@RequestBody @Valid OfferDto dto) {
         log.info("Guardando oferta");
-        return ResponseEntity.ok(service.save(dto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.save(dto));
     }
 
     @Override
@@ -77,6 +77,7 @@ public class OfferController extends CommonController<Offer, Long, OfferDto>{
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Boolean> deleteById(@PathVariable Long id) {
         log.info("Borrando oferta con id {}", id);
-        return ResponseEntity.ok(service.deleteById(id));
+        service.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 }
