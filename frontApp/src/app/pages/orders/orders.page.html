@@ -18,9 +18,9 @@
         <ion-item *ngFor="let orderedProduct of order.orderedProducts" class="order-item">
             <ion-label>
               <h2>{{ getProductName(orderedProduct.productId) }}</h2>
-              <p>Precio del producto: ${{ orderedProduct.productPrice}}</p>
-              <p>Cantidad: ${{ orderedProduct.quantity}}</p>
-              <p>Precio Total: ${{ orderedProduct.totalPrice}}</p>
+              <p>Precio del producto: {{ orderedProduct.productPrice}}€</p>
+              <p>Cantidad: {{ orderedProduct.quantity}}</p>
+              <p>Precio Total: {{ orderedProduct.totalPrice}}€</p>
             </ion-label>
         </ion-item>
         <p>Cantidad Total: {{ order.totalQuantityProducts }}</p>

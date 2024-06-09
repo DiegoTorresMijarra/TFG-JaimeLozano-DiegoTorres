@@ -31,6 +31,11 @@
           <p>Stock: {{ product.stock }}</p>
           <p>Gluten: {{ product.gluten ? 'Si' : 'No' }}</p>
           <p>Categoria: {{ product.category.name }}</p>
+          <div class="rating">
+            <ion-icon *ngFor="let star of [1, 2, 3, 4, 5]"
+                      [name]="star <= (product.averageRating ? product.averageRating : 5 )? 'star-sharp' : 'star-outline'">
+            </ion-icon>
+          </div>
         </ion-label>
       </ion-item>
     </ion-item-group>
