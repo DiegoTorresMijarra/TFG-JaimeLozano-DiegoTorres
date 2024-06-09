@@ -153,5 +153,9 @@ export class OrdersPage implements OnInit {
     this.currentOrderPage = page
   }
 
+  async dismissModal() {
+    return await this.modalController.dismiss()
+  }
+
   protected readonly Math = Math
 }

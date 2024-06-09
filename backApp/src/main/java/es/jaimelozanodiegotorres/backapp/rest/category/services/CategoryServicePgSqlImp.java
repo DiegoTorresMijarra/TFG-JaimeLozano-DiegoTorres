@@ -36,12 +36,13 @@ public class CategoryServicePgSqlImp extends CommonServicePgSql<Category, Long> 
         Category original = findById(id);
         return update(mapper.updateModel(original, dto));
     }
-
+    /**
     public PageResponse<Category> pageAll(CategoryFilters filters){
         log.info("Paginando todas las categorias");
         Page<Category> page = repository.findAll(filters.getSpecifications(), filters.getPageable());
         return PageResponse.of(page, filters.getSortBy(), filters.getDirection());
     }
+     */
 
     @Cacheable(key="#name")
     public Category findByName(String name) {

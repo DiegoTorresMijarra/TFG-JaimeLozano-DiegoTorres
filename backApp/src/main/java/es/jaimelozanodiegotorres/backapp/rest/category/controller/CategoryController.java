@@ -42,11 +42,12 @@ public class CategoryController extends CommonController<Category, Long, Categor
         log.info("Listando todas las categorias");
         return service.listAll();
     }
-
+/**
     @GetMapping("pageAll")
     public ResponseEntity<PageResponse<Category>> pageAll(@Valid CategoryFilters filters) {
         return ResponseEntity.ok(service.pageAll(filters));
     }
+ */
 
     @Override
     @GetMapping("{id}")
@@ -66,7 +67,7 @@ public class CategoryController extends CommonController<Category, Long, Categor
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Category> save(@RequestBody @Valid CategoryDto dto) {
         log.info("Guardando categoria");
-        return ResponseEntity.ok(service.save(dto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.save(dto));
     }
 
     @Override
@@ -79,10 +80,10 @@ public class CategoryController extends CommonController<Category, Long, Categor
 
     @Override
     @DeleteMapping("deleteCategory/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Boolean> deleteById(@PathVariable Long id) {
         log.info("Borrando categoria con id {}", id);
-        return ResponseEntity.ok(service.deleteById(id));
+        service.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 }

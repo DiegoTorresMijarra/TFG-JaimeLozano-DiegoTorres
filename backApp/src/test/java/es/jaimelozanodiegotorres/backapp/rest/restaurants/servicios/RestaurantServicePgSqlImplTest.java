@@ -1,7 +1,5 @@
 package es.jaimelozanodiegotorres.backapp.rest.restaurants.servicios;
 
-import es.jaimelozanodiegotorres.backapp.rest.commons.repository.CommonRepository;
-import es.jaimelozanodiegotorres.backapp.rest.commons.services.CommonServicePgSql;
 import es.jaimelozanodiegotorres.backapp.rest.restaurants.dto.RestaurantDto;
 import es.jaimelozanodiegotorres.backapp.rest.restaurants.mapper.RestaurantMapper;
 import es.jaimelozanodiegotorres.backapp.rest.restaurants.modelos.Restaurant;
@@ -104,14 +102,16 @@ class RestaurantServicePgSqlImplTest {
 
     @Test
     void update() {
-        when(repository.findById(res1.getId())).thenReturn(Optional.of(res1));
+        when(repository.findByIdAndDeletedAtIsNull(res1.getId())).thenReturn(Optional.of(res1));
         Restaurant updatedRestau = mapper.updateModel(res1, newDto);
         when(repository.save(updatedRestau)).thenReturn(updatedRestau);
+
         Restaurant result = service.update(res1.getId(), newDto);
+
         assertAll("Update",
                 () -> assertNotNull(result),
                 () -> assertEquals(res1.getId(), result.getId()),
-                () -> verify(repository, times(1)).findById(res1.getId()),
+                () -> verify(repository, times(1)).findByIdAndDeletedAtIsNull(res1.getId()),
                 () -> verify(repository, times(1)).save(updatedRestau)
         );
     }
