@@ -20,7 +20,7 @@
           <ion-button (click)="increaseQuantity()" color="primary" fill="solid">+</ion-button>
         </ion-buttons>
       </ion-item>
-      <ion-button expand="block" type="submit">Agregar al carrito</ion-button>
+      <ion-button expand="block" type="submit" color="primary">Agregar al carrito</ion-button>
     </form>
     <ng-template #noStock> <ion-text class="noStock"> No hay más stock de este producto actualmente </ion-text> </ng-template>
   </ion-item-divider>
@@ -52,7 +52,7 @@
     </ion-item>
   </ion-list>
   <ion-item-divider style="--background: var(--ion-color-header);">
-    <ion-label>Valoraciones:</ion-label>
+    <ion-label class="letraColor">Valoraciones:</ion-label>
   </ion-item-divider>
   <ion-list *ngIf="evaluations.length > 0">
     <ion-item *ngFor="let evaluation of evaluations">

@@ -3,7 +3,7 @@
     <ion-menu-button></ion-menu-button>
   </ion-buttons>
 
-  <ion-title>
+  <ion-title class="desktop-title">
     <ion-item button [routerLink]="['/']">
       <ion-thumbnail>
         <ion-img
@@ -14,6 +14,15 @@
       <h3 class="title">MacJava</h3>
     </ion-item>
   </ion-title>
+
+  <div class="ion-padding-end mobile-icon" slot="start">
+    <ion-thumbnail>
+      <ion-img
+        src="assets/icon/logoMacJava.png"
+        alt="The Wisconsin State Capitol building in Madison, WI at night"
+      ></ion-img>
+    </ion-thumbnail>
+  </div>
 
   <div class="ion-padding-end" slot="end" style="display: flex;">
     <ion-button
@@ -33,12 +42,6 @@
       <ion-icon id="iconDarkMode" slot="icon-only" name="contrast-outline" color="dark"></ion-icon>
     </ion-button>
 
-
-<!--    <ion-button *ngIf="!isLoggedIn" [routerLink]="['/register']" fill="outline" slot="end">Register</ion-button>-->
     <ion-button *ngIf="isLoggedIn" (click)="logout(); checkLoggedIn()" fill="outline" slot="end">Logout</ion-button>
-<!--    <ion-button *ngIf="!isLoggedIn" [routerLink]="['/login']" fill="outline" slot="end">Login</ion-button>-->
   </div>
-
-<!--  <ion-progress-bar type="indeterminate" *ngIf="!loaded"></ion-progress-bar> todo-->
-
 </ion-toolbar>
