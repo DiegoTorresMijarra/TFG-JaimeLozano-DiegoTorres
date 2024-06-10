@@ -15,9 +15,9 @@
       <ion-item>
         <ion-label>Cantidad:</ion-label>
         <ion-buttons slot="end">
-          <ion-button (click)="decreaseQuantity()" color="primary" fill="solid">-</ion-button>
+          <ion-button (click)="decreaseQuantity()" color="primary" fill="solid" size="small">-</ion-button>
           <ion-input class="quantity" [value]="quantity" readonly></ion-input>
-          <ion-button (click)="increaseQuantity()" color="primary" fill="solid">+</ion-button>
+          <ion-button (click)="increaseQuantity()" color="primary" fill="solid" size="small">+</ion-button>
         </ion-buttons>
       </ion-item>
       <ion-button expand="block" type="submit" color="primary">Agregar al carrito</ion-button>
