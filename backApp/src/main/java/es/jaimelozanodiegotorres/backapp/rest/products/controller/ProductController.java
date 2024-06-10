@@ -65,7 +65,7 @@ ProductController extends CommonController<Product, Long, ProductSaveDto> {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Product> save(@RequestBody @Valid ProductSaveDto dto) {
         log.info("Guardando producto");
-        return ResponseEntity.ok(service.save(dto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.save(dto));
     }
 
     @PatchMapping(value = "updateProductPhoto/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -89,6 +89,7 @@ ProductController extends CommonController<Product, Long, ProductSaveDto> {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Boolean> deleteById(@PathVariable Long id) {
         log.info("Borrando producto con id {}", id);
-        return ResponseEntity.ok(service.deleteById(id));
+        service.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 }
