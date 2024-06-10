@@ -1,5 +1,6 @@
 package es.jaimelozanodiegotorres.backapp.rest.excel;
 
+import es.jaimelozanodiegotorres.backapp.rest.commons.services.CommonService;
 import es.jaimelozanodiegotorres.backapp.rest.orders.models.Order;
 import es.jaimelozanodiegotorres.backapp.rest.orders.models.OrderedProduct;
 import es.jaimelozanodiegotorres.backapp.rest.orders.service.OrderService;
@@ -21,7 +22,7 @@ import java.util.Set;
 
 @Slf4j
 @Service
-public class ExcelServiceImpl implements ExcelService {
+public class ExcelServiceImpl extends CommonService implements ExcelService {
 
     private final OrderService orderService;
 
@@ -32,6 +33,7 @@ public class ExcelServiceImpl implements ExcelService {
 
     @Autowired
     public ExcelServiceImpl(OrderService orderService) {
+        super("Excel");
         this.orderService = orderService;
     }
 
@@ -45,6 +47,9 @@ public class ExcelServiceImpl implements ExcelService {
     public void generateExcelOrderById(ObjectId id, HttpServletResponse response) throws ExcelException{
         log.info("Generando excel de la order con id: {}", id);
         Order order = orderService.findById(id);
+
+        if(!verifyWorker())
+            verifyLogguedSameUser(order.getUserId());
 
         XSSFWorkbook workbook = new XSSFWorkbook();
         XSSFSheet sheet = workbook.createSheet("Order_" + id); // TODO: tal vez, interese poner el nombre

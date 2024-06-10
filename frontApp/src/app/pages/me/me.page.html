@@ -29,7 +29,7 @@
             <ion-col><strong>Total</strong></ion-col>
             <ion-col><strong>Estado</strong></ion-col>
             <ion-col><strong>Fecha</strong></ion-col>
-            <ion-col><strong>Valorar:</strong></ion-col>
+            <ion-col><strong>Acciones:</strong></ion-col>
           </ion-row>
           <ion-row *ngFor="let order of user.orders | paginate:currentOrderPage:pageOrderSize">
             <ion-col>{{ order.id }}</ion-col>
