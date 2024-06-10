@@ -30,26 +30,28 @@
       </ion-button>
     </ion-item-divider>
     <ng-container *ngIf="showProducts">
-    <ion-item *ngFor="let orderedProduct of order?.orderedProducts">
-      <ion-item>
-        <ion-item>
-          <ion-label>Producto:</ion-label>
-          <ion-text>{{ getProductName(orderedProduct?.productId) }}</ion-text>
-        </ion-item>
-        <ion-item>
-          <ion-label>Precio producto:</ion-label>
-          <ion-text>{{ orderedProduct?.productPrice }}</ion-text>
-        </ion-item>
-        <ion-item>
-          <ion-label>Cantidad:</ion-label>
-          <ion-text>{{ orderedProduct?.quantity }}</ion-text>
-        </ion-item>
-        <ion-item>
-          <ion-label>Precio Total:</ion-label>
-          <ion-text>{{ orderedProduct?.totalPrice }}</ion-text>
-        </ion-item>
+      <ion-item *ngFor="let orderedProduct of order?.orderedProducts">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="6" size-md="3">
+              <ion-label>Producto:</ion-label>
+              <ion-text>{{ getProductName(orderedProduct?.productId) }}</ion-text>
+            </ion-col>
+            <ion-col size="6" size-md="3">
+              <ion-label>Precio producto:</ion-label>
+              <ion-text>{{ orderedProduct?.productPrice }}</ion-text>
+            </ion-col>
+            <ion-col size="6" size-md="3">
+              <ion-label>Cantidad:</ion-label>
+              <ion-text>{{ orderedProduct?.quantity }}</ion-text>
+            </ion-col>
+            <ion-col size="6" size-md="3">
+              <ion-label>Precio Total:</ion-label>
+              <ion-text>{{ orderedProduct?.totalPrice }}</ion-text>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
       </ion-item>
-    </ion-item>
     </ng-container>
     <ion-item-divider *ngIf="showProducts"></ion-item-divider>
     <ion-item>
