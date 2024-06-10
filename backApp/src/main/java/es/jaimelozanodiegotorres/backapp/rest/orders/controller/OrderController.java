@@ -79,10 +79,9 @@ public class OrderController extends CommonController<Order, ObjectId, OrderDto>
     @Override
     @PostMapping("saveOrder")
     @Transactional
-    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Order> save(@RequestBody @Valid OrderDto dto) {
         log.info("Guardando pedido");
-        return ResponseEntity.ok(service.save(dto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.save(dto));
     }
 
     @Override
@@ -98,10 +97,10 @@ public class OrderController extends CommonController<Order, ObjectId, OrderDto>
     @DeleteMapping("deleteOrder/{id}")
     @Transactional
     @PreAuthorize("hasRole('ADMIN')")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Boolean> deleteById(@PathVariable("id") ObjectId id) {
         log.info("Borrando pedido con id {}", id);
-        return ResponseEntity.ok(service.deleteById(id));
+        service.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/restaurantExists/{id}")

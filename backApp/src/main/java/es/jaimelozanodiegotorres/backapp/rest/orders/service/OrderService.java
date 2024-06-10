@@ -22,6 +22,7 @@ import es.jaimelozanodiegotorres.backapp.rest.products.repository.ProductReposit
 import es.jaimelozanodiegotorres.backapp.rest.restaurants.servicios.RestaurantServicePgSqlImpl;
 import es.jaimelozanodiegotorres.backapp.rest.user.service.UserServicePgSql;
 import jakarta.transaction.Transactional;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,12 +42,13 @@ public class OrderService extends CommonServiceMongo<Order, ObjectId> {
     OrderMapper mapper;
     private final ObjectMapper map;
     private final WebSocketConfig webSocketConfig;
+    // Para los test
+    @Setter
     private WebSocketHandler webSocketService;
     private final ProductRepository productRepository;
     private final UserServicePgSql userService;
     private final RestaurantServicePgSqlImpl restaurantService;
     private final AddressesServicePgSqlImpl addressesService;
-
 
     @Autowired
     public OrderService(OrderRepository repository, ProductRepository productRepository, UserServicePgSql userService, RestaurantServicePgSqlImpl restaurantService, AddressesServicePgSqlImpl addressesService, WebSocketConfig webSocketConfig){
@@ -261,4 +263,5 @@ public class OrderService extends CommonServiceMongo<Order, ObjectId> {
             e.printStackTrace();
         }
     }
+
 }
