@@ -2,10 +2,13 @@ package es.jaimelozanodiegotorres.backapp.rest.orders.controller;
 
 import es.jaimelozanodiegotorres.backapp.pagination.PageResponse;
 import es.jaimelozanodiegotorres.backapp.rest.commons.controller.CommonController;
+import es.jaimelozanodiegotorres.backapp.rest.excel.ExcelService;
+import es.jaimelozanodiegotorres.backapp.rest.excel.ExcelServiceImpl;
 import es.jaimelozanodiegotorres.backapp.rest.orders.dto.OrderDto;
 import es.jaimelozanodiegotorres.backapp.rest.orders.models.Order;
 import es.jaimelozanodiegotorres.backapp.rest.orders.models.OrderState;
 import es.jaimelozanodiegotorres.backapp.rest.orders.service.OrderService;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +23,9 @@ import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -32,6 +38,7 @@ import java.util.List;
 @Slf4j
 public class OrderController extends CommonController<Order, ObjectId, OrderDto> {
 
+    private final ExcelService excelService;
     OrderService service;
 
     /**
@@ -40,8 +47,9 @@ public class OrderController extends CommonController<Order, ObjectId, OrderDto>
      * @param service Servicio de productos
      */
     @Autowired
-    public OrderController(OrderService service) {
+    public OrderController(OrderService service, ExcelService excelService) {
         this.service = service;
+        this.excelService = excelService;
     }
 
     @Override
@@ -146,4 +154,18 @@ public class OrderController extends CommonController<Order, ObjectId, OrderDto>
         log.info("Actualizando estado del pedido con id: {} a {}", id.toHexString(), state);
         return ResponseEntity.ok(service.patchState(id, state));
     }
+
+    @GetMapping("getExcelById/{id}")
+    public void getExcelById(@PathVariable ObjectId id, HttpServletResponse response) {
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+        String currentDateTime = dateFormatter.format(new Date());
+
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=Order_" + id + "_" + currentDateTime + ".xlsx";
+        response.setHeader(headerKey, headerValue);
+        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+
+        excelService.generateExcelOrderById(id, response);
+    }
+
 }

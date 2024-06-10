@@ -73,4 +73,15 @@ export class OrderService {
         }),
       )
   }
+
+  downloadExcel(orderId: string): Observable<Blob> {
+    const headers = this.authService.getAuthHeaders()
+    const url = `${this.apiUrl}/getExcelById/${orderId}`
+    return this.http.get(url, { headers, responseType: 'blob' }).pipe(
+      catchError((error) => {
+        console.error('Error descargando el archivo Excel:', error)
+        return throwError(error)
+      }),
+    )
+  }
 }

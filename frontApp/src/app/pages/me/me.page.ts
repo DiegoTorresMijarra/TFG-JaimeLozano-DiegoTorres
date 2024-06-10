@@ -7,9 +7,11 @@ import { CurrencyPipe, DatePipe, NgForOf, NgIf } from '@angular/common'
 import { UserResponseDto } from '../../models/user.entity'
 import { UserService } from '../../services/user.service'
 import { addIcons } from 'ionicons'
-import { starOutline, starSharp } from 'ionicons/icons'
+import { starOutline, starSharp, downloadOutline } from 'ionicons/icons'
 import { PaginatePipe } from '../../pipes/paginate.pipe'
 import { AddressesService } from '../../services/addresses.service'
+import { OrderService } from '../../services/orders.service'
+import { catchError } from 'rxjs'
 
 @Component({
   selector: 'app-login',
@@ -40,8 +42,9 @@ export class MePage implements OnInit {
     private appComponent: AppComponent,
     private userService: UserService,
     private addressService: AddressesService,
+    private orderService: OrderService,
   ) {
-    addIcons({ starOutline, starSharp })
+    addIcons({ starOutline, starSharp, downloadOutline })
   }
 
   ngOnInit(): void {
@@ -82,6 +85,27 @@ export class MePage implements OnInit {
       },
       error: (error) => {
         console.error('Error deleting product:', error)
+      },
+    })
+  }
+
+  downloadExcel(orderId: string): void {
+    this.orderService.downloadExcel(orderId).subscribe({
+      next: (blob: Blob) => {
+        const url = window.URL.createObjectURL(blob)
+        const a = document.createElement('a')
+        a.href = url
+        a.download = `Order_${orderId}.xlsx`
+        document.body.appendChild(a)
+        a.click()
+        document.body.removeChild(a)
+        window.URL.revokeObjectURL(url)
+      },
+      error: (error: any) => {
+        console.error('Error downloading the file', error)
+      },
+      complete: () => {
+        console.log('File download completed')
       },
     })
   }

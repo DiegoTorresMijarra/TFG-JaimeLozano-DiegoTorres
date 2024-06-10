@@ -38,9 +38,13 @@
             <ion-col  class="{{order.state.toLowerCase()}}">{{ order.state }}</ion-col>
             <ion-col>{{ order.createdAt | date:'short' }}</ion-col>
             <ion-col>
-              <ion-button fill="clear" (click)="goToEvaluationPage(order)">
-                <ion-icon name="star-sharp" class="golden-star"></ion-icon>
-              </ion-button>
+              <ion-buttons>
+                <ion-button fill="clear" (click)="goToEvaluationPage(order)">
+                  <ion-icon name="star-sharp" class="golden-star"></ion-icon>
+                </ion-button>
+                <ion-button fill="clear" (click)="downloadExcel(order.id)">
+                  <ion-icon name="download-outline"></ion-icon>                </ion-button>
+              </ion-buttons>
             </ion-col>
           </ion-row>
         </ion-grid>

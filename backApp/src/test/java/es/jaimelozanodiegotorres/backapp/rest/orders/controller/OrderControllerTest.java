@@ -55,11 +55,13 @@ class OrderControllerTest {
             .roles(Set.of(Role.USER))
             .id(UUID.fromString("550e8400-e29b-41d4-a716-446655440000"))
             .build();
+
     private final Product product= Product.builder()
             .id(1L)
             .stock(100)
             .price(10.00)
             .build();
+
     private final List<OrderedProduct> validList= List.of(
             OrderedProduct.builder()
                     .quantity(10)
