@@ -17,12 +17,14 @@
         <p>Created At: {{ category.createdAt | date: 'short' }}</p>
         <p>Updated At: {{ category.updatedAt | date: 'short' }}</p>
       </ion-label>
+      <ion-buttons class="actions">
       <ion-button *ngIf="isAdmin" [routerLink]="['/categories', category.id]" color="tertiary" fill="clear">
         Actualizar Categoria
       </ion-button>
       <ion-button *ngIf="isAdmin"  (click)="deleteCategory(category.id)" color="danger" fill="clear">
         Borrar Categoria
       </ion-button>
+      </ion-buttons>
     </ion-item>
   </ion-list>
 

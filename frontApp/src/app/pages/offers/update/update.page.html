@@ -34,7 +34,7 @@
         <ion-col size="6">
           <ion-item class="center-label">
             <ion-label position="floating">Fecha inicio</ion-label>
-            <ion-datetime formControlName="fechaDesde" class="align-right small-datetime"></ion-datetime>
+            <ion-datetime formControlName="fechaDesde" class="responsive-datetime"></ion-datetime>
           </ion-item>
           <ion-text color="danger" *ngIf="offerForm.get('fechaDesde')?.touched && offerForm.get('fechaDesde')?.errors?.['required']">
             <ion-note *ngIf="offerForm.get('fechaDesde')?.errors?.['required']">La fecha de inicio no puede estar vacía.</ion-note>
@@ -44,7 +44,7 @@
         <ion-col size="6">
           <ion-item class="center-label">
             <ion-label position="floating">Fecha fin</ion-label>
-            <ion-datetime formControlName="fechaHasta" class="align-right small-datetime" [min]="offerForm.get('fechaDesde')?.value"></ion-datetime>
+            <ion-datetime formControlName="fechaHasta" class="responsive-datetime" [min]="offerForm.get('fechaDesde')?.value"></ion-datetime>
           </ion-item>
           <ion-text color="danger" *ngIf="offerForm.get('fechaHasta')?.touched && offerForm.get('fechaHasta')?.errors?.['required']">
             <ion-note *ngIf="offerForm.get('fechaHasta')?.errors?.['required']">La fecha de fin no puede estar vacía.</ion-note>

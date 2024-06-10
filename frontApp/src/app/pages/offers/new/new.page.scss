@@ -8,3 +8,34 @@ ion-note{
   --color: red;
   padding-left: 5px;
 }
+/* Estilos globales */
+.responsive-datetime {
+  --width: 100%;
+  --height: auto;
+  --background: var(--ion-datetime-background);
+  --color: var(--ion-datetime-color);
+}
+
+/* Estilos para pantallas grandes (escritorio) */
+@media (min-width: 768px) {
+  .responsive-datetime {
+    --width: 250px;
+    --height: 40px;
+  }
+}
+
+/* Estilos para pantallas medianas (tabletas) */
+@media (min-width: 576px) and (max-width: 767px) {
+  .responsive-datetime {
+    --width: 200px;
+    --height: 35px;
+  }
+}
+
+/* Estilos para pantallas pequeñas (móviles) */
+@media (max-width: 575px) {
+  .responsive-datetime {
+    --width: 100%;
+    --height: auto;
+  }
+}

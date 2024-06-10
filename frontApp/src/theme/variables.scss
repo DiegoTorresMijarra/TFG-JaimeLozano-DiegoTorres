@@ -3,28 +3,28 @@
 
 /** Ionic CSS Variables **/
 :root {
-  --ion-color-primary: #7cb342; /* Verde lima */
+  --ion-color-primary: #4CAF50; /* Verde lima */
   --ion-color-primary-contrast: #ffffff;
 
-  --ion-color-secondary: #4feaff; /* Amarillo suave */
+  --ion-color-secondary: #03A9F4; /* Amarillo suave */
   --ion-color-secondary-contrast: #f8f6f6;
 
-  --ion-color-tertiary: #ff7300; /* Naranja claro */
+  --ion-color-tertiary: #FF9800; /* Naranja claro */
   --ion-color-tertiary-contrast: #f4f1f1;
 
-  --ion-color-success: #4fffa7; /* Verde menta */
+  --ion-color-success: #81C784; /* Verde menta */
   --ion-color-success-contrast: #faf6f6;
 
-  --ion-color-warning: #f6e202; /* Rojo brillante */
+  --ion-color-warning: #FFEB3B; /* Rojo brillante */
   --ion-color-warning-contrast: #ffffff;
 
-  --ion-color-danger: #f80000; /* Marrón chocolate */
+  --ion-color-danger: #F44336; /* Marrón chocolate */
   --ion-color-danger-contrast: #ffffff;
 
-  --ion-color-dark: #424242; /* Gris oscuro */
+  --ion-color-dark: #212121; /* Gris oscuro */
   --ion-color-dark-contrast: #ffffff;
 
-  --ion-color-medium: #bdbdbd; /* Gris claro */
+  --ion-color-medium: #E0E0E0; /* Gris claro */
   --ion-color-medium-contrast: #000000;
 
   --ion-color-light: #ffffff; /* Blanco */
@@ -35,6 +35,9 @@
 
   --ion-color-footer: #424242; /* Gris oscuro para el pie de página */
   --ion-color-footer-contrast: #ffffff; /* Texto en contraste con el color de fondo */
+
+  --ion-datetime-background: #ffffff;
+  --ion-datetime-color: #000000;
 }
 
 /*
@@ -140,6 +143,9 @@ body.dark {
   --ion-color-light-contrast-rgb: 255, 255, 255;
   --ion-color-light-shade: #1d1d1d;
   --ion-color-light-tint: #383838;
+
+  --ion-datetime-background: #000000;
+  --ion-datetime-color: #ffffff;
 }
 
 /*

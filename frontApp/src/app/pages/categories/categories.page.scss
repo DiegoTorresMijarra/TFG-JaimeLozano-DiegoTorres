@@ -42,3 +42,24 @@ ion-button[fill="clear"] {
 ion-button[fill="clear"]:hover {
   --background: rgba(0, 0, 0, 0.1); /* Color de fondo al pasar el ratón */
 }
+@media (min-width: 0px) {
+  .product-item {
+    width: 90%;
+    ion-item {
+      width: 100%;
+    }
+  }
+  .product-item ion-thumbnail {
+    max-width: 200px;
+  }
+
+  .actions {
+    width: 50%;
+    display: flex;
+    justify-content: space-around;
+    overflow-x: auto;
+  }
+  .product-data::part(native) {
+    max-height: 200px;
+  }
+}

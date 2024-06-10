@@ -55,6 +55,12 @@ ion-button[fill="clear"]:hover {
       width: 100%;
     }
   }
+  .actions {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    overflow-x: auto;
+  }
 }
 
 @media (min-width: 768px) {

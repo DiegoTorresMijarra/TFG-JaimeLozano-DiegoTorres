@@ -20,12 +20,14 @@
         <p>Creada: {{ offer.createdAt | date: 'short' }}</p>
         <p>Actualizada: {{ offer.updatedAt | date: 'short' }}</p>
       </ion-label>
+      <ion-buttons class="actions">
       <ion-button *ngIf="isAdmin" [routerLink]="['/offers', offer.id]" color="tertiary" fill="clear">
         Actualizar Oferta
       </ion-button>
       <ion-button *ngIf="isAdmin" (click)="deleteOffer(offer.id)" color="danger" fill="clear">
         Borrar Oferta
       </ion-button>
+      </ion-buttons>
     </ion-item>
   </ion-list>
 

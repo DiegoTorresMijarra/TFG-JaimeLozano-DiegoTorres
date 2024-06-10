@@ -35,7 +35,7 @@
   <ion-footer>
     <ion-toolbar>
       <ion-title class="ion-align-items-start" slot="start">Pagina: {{ currentOrderPage }} de {{ Math.ceil(orders.length / pageOrderSize) }}</ion-title>
-      <ion-buttons slot="end">
+      <ion-buttons slot="end" class="actions">
         <ion-button [disabled]="currentOrderPage <= 1" (click)="changeOrderPage(currentOrderPage - 1)">
           Anterior
         </ion-button>

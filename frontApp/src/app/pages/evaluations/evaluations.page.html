@@ -22,12 +22,14 @@
         <p>Creada: {{ evaluation.createdAt | date: 'short' }}</p>
         <p>Actualizada: {{ evaluation.updatedAt | date: 'short' }}</p>
       </ion-label>
+      <ion-buttons class="actions">
 <!--      <ion-button [routerLink]="['/evaluations', evaluation.id]" color="tertiary" fill="clear">-->
 <!--        Actualizar Valoracion-->
 <!--      </ion-button>-->
       <ion-button (click)="deleteEvaluation(evaluation.id)" color="danger" fill="clear">
         Borrar Valoracion
       </ion-button>
+      </ion-buttons>
     </ion-item>
   </ion-list>
 
