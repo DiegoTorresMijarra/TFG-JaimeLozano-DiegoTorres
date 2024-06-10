@@ -36,7 +36,6 @@ public class UserDto {
     @Schema(description = "Email del usuario", example = "johndoe@localhost")
     @Email(regexp = ".*@.*\\..*", message = "Email debe ser válido")
     @NotBlank(message = "Email no puede estar vacío")
-    @Pattern(regexp = REGEXP_SANITIZER, message = "El campo solo puede contener letras y números")
     private String email;
 
     @Schema(description = "Password del usuario", example = "password")

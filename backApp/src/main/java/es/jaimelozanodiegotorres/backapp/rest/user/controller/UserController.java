@@ -45,20 +45,21 @@ public class UserController extends CommonController<User, UUID, UserDto> {
 
     @Override
     @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping
     public List<User> listAll() {
         log.info("Listando todos los usuarios");
         return service.listAll();
     }
 
-    @GetMapping("pageAll")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<PageResponse<User>> pageAll(@Valid UserFilters filters) {
-        return ResponseEntity.ok(service.pageAll(filters));
-    }
+//    @GetMapping("pageAll")
+//    @PreAuthorize("hasRole('ADMIN')")
+//    public ResponseEntity<PageResponse<User>> pageAll(@Valid UserFilters filters) {
+//        return ResponseEntity.ok(service.pageAll(filters));
+//    }
 
     @Override
     @GetMapping("{id}")
-    @PreAuthorize("hasRole('WORKER')")
+    @PreAuthorize("hasAnyRole('ADMIN','WORKER')")
     public ResponseEntity<User> findById(@PathVariable UUID id) {
         log.info("Buscando usuario con id: {}", id);
         return ResponseEntity.ok(service.findById(id));
@@ -69,7 +70,7 @@ public class UserController extends CommonController<User, UUID, UserDto> {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<User> save(@RequestBody @Valid UserDto dto) {
         log.info("Guardando usuario");
-        return ResponseEntity.ok(service.save(dto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.save(dto));
     }
 
     @Override
@@ -86,7 +87,8 @@ public class UserController extends CommonController<User, UUID, UserDto> {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Boolean> deleteById(@PathVariable UUID id) {
         log.info("Borrando valoracion con id {}", id);
-        return ResponseEntity.ok(service.deleteById(id));
+        service.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 
     // detalles por usuario:

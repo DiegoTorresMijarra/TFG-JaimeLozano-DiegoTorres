@@ -35,13 +35,11 @@ public class UserServicePgSql extends CommonServicePgSql<User, UUID> {
 
     private final AddressesRepository addressesRepository;
     private final OrderRepository orderRepository;
-    private final AddressesServicePgSqlImpl addressesService;
 
 
-    protected UserServicePgSql(UserRepository repository, PasswordEncoder passwordEncoder, AddressesRepository addressesRepository, OrderRepository orderRepository, AddressesServicePgSqlImpl addressesService) {
+    protected UserServicePgSql(UserRepository repository, PasswordEncoder passwordEncoder, AddressesRepository addressesRepository, OrderRepository orderRepository) {
         super(repository);
         this.orderRepository = orderRepository;
-        this.addressesService = addressesService;
         this.saveMapper = UserSaveMapper.INSTANCE;
         this.responseMapper = UserResponseMapper.INSTANCE;
         this.passwordEncoder = passwordEncoder;
@@ -71,12 +69,12 @@ public class UserServicePgSql extends CommonServicePgSql<User, UUID> {
                 });
         return update(saveMapper.updateModel(original, dto));
     }
-
-    public PageResponse<User> pageAll(UserFilters filters){
-        log.info("Paginando todos los usuarios");
-        Page<User> page = repository.findAll(filters.getSpecifications(), filters.getPageable());
-        return PageResponse.of(page, filters.getSortBy(), filters.getDirection());
-    }
+//
+//    public PageResponse<User> pageAll(UserFilters filters){
+//        log.info("Paginando todos los usuarios");
+//        Page<User> page = repository.findAll(filters.getSpecifications(), filters.getPageable());
+//        return PageResponse.of(page, filters.getSortBy(), filters.getDirection());
+//    }
 
     /**
      * Borra un usuario por su ID (borrado lógico)
@@ -115,7 +113,7 @@ public class UserServicePgSql extends CommonServicePgSql<User, UUID> {
 
         if(user.isClient()){
             res.setOrders(orderRepository.findByUserId(user.getId()));
-            res.setAddresses(addressesService.findByUserId(user.getId()));
+            res.setAddresses(addressesRepository.findByUserIdAndDeletedAtIsNull(user.getId()));
             return res;
         }
 

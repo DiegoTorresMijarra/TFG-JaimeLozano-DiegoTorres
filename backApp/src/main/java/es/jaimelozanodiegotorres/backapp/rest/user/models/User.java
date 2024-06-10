@@ -86,7 +86,8 @@ public class User implements UserDetails {
     @Schema(description = "Roles del usuario", example = "ADMIN")
     @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
-    private Set<Role> roles;
+    @Builder.Default
+    private Set<Role> roles = Set.of(Role.USER);
 
     public boolean isWorker() {
         return isEnabled()&&Role.isWorker(roles);
