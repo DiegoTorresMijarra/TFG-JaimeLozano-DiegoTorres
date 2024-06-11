@@ -28,8 +28,6 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 public class SecurityConfig {
     private final UserDetailsService userService;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
-    @Value("${api.version}")
-    private String apiVersion;
     @Autowired
     public SecurityConfig(UserDetailsService userService, JwtAuthenticationFilter jwtAuthenticationFilter) {
         this.userService = userService;
@@ -57,7 +55,7 @@ public class SecurityConfig {
 
                 .authorizeHttpRequests(request -> request
                         .requestMatchers("/error/**").permitAll()
-                        // Abrimos a Swagger -- Quitar en producción
+                        // Abrimos a Swagger -- Quitar en produccion
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                         // Websockets para notificaciones
                         .requestMatchers("/ws/**").permitAll()
