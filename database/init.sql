@@ -1,5 +1,5 @@
 SELECT 'CREATE DATABASE postgres'
-WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = 'postgres');
+    WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = 'postgres');
 
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
@@ -30,12 +30,12 @@ CREATE TABLE "public"."categories"
 -- Insertar la tabla categories
 INSERT INTO "categories" ("id", "name", "created_at", "updated_at")
 VALUES (1, 'Sin Categoria', '2023-01-01', '2023-01-01'),
-       (2, 'Platos Principales', '2024-06-03', '2024-06-03'),
+       (2, 'Principales', '2024-06-03', '2024-06-03'),
        (3, 'Postres', '2024-06-03', '2024-06-03'),
        (4, 'Bebidas', '2024-06-03', '2024-06-03'),
        (5, 'Aperitivos', '2024-06-03', '2024-06-03'),
-       (6, 'Sopas y Ensaladas', '2024-06-03', '2024-06-03'),
-       (7, 'Especialidades de la Casa', '2024-06-03', '2024-06-03'),
+       (6, 'Sopas', '2024-06-03', '2024-06-03'),
+       (7, 'Especialidades', '2024-06-03', '2024-06-03'),
        (8, 'Platos Veganos', '2024-06-03', '2024-06-03')
 ;
 
@@ -96,9 +96,9 @@ CREATE TABLE "public"."restaurants"
 
 -- Insertar datos en la tabla restaurants
 INSERT INTO "restaurants" ("id", "name", "address", "phone", "created_at", "updated_at")
-VALUES (1, 'Restaurante1', 'Calle 1', 111111111, '2023-01-01', '2023-01-01'),
-       (2, 'Restaurante2', 'Calle 2', 999999999, '2023-01-01', '2023-01-01'),
-       (3, 'Restaurante3', 'Calle 3', 999999999, '2023-01-01', '2023-01-01')
+VALUES (1, 'MacJava Leganes', 'IES Luis Vives', 111111111, '2023-01-01', '2023-01-01'),
+       (2, 'MacJava Alcorcon', 'IES María Zambrano', 999999999, '2023-01-01', '2023-01-01'),
+       (3, 'MacJava Getafe', 'IES Enrique Tierno Galván', 999999999, '2023-01-01', '2023-01-01')
 ;
 
 -- Crear la tabla ofertas
@@ -252,8 +252,8 @@ CREATE TABLE "public"."evaluation"
 -- Insertar la tabla valoraciones
 INSERT INTO "evaluation" ("id", "value", "comment", "created_at", "updated_at", "user_id", "product_id")
 VALUES (1, 3, 'Muy buen producto', '2023-01-01', '2023-01-01', '24bee18d-920c-4f25-971f-99e91d0aa331', 1),
-       (2, 2, 'Muy buen producto', '2023-01-02', '2023-01-02', '24bee18d-920c-4f25-971f-99e91d0aa331', 2),
-       (3, 3, 'Muy buen producto', '2023-01-03', '2023-01-03', '24bee18d-920c-4f25-971f-99e91d0aa331', 3),
-       (4, 3, 'Muy buen producto', '2023-01-03', '2023-01-03', '24bee18d-920c-4f25-971f-99e91d0aa331', 3),
-       (5, 2, 'Muy buen producto', '2023-01-03', '2023-01-03', '24bee18d-920c-4f25-971f-99e91d0aa331', 3)
+       (2, 2, 'Muy buen Comida', '2023-01-02', '2023-01-02', '24bee18d-920c-4f25-971f-99e91d0aa331', 2),
+       (3, 3, 'Malo', '2023-01-03', '2023-01-03', '24bee18d-920c-4f25-971f-99e91d0aa331', 3),
+       (4, 3, 'Malisimo', '2023-01-03', '2023-01-03', '24bee18d-920c-4f25-971f-99e91d0aa331', 3),
+       (5, 2, 'Buen producto', '2023-01-03', '2023-01-03', '24bee18d-920c-4f25-971f-99e91d0aa331', 3)
 ;
