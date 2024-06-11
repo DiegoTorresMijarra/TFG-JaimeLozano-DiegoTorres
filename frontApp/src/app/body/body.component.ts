@@ -1,37 +1,11 @@
-import {
-  AfterViewInit,
-  Component,
-  DoCheck,
-  OnInit,
-  ViewChild,
-} from '@angular/core'
-import { IonContent, IonicModule } from '@ionic/angular'
+import { IonicModule } from '@ionic/angular'
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router'
 import { CommonModule, NgForOf } from '@angular/common'
-import { AppComponent } from '../app.component'
-import {
-  bagOutline,
-  pricetagOutline,
-  pricetagSharp,
-  bagSharp,
-  cubeOutline,
-  cubeSharp,
-  listOutline,
-  listSharp,
-  restaurantOutline,
-  restaurantSharp,
-  starOutline,
-  starSharp,
-  fastFoodOutline,
-  fastFood,
-  fastFoodSharp,
-} from 'ionicons/icons'
-import { addIcons } from 'ionicons'
+import { Component, DoCheck, OnInit } from '@angular/core'
 import { AuthService } from '../services/auth.service'
 
 @Component({
   selector: 'app-body',
-  standalone: true,
   imports: [
     IonicModule,
     RouterLinkActive,
@@ -42,6 +16,7 @@ import { AuthService } from '../services/auth.service'
   ],
   templateUrl: './body.component.html',
   styleUrl: './body.component.css',
+  standalone: true,
 })
 export class BodyComponent implements OnInit, DoCheck {
   public rolesList: string[] | null = []
@@ -70,28 +45,12 @@ export class BodyComponent implements OnInit, DoCheck {
     { title: 'Ofertas', url: '/offers', icon: 'pricetag', role: 'ROLE_WORKER' },
   ]
 
-  constructor(private authService: AuthService) {
-    addIcons({
-      pricetagOutline,
-      pricetagSharp,
-      bagOutline,
-      bagSharp,
-      restaurantOutline,
-      restaurantSharp,
-      listOutline,
-      listSharp,
-      starOutline,
-      starSharp,
-      cubeOutline,
-      cubeSharp,
-      fastFoodOutline,
-      fastFoodSharp,
-      fastFood,
-    })
-  }
+  constructor(private authService: AuthService) {}
+
   ngOnInit() {
     this.rolesList = this.authService.getUserRoles()
   }
+
   ngDoCheck(): void {
     this.rolesList = this.authService.getUserRoles()
   }
@@ -99,6 +58,4 @@ export class BodyComponent implements OnInit, DoCheck {
   hasRole(role: string): boolean {
     return <boolean>this.rolesList?.includes(role)
   }
-
-  protected readonly AppComponent = AppComponent
 }
