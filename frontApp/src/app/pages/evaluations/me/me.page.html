@@ -1,0 +1,40 @@
+<ion-content [fullscreen]="true">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title size="large">Productos en pedido con id: {{ order?.id }}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-card *ngIf="evaluationForm">
+    <ion-card-header>
+      <ion-card-title>Evaluaciones de Pedidos</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <form [formGroup]="evaluationForm" (ngSubmit)="onSubmit()">
+        <ion-grid>
+          <ion-row>
+            <ion-col><strong>Pedido ID: {{ evaluationForm.get('orderId')?.value }}</strong></ion-col>
+          </ion-row>
+
+          <ion-row *ngFor="let evalForm of evaluationForms.controls; let i = index" [formGroup]="getEvaluationFormGroup(i)">
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="stacked">Producto ID: {{ evalForm.get('productId')?.value }}</ion-label>
+                <ion-input formControlName="value" placeholder="Valoración (1-5)"></ion-input>
+                <ion-textarea formControlName="comment" placeholder="Comentario"></ion-textarea>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col size="12">
+              <ion-button type="submit" expand="full">Enviar Evaluación</ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </form>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+

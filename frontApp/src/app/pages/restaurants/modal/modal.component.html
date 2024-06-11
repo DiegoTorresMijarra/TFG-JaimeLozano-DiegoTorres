@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ restaurant?.name }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismissModal()" color="light">
+        <ion-icon class="cerrar" name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-label>Nombre:</ion-label>
+      <ion-text>{{ restaurant?.name }}</ion-text>
+    </ion-item>
+    <ion-item>
+      <ion-label>Telefono:</ion-label>
+      <ion-text>{{ restaurant?.phone }}</ion-text>
+    </ion-item>
+    <ion-item>
+      <ion-label>Direccion:</ion-label>
+      <ion-text>{{ restaurant?.address }}</ion-text>
+    </ion-item>
+    <ion-item>
+      <ion-label>Creado en:</ion-label>
+      <ion-text>{{ restaurant?.createdAt | date: 'short' }}</ion-text>
+    </ion-item>
+    <ion-item>
+      <ion-label>Actualizado en:</ion-label>
+      <ion-text>{{ restaurant?.updatedAt | date: 'short' }}</ion-text>
+    </ion-item>
+  </ion-list>
+</ion-content>

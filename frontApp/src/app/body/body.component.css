@@ -1,0 +1,17 @@
+ion-list {
+  padding: 0;
+
+  background-image: linear-gradient(to bottom right, #002f4b, #dc4225);
+  opacity: .6;
+}
+/* styles.scss or a specific scss file for your component */
+.custom-menu {
+  ion-item {
+    color: var(--ion-color-primary, #3880ff);
+
+    ion-icon {
+      color: var(--ion-color-primary, #3880ff);
+    }
+  }
+}
+

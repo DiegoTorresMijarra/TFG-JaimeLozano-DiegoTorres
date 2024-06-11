@@ -1,0 +1,70 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ product?.name }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismissModal()" color="light">
+        <ion-icon class="cerrar" name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item-divider>
+    <form class="selectorQuantity" (ngSubmit)="addToCart()" *ngIf="product!.stock - cartQuantity >= 1; else noStock">
+      <ion-item>
+        <ion-label>Cantidad:</ion-label>
+        <ion-buttons slot="end">
+          <ion-button (click)="decreaseQuantity()" color="primary" fill="solid" size="small">-</ion-button>
+          <ion-input class="quantity" [value]="quantity" readonly></ion-input>
+          <ion-button (click)="increaseQuantity()" color="primary" fill="solid" size="small">+</ion-button>
+        </ion-buttons>
+      </ion-item>
+      <ion-button expand="block" type="submit" color="primary">Agregar al carrito</ion-button>
+    </form>
+    <ng-template #noStock> <ion-text class="noStock"> No hay más stock de este producto actualmente </ion-text> </ng-template>
+  </ion-item-divider>
+
+  <ion-list>
+    <ion-item>
+      <ion-label>Nombre:</ion-label>
+      <ion-text>{{ product?.name }}</ion-text>
+    </ion-item>
+    <ion-item *ngIf="product?.priceOffer">
+      <ion-label>Precio:</ion-label>
+      <ion-text><del class="original-price">{{ product?.price | currency }}</del><span class="offer-price">{{ product?.priceOffer | currency }}</span></ion-text>
+    </ion-item>
+    <ion-item *ngIf="!product?.priceOffer">
+      <ion-label>Precio:</ion-label>
+      <ion-text><span class="offer-price">{{ product?.price | currency }}</span></ion-text>
+    </ion-item>
+    <ion-item>
+      <ion-label>Stock:</ion-label>
+      <ion-text>{{ product?.stock }}</ion-text>
+    </ion-item>
+    <ion-item>
+      <ion-label>Gluten:</ion-label>
+      <ion-text>{{ product?.gluten ? 'Si' : 'No' }}</ion-text>
+    </ion-item>
+    <ion-item>
+      <ion-label>Categoria:</ion-label>
+      <ion-text>{{ product?.category?.name }}</ion-text>
+    </ion-item>
+  </ion-list>
+  <ion-item-divider style="--background: var(--ion-color-header);">
+    <ion-label class="letraColor">Valoraciones:</ion-label>
+  </ion-item-divider>
+  <ion-list *ngIf="evaluations.length > 0">
+    <ion-item *ngFor="let evaluation of evaluations">
+      <ion-text style="padding: 4%;">
+        Usuario: {{ evaluation.userName }}
+      </ion-text>
+      <ion-text class="rating" style="padding: 4%;">
+        Valoración: <ion-icon *ngFor="let star of [1, 2, 3, 4, 5]" [name]="star <= (evaluation?.value ?? 0) ? 'star-sharp' : 'star-outline'"></ion-icon>
+      </ion-text>
+      <ion-text style="padding: 4%;">{{ evaluation.comment }}</ion-text>
+    </ion-item>
+  </ion-list>
+
+  <ion-item *ngIf="!evaluations.length"><ion-text>No tiene valoraciones aun.</ion-text></ion-item>
+</ion-content>

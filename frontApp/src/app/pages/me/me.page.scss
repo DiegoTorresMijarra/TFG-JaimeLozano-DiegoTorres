@@ -1,0 +1,260 @@
+ion-header {
+  ion-toolbar {
+    ion-title {
+      font-size: 22px;
+      font-weight: 600;
+    }
+  }
+}
+
+ion-content {
+  --background: var(--ion-background-color, #fff);
+
+  .login-container {
+    padding: 16px;
+
+    ion-item {
+      --padding-start: 16px;
+      --padding-end: 16px;
+      border-radius: 4px;
+      margin-bottom: 20px;
+
+
+      ion-label {
+        color: #616e7e;
+      }
+
+      ion-input {
+        color: var(--ion-color-primary, #3880ff);
+      }
+    }
+
+    ion-button {
+      --background: var(--ion-color-primary, #3880ff);
+      --border-radius: 4px;
+      --padding-start: 16px;
+      --padding-end: 16px;
+      --color: white;
+      font-weight: 500;
+
+      &:hover {
+        --background: #3171e0;
+      }
+    }
+  }
+}
+.golden-star {
+  color: #FFD700; /* Color amarillo dorado */
+}
+
+/*query for display on diferent screens*/
+
+@media (min-width: 0px) {
+  /*ion-components*/
+  * {
+    border-radius: 5px;
+  }
+
+  .pending {
+    color: orange;
+    font-weight: bold;
+  }
+
+  .accepted {
+    color: green;
+    font-weight: bold;
+  }
+
+  .rejected {
+    color: red;
+    font-weight: bold;
+  }
+
+  .delivered {
+    color: blue;
+    font-weight: bold;
+  }
+
+  .canceled {
+    color: gray;
+    font-weight: bold;
+  }
+
+  .deleted {
+    color: black;
+    font-weight: bold;
+  }
+
+  .buttons {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    flex-direction: row;
+  }
+
+  .buttons ion-button {
+    font-size: calc(80%);
+    width: 30%;
+  }
+
+
+  .muestra::part(native) {
+    --background: rgba(0, 0, 0, 0.1);
+  }
+
+
+  ion-item-group {
+    height: 100%;
+    display: flex;
+    align-content: space-between;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+
+  .muestra::part(native) {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    max-height: 150px;
+    min-height: 150px;
+  }
+
+  ion-label {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  ion-list {
+    padding: 0;
+  }
+
+  ion-col {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    flex-direction: row;
+  }
+
+  ion-card {
+    --background: none;
+  }
+
+  body .dark ion-card-content{
+    padding:0;
+  }
+
+  .personal ion-card-content {
+    padding-top: 10px;
+  }
+
+  ion-toolbar {
+    display: flex;
+    border:0;
+    border-style: solid;
+    border-bottom-width: 3px;
+    border-image: linear-gradient(to right,
+      /*calc(var(--ion-border-color) - var(--ion-color-step-60)) 20%, todo*/ rgba(0, 0, 0, 1) 0%,
+      rgba(0, 0, 0, 0.5) 40%, /* Negro transparente al 20% */ rgba(0, 0, 0, 0) 80%) 1;
+  }
+
+  #addresses ion-card-header {
+    padding: 0;
+  }
+
+  ion-thumbnail {
+    width: 20%;
+    height: 100%;
+
+    overflow: hidden;
+    object-fit: cover;
+  }
+
+  ion-thumbnail::part(img) {
+    display: flex;
+    justify-content: center;
+    width: auto;
+  }
+
+  ion-modal::part(content) {
+    width: 50%;
+    height: 50%;
+  }
+
+  ion-popover::part(content) {
+    max-width: fit-content;
+    margin: 0;
+    border: 1px solid var(--ion-color-step-300, black);
+  }
+
+  ion-input {
+    text-align: center;
+  }
+
+  /*Clases for elements*/
+  .badget {
+    height: 2em;
+    margin: 3px;
+  }
+
+  .muestrario {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+  }
+
+  .titulo {
+    padding-bottom: calc(var(--padding-bottom) * 1.2);
+    width: 100%;
+  }
+
+  .nota {
+    font: inherit;
+    font-size: calc(80%);
+    color: var(--ion-color-step-300);
+  }
+
+  .descripcion {
+    padding-right: calc(var(--padding-end) + 5%);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: space-around;
+    justify-content: space-evenly;
+  }
+  .descripcion p{
+    width: 100%;
+  }
+
+  .muestra {
+    height: 100%;
+    width: 30%;
+    margin: 10px 0 10px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .muestra {
+    height: 100%;
+    width: 45%;
+  }
+}
+
+@media (max-width: 600px) {
+  /*Clases for elements*/
+  .muestra {
+    width: 100%;
+    margin: auto;
+  }
+  ion-card-content {
+    padding: 0;
+  }
+}
+
