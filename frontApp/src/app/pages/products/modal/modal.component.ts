@@ -1,12 +1,5 @@
 import { Component, inject, Input, OnInit } from '@angular/core'
 import { IonicModule, ModalController } from '@ionic/angular'
-import { addIcons } from 'ionicons'
-import {
-  closeOutline,
-  closeSharp,
-  starOutline,
-  starSharp,
-} from 'ionicons/icons'
 import { Product } from '../../../models/product.entity'
 import { CommonModule } from '@angular/common'
 import { FormsModule } from '@angular/forms'
@@ -33,16 +26,15 @@ export class ProductModalComponent implements OnInit {
     private modalController: ModalController,
     private cartService: CartService,
   ) {
-    addIcons({ closeOutline, closeSharp, starOutline, starSharp })
-    this.cartQuantity =
-      this.cartService
-        .getCart()
-        .lineas.find((line) => line.product.id === this.product?.id)
-        ?.quantity ?? 0
   }
 
   ngOnInit() {
     this.loadEvaluations(this.product?.id)
+    this.cartQuantity =
+      this.cartService
+        .getCart()
+        .lineas.find((line) => line.product.id === this.product!.id)
+        ?.quantity ?? 0
   }
 
   async dismissModal() {
