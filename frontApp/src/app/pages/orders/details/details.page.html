@@ -1,0 +1,54 @@
+<ion-content [fullscreen]="true">
+  <ion-toolbar>
+    <ion-title>Detalles del pedido: </ion-title>
+  </ion-toolbar>
+  <ion-item *ngIf="order; else noOrder" class="product-item">
+    <ion-label>
+      <h2>Pedido: {{ order.id }}</h2>
+      <p>Usuario: {{ userNames }}</p>
+      <p>Restaurante: {{ restaurantNames }}</p>
+      <p>Direccion: <a [routerLink]="['/addresses/details/' + order.addressesId]">{{ addresesNames }}</a></p>
+      <ion-item *ngFor="let orderedProduct of order.orderedProducts" class="product-item">
+        <ion-thumbnail slot="start">
+          <ion-img [src]="getProductUrl(orderedProduct.product)"></ion-img>
+        </ion-thumbnail>
+        <ion-label>
+          <h2>{{ orderedProduct.product?.name}}</h2>
+          <p>Precio del producto: {{ orderedProduct.productPrice}}€</p>
+          <p>Cantidad: {{ orderedProduct.quantity}}</p>
+          <p>Precio Total: {{ orderedProduct.totalPrice}}€</p>
+        </ion-label>
+      </ion-item>
+      <p>Cantidad Total: {{ order.totalQuantityProducts }}</p>
+      <p>Precio Total: {{ order.totalPrice }}€</p>
+      <p>Creado: {{ order.createdAt | date: 'short' }}</p>
+      <p>Actualizado: {{order.updatedAt | date: 'short' }}</p>
+    </ion-label>
+    <ion-buttons>
+      <form [formGroup]="orderForm!" (ngSubmit)="patchOrder()">
+        <ion-item>
+          <ion-label position="floating">Estado</ion-label>
+          <ion-select formControlName="state" >
+            <ion-select-option *ngFor="let state of Object.values(OrderState)"
+                               [value]="state" class="{{state.toLowerCase()}}">{{ state }}</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label>Pagado</ion-label>
+          <ion-toggle formControlName="isPaid" [checked]="order.isPaid"></ion-toggle>
+        </ion-item>
+        <ion-button expand="block" type="submit" color="primary" fill="solid" [disabled]="orderForm!.invalid">Actualizar Pedido</ion-button>
+      </form>
+    </ion-buttons>
+  </ion-item>
+  <ng-template #noOrder>
+    <p>Ha ocurrido algo inesperado pruebe más tarde</p>
+  </ng-template>
+  <ion-toast
+    [isOpen]="isToastOpen"
+    message="Pedido actualizado"
+    duration="2000"
+    color="success"
+    position="top">
+  </ion-toast>
+</ion-content>

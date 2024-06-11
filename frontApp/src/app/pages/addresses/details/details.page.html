@@ -1,0 +1,63 @@
+<ion-content class="ion-padding">
+  <ion-card *ngIf="address; else noAddress">
+    <ion-card-header>
+      <ion-card-title>Detalles de la Dirección: {{ address.name }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item>
+          <ion-label>Pais:</ion-label>
+          <ion-text>{{ address.country }}</ion-text>
+        </ion-item>
+        <ion-item>
+          <ion-label>Provincia:</ion-label>
+          <ion-text>{{ address.province }}</ion-text>
+        </ion-item>
+        <ion-item>
+          <ion-label>Ciudad:</ion-label>
+          <ion-text>{{ address.city }}</ion-text>
+        </ion-item>
+        <ion-item>
+          <ion-label>Calle:</ion-label>
+          <ion-text>{{ address.street }}</ion-text>
+        </ion-item>
+        <ion-item>
+          <ion-label>Número:</ion-label>
+          <ion-text>{{ address.number }}</ion-text>
+        </ion-item>
+        <ion-item *ngIf="address.apartment">
+          <ion-label>Apartamento:</ion-label>
+          <ion-text>{{ address.apartment }}</ion-text>
+        </ion-item>
+        <ion-item>
+          <ion-label>Código Postal:</ion-label>
+          <ion-text>{{ address.postalCode }}</ion-text>
+        </ion-item>
+        <ion-item *ngIf="address.extraInfo">
+          <ion-label>Información Adicional:</ion-label>
+          <ion-text>{{ address.extraInfo }}</ion-text>
+        </ion-item>
+<!--        <ion-item>-->
+<!--          <ion-label>Usuario:</ion-label>-->
+<!--          <ion-text>{{ address.userId }}</ion-text>-->
+<!--        </ion-item>-->
+<!--        <ion-item>-->
+<!--          <ion-label>Creado en:</ion-label>-->
+<!--          <ion-text>{{ address.createdAt }}</ion-text>-->
+<!--        </ion-item>-->
+<!--        <ion-item>-->
+<!--          <ion-label>Actualizado en:</ion-label>-->
+<!--          <ion-text>{{ address.updatedAt }}</ion-text>-->
+<!--        </ion-item>-->
+<!--        <ion-item *ngIf="address.deletedAt">-->
+<!--          <ion-label>Eliminado en:</ion-label>-->
+<!--          <ion-text>{{ address.deletedAt }}</ion-text>-->
+<!--        </ion-item>-->
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+  <ng-template #noAddress>
+    <p>Ha ocurrido algo inesperado pruebe más tarde</p>
+  </ng-template>
+</ion-content>
+

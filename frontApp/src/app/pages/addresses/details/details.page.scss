@@ -1,0 +1,9 @@
+ion-card-header {
+  display: flex;
+  border:0;
+  border-style: solid;
+  border-bottom-width: 3px;
+  border-image: linear-gradient(to right,
+    /*calc(var(--ion-border-color) - var(--ion-color-step-60)) 20%, todo*/ rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 0.5) 40%, /* Negro transparente al 20% */ rgba(0, 0, 0, 0) 80%) 1;
+}

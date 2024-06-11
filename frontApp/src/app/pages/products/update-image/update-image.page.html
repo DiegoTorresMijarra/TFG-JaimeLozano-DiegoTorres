@@ -1,0 +1,35 @@
+<ion-content [fullscreen]="true">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title color="primary" size="large">Nuevo Producto</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <form [formGroup]="imageForm" (ngSubmit)="onSubmitImage()" enctype="multipart/form-data">
+    <ion-item *ngIf="product">
+      <ion-label>
+        <h2 class="titulo ion-margin-bottom">{{ product.name }}: <span class="subTitulo">{{ product.id }}</span></h2>
+        <p class="ion-text-justify">
+          Imagen Actual→
+        </p>
+      </ion-label>
+      <ion-thumbnail >
+        <ion-img  [src]="getProductUrl(product)" alt="{{'image_' + product.id}}">
+        </ion-img>
+      </ion-thumbnail>
+    </ion-item>
+
+
+    <ion-item>
+      <ion-label >Seleccionar Imagen</ion-label>
+      <input type="file" (change)="handleFileInput($event)" accept="{{ValidImageExtensions.toString()}}">
+    </ion-item>
+    <ion-text color="danger" *ngIf="imageForm.get('image')?.touched && imageForm.get('image')?.errors?.['required']">
+      <ion-note>La imagen es obligatoria.</ion-note>
+    </ion-text>
+    <ion-text color="danger" *ngIf="imageForm.get('image')?.touched && imageForm.get('image')?.errors?.['invalidMimeType']">
+      <ion-note>Solo se permiten imágenes JPEG, JPG, PNG y GIF.</ion-note>
+    </ion-text>
+    <ion-button expand="block" type="submit" [disabled]="imageForm.invalid">Actualizar Imagen</ion-button>
+  </form>
+</ion-content>

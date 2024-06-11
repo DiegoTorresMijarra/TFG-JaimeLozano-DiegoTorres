@@ -117,3 +117,15 @@ ion-note {
 ion-item.selected {
   --color: var(--ion-color-primary);
 }
+.auth-buttons {
+  display: flex;
+  justify-content: flex-end;
+  margin: 10px;
+}
+
+ion-menu {
+  .auth-buttons {
+    margin-top: 20px;
+    padding: 0 10px;
+  }
+}

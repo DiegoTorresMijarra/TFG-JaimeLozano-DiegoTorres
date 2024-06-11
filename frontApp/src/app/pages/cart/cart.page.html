@@ -1,0 +1,118 @@
+<!-- cart.component.html -->
+
+<ion-content [fullscreen]="true">
+  <ion-toolbar>
+    <ion-title>Carrito de Compra</ion-title>
+  </ion-toolbar>
+  <div *ngIf="cart.lineas.length > 0; else emptyCart">
+    <ion-card>
+      <ion-toolbar>
+        <ion-title size="large">Productos</ion-title>
+      </ion-toolbar>
+      <ion-card-content>
+        <ion-list id="carrito">
+          <ion-item *ngFor="let linea of cart.lineas">
+            <ion-label>
+              <h2>{{ linea.product.name }}</h2>
+              <p>Precio: {{ linea.price | number:'1.2-2' }}€ - Cantidad: {{ linea.quantity }}</p>
+              <p>Subtotal: {{ linea.subtotal | number:'1.2-2' }}€</p>
+            </ion-label>
+            <ion-thumbnail slot="start">
+              <ion-img [src]="getProductUrl(linea.product)"></ion-img>
+            </ion-thumbnail>
+            <ion-button color="danger" (click)="removeLine(linea.product.id)" >Eliminar</ion-button>
+          </ion-item>
+        </ion-list>
+        <ion-item>
+          <ion-label><strong>Total</strong></ion-label>
+          <ion-note slot="end"><strong>{{ cart.totalPrice | number:'1.2-2' }}€</strong></ion-note>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+
+
+    <ion-card *ngIf="user && user.addresses" id="addresses">
+      <ion-toolbar>
+        <ion-title size="large">Direcciones</ion-title>
+        <ion-buttons slot="end">
+          <ion-button [routerLink]="['/addresses/new']" color="success" fill="solid">
+            Nueva Direccion
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+      <ion-card-content>
+        <ion-list class="ion-margin-top muestrario">
+          <ion-item class="muestra ion-align-items-center" lines="full"
+                    *ngFor="let address of user.addresses | paginate:currentAddressesPage:pageAddressesSize"
+                    [ngClass]="{'selected-address': address.id === addressSeleccted}">
+            <ion-label class="descripcion">
+              <h2 class="titulo">{{address.name}}</h2>
+              <p>{{address.street}}, Numero: {{address.number}}, {{address.city}},
+                {{address.postalCode}} {{address.province}}</p>
+            </ion-label>
+            <ion-buttons class="buttons" style="display: flex" slot="end">
+
+              <ion-button [routerLink]="['/addresses/details/' + address.id]"
+                          color="primary" size="large" fill="solid">Detalles</ion-button>
+
+              <ion-button [routerLink]="['/addresses/update/' + address.id]"
+                          color="warning" size="large" fill="solid">Actualizar</ion-button>
+
+              <ion-button (click)="seleccionarAddress(address.id)"
+                          color="success" size="large" fill="solid">Seleccionar</ion-button>
+            </ion-buttons>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+      <ion-footer>
+        <ion-toolbar>
+          <ion-title class="ion-align-items-start" slot="start">Página: {{ currentAddressesPage }} de {{ Math.ceil(user.addresses.length / pageAddressesSize) }}</ion-title>
+          <ion-buttons slot="end">
+            <ion-button [disabled]="currentAddressesPage <= 1" (click)="changeAddressesPage(currentAddressesPage - 1)">
+              Anterior
+            </ion-button>
+            <ion-button [disabled]="currentAddressesPage >= user.addresses.length / pageAddressesSize" (click)="changeAddressesPage(currentAddressesPage + 1)">
+              Siguiente
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-footer>
+    </ion-card>
+    <ion-card>
+      <ion-toolbar>
+        <ion-title size="large">Datos del pedido:</ion-title>
+      </ion-toolbar>
+      <ion-card-content>
+        <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+          <ion-list id="formCompra" >
+            <ion-item>
+              <ion-label>Selecciona un restaurante:</ion-label>
+              <ion-select formControlName="restaurant">
+                <ion-select-option *ngFor="let restaurante of restaurantes" [value]="restaurante.id">
+                  {{ restaurante.name }}
+                </ion-select-option>
+              </ion-select>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Número de Tarjeta</ion-label>
+              <ion-input type="text" formControlName="cardNumber"
+                         placeholder="0000 0000 0000 0000"
+                         [maskito]="cardMask"
+                         [maskitoElement]="maskPredicate"></ion-input>
+            </ion-item>
+          </ion-list>
+          <ion-text color="danger" *ngIf="formGroup.get('cardNumber')?.touched && formGroup.get('cardNumber')?.errors?.['pattern']">
+            <ion-note>La tarjeta debe tener un formato valido.</ion-note>
+          </ion-text>
+          <ion-text color="danger" *ngIf="formGroup.get('cardNumber')?.touched && formGroup.get('cardNumber')?.errors?.['required']">
+            <ion-note>La tarjeta es obligatoria.</ion-note>
+          </ion-text>
+          <ion-button expand="block" type="submit" [disabled]="formGroup.invalid || !addressSeleccted">Pagar</ion-button>
+        </form>
+      </ion-card-content>
+    </ion-card>
+  </div>
+  <ng-template #emptyCart>
+    <p>No hay productos en el carrito.</p>
+  </ng-template>
+</ion-content>

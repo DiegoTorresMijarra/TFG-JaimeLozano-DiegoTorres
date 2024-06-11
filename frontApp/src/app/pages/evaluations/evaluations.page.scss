@@ -1,0 +1,81 @@
+.product-item {
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid #dcdcdc;
+  padding: 16px 0;
+}
+
+.product-item h2 {
+  font-size: 18px;
+  margin: 0;
+  color: var(--ion-color-primary);
+}
+
+.product-item p {
+  margin: 4px 0;
+  color: #555;
+}
+
+.product-item p span {
+  font-weight: bold;
+}
+.rating {
+   display: flex;
+   align-items: center;
+   margin-top: 8px;
+
+   p {
+     margin: 0;
+     margin-right: 8px;
+   }
+
+   ion-icon {
+     font-size: 24px;
+     color: #FFD700;
+     margin-right: 2px;
+   }
+ }
+/* Estilos para los botones */
+ion-button {
+  --border-radius: 25px; /* Redondeado los bordes de los botones */
+  --background: var(--ion-color-primary); /* Color de fondo del botón */
+  --color: #fff; /* Color del texto del botón */
+  --padding-start: 20px; /* Aumentado el espacio interno izquierdo */
+  --padding-end: 20px; /* Aumentado el espacio interno derecho */
+}
+
+ion-button:hover {
+  --background: #4285F4; /* Cambiado el color de fondo al pasar el ratón */
+}
+
+ion-button[fill="clear"] {
+  --background: transparent; /* Botones transparentes */
+  --color: var(--ion-color-primary); /* Color de texto */
+  --border-width: 1px; /* Ancho del borde */
+  --border-color: var(--ion-color-primary); /* Color del borde */
+}
+
+ion-button[fill="clear"]:hover {
+  --background: rgba(0, 0, 0, 0.1); /* Color de fondo al pasar el ratón */
+}
+@media (min-width: 0px) {
+  .product-item {
+    width: 90%;
+    ion-item {
+      width: 100%;
+    }
+  }
+  .product-item ion-thumbnail {
+    max-width: 200px;
+  }
+
+  .actions {
+    width: 50%;
+    display: flex;
+    justify-content: space-around;
+    overflow-x: auto;
+  }
+  .product-data::part(native) {
+    max-height: 200px;
+  }
+}

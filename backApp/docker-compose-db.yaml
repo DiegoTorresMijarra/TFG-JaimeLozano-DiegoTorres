@@ -2,8 +2,8 @@
 # Desarrollo
 services:
   # PostgreSQL
-  postgres-db:
-    container_name: db_postgres
+  postgres-db-dev:
+    container_name: db_postgres_dev
     image: postgres:12-alpine
     restart: always
     env_file: .env
@@ -14,13 +14,14 @@ services:
     ports:
       - ${POSTGRES_PORT}:5432
     volumes:
+      - postgres-data-volume-dev:/var/lib/postgresql/data
       - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - app-network
 
   # MongoDB
-  mongo-db:
-    container_name: db_mongo
+  mongo-db-dev:
+    container_name: db_mongo_dev
     image: mongo:5.0
     restart: always
     env_file: .env
@@ -31,6 +32,7 @@ services:
     ports:
       - ${MONGO_PORT}:27017
     volumes:
+      - mongo-data-volume-dev:/data/db
       - ./database/init.js:/docker-entrypoint-initdb.d/init.js:ro
     networks:
       - app-network
@@ -38,3 +40,9 @@ services:
 networks:
   app-network:
     driver: bridge
+
+volumes:
+  postgres-data-volume-dev:
+    name: postgres-data-volume-dev
+  mongo-data-volume-dev:
+    name: mongo-data-volume-dev

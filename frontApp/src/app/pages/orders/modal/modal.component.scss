@@ -1,0 +1,23 @@
+ion-button .cerrar {
+  color: white; /* Cambia 'white' por el color deseado */
+}
+ion-grid {
+  width: 100%;
+}
+ion-row {
+  display: flex;
+  flex-wrap: wrap;
+}
+ion-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0;
+  padding: 0.5rem;
+}
+ion-label, ion-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+

@@ -1,0 +1,128 @@
+<ion-content [fullscreen]="true" *ngIf="user">
+  <ion-button (click)="authService.logout()"
+              (keydown.enter)="authService.logout()"
+              fill="outline" slot="end" style="position: absolute; top: 20px;  right: 20px;">
+    Logout
+  </ion-button>
+  <ion-card  class="personal">
+    <ion-toolbar>
+      <ion-title>Bienvenido a MacJava: {{ user.name }} {{ user.surname }}</ion-title>
+    </ion-toolbar>
+
+    <ion-card-content>
+      <ion-list>
+        <ion-item> Email: {{ user.email }}</ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="user.orders">
+    <ion-toolbar>
+      <ion-title>Pedidos</ion-title>
+    </ion-toolbar>
+    <ion-card-content>
+      <ion-list>
+        <ion-grid>
+          <ion-row>
+            <ion-col><strong>Pedido ID</strong></ion-col>
+            <ion-col><strong>Restaurante ID</strong></ion-col>
+            <ion-col><strong>Total</strong></ion-col>
+            <ion-col><strong>Estado</strong></ion-col>
+            <ion-col><strong>Fecha</strong></ion-col>
+            <ion-col><strong>Acciones:</strong></ion-col>
+          </ion-row>
+          <ion-row *ngFor="let order of user.orders | paginate:currentOrderPage:pageOrderSize">
+            <ion-col>{{ order.id }}</ion-col>
+            <ion-col>{{ order.restaurantId }}</ion-col>
+            <ion-col>{{ order.totalPrice | currency }}</ion-col>
+            <ion-col  class="{{order.state.toLowerCase()}}">{{ order.state }}</ion-col>
+            <ion-col>{{ order.createdAt | date:'short' }}</ion-col>
+            <ion-col>
+              <ion-buttons>
+                <ion-button fill="clear" (click)="goToEvaluationPage(order)">
+                  <ion-icon name="star-sharp" class="golden-star"></ion-icon>
+                </ion-button>
+                <ion-button fill="clear" (click)="downloadExcel(order.id)">
+                  <ion-icon name="download-outline"></ion-icon>                </ion-button>
+              </ion-buttons>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-list>
+
+    </ion-card-content>
+    <ion-footer>
+      <ion-toolbar>
+        <ion-title class="ion-align-items-start" slot="start">Pagina: {{ currentOrderPage }} de {{ Math.ceil(user.orders.length / pageOrderSize) }}</ion-title>
+        <ion-buttons slot="end">
+          <ion-button [disabled]="currentOrderPage <= 1" (click)="changeOrderPage(currentOrderPage - 1)">
+            Anterior
+          </ion-button>
+          <ion-button [disabled]="(user.orders.length / pageOrderSize) <= currentOrderPage" (click)="changeOrderPage(currentOrderPage + 1)">
+            Siguiente
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-footer>
+  </ion-card>
+
+  <ion-card *ngIf="user.addresses" id="addresses">
+    <ion-card-header>
+      <ion-toolbar>
+        <ion-title size="large">Direcciones</ion-title>
+        <ion-buttons slot="end">
+          <ion-button [routerLink]="['/addresses/new']" color="success" fill="solid">
+            Nueva Direccion
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list class="ion-margin-top muestrario">
+        <ion-item class="muestra ion-align-items-center" lines="full" *ngFor="let address of user.addresses | paginate:currentAddressesPage:pageAddressesSize">
+          <ion-label class="descripcion">
+            <h2 class="titulo">{{address.name}}</h2>
+            <p>{{address.street}}, Numero: {{address.number}}, {{address.city}},
+              {{address.postalCode}} {{address.province}}</p>
+          </ion-label>
+          <ion-buttons class="buttons" style="display: flex" slot="end">
+
+            <ion-button [routerLink]="['/addresses/details/' + address.id]"
+              color="primary" size="large" fill="solid">Detalles</ion-button>
+
+            <ion-button [routerLink]="['/addresses/update/' + address.id]"
+              color="warning" size="large" fill="solid">Actualizar</ion-button>
+
+            <ion-button (click)="deleteAddress(address.id)"
+              color="danger" size="large" fill="solid">Borrar</ion-button>
+          </ion-buttons>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+    <ion-footer>
+      <ion-toolbar>
+        <ion-title class="ion-align-items-start" slot="start">Página: {{ currentAddressesPage }} de {{ Math.ceil(user.addresses.length / pageAddressesSize) }}</ion-title>
+        <ion-buttons slot="end">
+          <ion-button [disabled]="currentAddressesPage <= 1" (click)="changeAddressesPage(currentAddressesPage - 1)">
+            Anterior
+          </ion-button>
+          <ion-button [disabled]="currentAddressesPage >= user.addresses.length / pageAddressesSize" (click)="changeAddressesPage(currentAddressesPage + 1)">
+            Siguiente
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-footer>
+  </ion-card>
+
+  <ion-card *ngIf="user.roles.indexOf('ADMIN') !== -1 || user.roles.indexOf('WORKER') !== -1 ">
+    <ion-toolbar>
+      <ion-title>Consulta los Pedidos:</ion-title>
+    </ion-toolbar>
+    <ion-button [routerLink]="['/websocket-orders']" color="primary" fill="clear">
+      WebSocket
+    </ion-button>
+    <ion-card-content>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>
