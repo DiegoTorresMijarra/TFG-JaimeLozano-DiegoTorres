@@ -25,8 +25,7 @@ export class ProductModalComponent implements OnInit {
   constructor(
     private modalController: ModalController,
     private cartService: CartService,
-  ) {
-  }
+  ) { }
 
   ngOnInit() {
     this.loadEvaluations(this.product?.id)

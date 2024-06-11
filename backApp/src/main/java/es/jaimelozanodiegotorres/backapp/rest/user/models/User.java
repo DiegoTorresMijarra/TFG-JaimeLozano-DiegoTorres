@@ -18,10 +18,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -87,7 +84,7 @@ public class User implements UserDetails {
     @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
     @Builder.Default
-    private Set<Role> roles = Set.of(Role.USER);
+    private Set<Role> roles = new HashSet<>(Role.USER.ordinal());
 
     public boolean isWorker() {
         return isEnabled()&&Role.isWorker(roles);
