@@ -1,6 +1,5 @@
 # TFG-JaimeLozano-DiegoTorres
 
----
 # MacJava Project:
 
 **Autor/es del Proyecto:**
