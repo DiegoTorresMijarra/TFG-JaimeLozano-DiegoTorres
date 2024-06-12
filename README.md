@@ -15,7 +15,63 @@ Para asegurar un flujo de trabajo ordenado y colaborativo, se adopta la metodolo
 
 Con la API MacJava, las tiendas online pueden beneficiarse de una plataforma confiable y escalable, diseñada para manejar grandes volúmenes de datos y proporcionar una experiencia de usuario excepcional.
 
-## 2. Galeria
+## Instalación:
+
+### Desarrollo:
+
+#### Requisitos:
+
+- [Git](https://git-scm.com/downloads)
+- [JDK 17 o superior](https://www.oracle.com/java/technologies/javase-downloads.html)
+- [Apache Maven 3.11.0 o superior](https://maven.apache.org/download.cgi)
+- [Node.js y npm](https://nodejs.org/)
+- [Angular CLI](https://angular.io/cli)
+- [Ionic CLI](https://ionicframework.com/docs/cli)
+- [Docker](https://www.docker.com/products/docker-desktop)
+
+
+Descargar repositorio:
+```
+git clone https://github.com/DiegoTorresMijarra/TFG-JaimeLozano-DiegoTorres.git
+```
+Front:
+```
+cd TFG-JaimeLozano-DiegoTorres/frontApp 
+
+npm install
+
+npm start
+```
+Back:
+``` 
+cd TFG-JaimeLozano-DiegoTorres/backApp
+
+docker-compose -f docker-compose-db.yaml up # levantar bbdd de desarrollo
+
+mvn clean install
+
+mvn spring-boot:run
+```
+### Despliegue:
+
+#### Requisitos:
+
+- [Git](https://git-scm.com/downloads)
+- [Docker](https://www.docker.com/products/docker-desktop)
+
+Descargar repositorio:
+```
+git clone https://github.com/DiegoTorresMijarra/TFG-JaimeLozano-DiegoTorres.git
+```
+Despliegue Dockers:
+```
+cd TFG-JaimeLozano-DiegoTorres
+
+docker-compose -f docker-compose.yaml up
+```
+
+
+## Galeria
 <div style="display: flex; flex-wrap: wrap; justify-content: center;">
     <img src="/documentacion/Imagenes/actualizarProducto.png" width="150" height="150" alt="actualizarProducto">
     <img src="/documentacion/Imagenes/carrito.png" width="150" height="150" alt="carrito">
@@ -100,9 +156,7 @@ Consulte el [Manual de Usuario](documentacion/ManualUsuario.pdf).
 
 ### Implementación
 
-Para lanzar Docker, consulte el archivo `docker-compose.yaml` y los scripts de inicialización `init.sql` y `init.js`.
-
-En el back-end, se organiza en modelos, DTOs, mappers, repositorios, servicios y controladores. En el front-end, se organiza en un header, footer y body con vistas y servicios que se conectan al back-end mediante HTTP.
+El back-end, se organiza en modelos, DTOs, mappers, repositorios, servicios y controladores. En el front-end, se organiza en un header, footer y body con vistas y servicios que se conectan al back-end mediante HTTP.
 
 ### Documentación
 
