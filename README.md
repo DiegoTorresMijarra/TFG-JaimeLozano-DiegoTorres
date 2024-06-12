@@ -52,7 +52,7 @@ mvn clean install
 
 mvn spring-boot:run
 ```
-### Despliegue:
+### Despliegue-Produccion:
 
 #### Requisitos:
 
@@ -69,7 +69,13 @@ cd TFG-JaimeLozano-DiegoTorres
 
 docker-compose -f docker-compose.yaml up
 ```
+#### Usuarios de prueba:
 
+| Username | Contrasena | Roles               | 
+|    :---:  |    :---:  |    :---:  |
+| user     | user       | USER                |
+| admin    | admin      | USER, ADMIN, WORKER |
+| worker   | worker     | WORKER              |
 
 ## Galeria
 <div style="display: flex; flex-wrap: wrap; justify-content: center;">
