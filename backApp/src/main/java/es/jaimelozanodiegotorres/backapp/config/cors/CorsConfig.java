@@ -27,6 +27,11 @@ public class CorsConfig {
                         .allowedOrigins("http://localhost:4200")
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH")
                         .maxAge(3600);
+                //todo poner if perfil prod
+                registry.addMapping("/**")
+                        .allowedOrigins("https://tfg-jaime-lozano-diego-torres-git-master-jaime9lozanos-projects.vercel.app/")
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH")
+                        .maxAge(3600);
             }
 
         };
