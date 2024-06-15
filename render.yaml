@@ -1,12 +1,12 @@
 services:
   - type: web
-    name: mi-aplicacion
+    name: my-app
     env: docker
     repo: https://github.com/DiegoTorresMijarra/TFG-JaimeLozano-DiegoTorres
     branch: main
     buildCommand: ./mvnw clean package -DskipTests
     startCommand: java -jar target/my-app.jar
-    dockerfilePath: Dockerfile
+    dockerfilePath: backApp/Dockerfile
     plan: free
     envVars:
       - key: API_PORT
