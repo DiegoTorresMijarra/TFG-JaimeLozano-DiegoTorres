@@ -2,8 +2,8 @@ services:
   - type: web
     name: my-app
     env: docker
-    repo: https://github.com/DiegoTorresMijarra/TFG-JaimeLozano-DiegoTorres/tree/feature/despliegue
-    branch: main
+    repo: https://github.com/DiegoTorresMijarra/TFG-JaimeLozano-DiegoTorres
+    branch: despliegue
     buildCommand: ./mvnw clean package -DskipTests
     dockerfilePath: backApp/Dockerfile
     plan: free
