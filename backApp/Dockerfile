@@ -10,4 +10,4 @@ FROM eclipse-temurin:17-jre-alpine AS run
 WORKDIR /app
 COPY --from=build /app/target/*.jar /app/my-app.jar
 EXPOSE 3000
-ENTRYPOINT ["java","-jar","-Dspring.profiles.active=prod","/app/my-app.jar"]
+ENTRYPOINT ["java","-jar","-Dspring.profiles.active=prod-server","/app/my-app.jar"]
