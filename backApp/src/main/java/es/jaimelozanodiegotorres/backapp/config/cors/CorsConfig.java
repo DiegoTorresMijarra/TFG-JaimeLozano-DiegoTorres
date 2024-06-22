@@ -19,12 +19,6 @@ public class CorsConfig {
         return new WebMvcConfigurer() {
 
             @Override
-            // Ajustamos una configuración específica para cada serie de métodos
-            // Así por cada fuente podemos permitir lo que queremos
-            // Por ejemplo ene esta configuración solo permitirmos el dominio producto
-            // Permitimos solo un dominio
-            // e indicamos los verbos que queremos usar
-            // Debes probar con uncliente desde ese puerto
             public void addCorsMappings(CorsRegistry registry) {
                 if(profile==null)
                     throw new RuntimeException("No profile setUp");
@@ -46,7 +40,6 @@ public class CorsConfig {
                             .maxAge(3600);
                 }
             }
-
         };
     }
 }

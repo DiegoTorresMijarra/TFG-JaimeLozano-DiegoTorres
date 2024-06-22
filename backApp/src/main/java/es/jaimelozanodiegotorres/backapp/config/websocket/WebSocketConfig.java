@@ -12,6 +12,7 @@ public class WebSocketConfig implements WebSocketConfigurer {
     // wss://localhost:3000/v1/ws/orders
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
+
         registry.addHandler(webSocketOrdersHandler(), "/ws/orders")
                 .setAllowedOrigins("http://localhost:4200");
     }

@@ -58,7 +58,7 @@ public class SecurityConfig {
                         // Abrimos a Swagger -- Quitar en produccion
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                         // Websockets para notificaciones
-                        .requestMatchers("/ws/**").permitAll()
+                        .requestMatchers("/ws/**").hasAnyRole("ADMIN", "WORKER")
                         // Storage
                         .requestMatchers("/storage/**").permitAll()
                         // Endpoints
@@ -72,16 +72,6 @@ public class SecurityConfig {
                         .requestMatchers("/addresses/**").permitAll()
                         .requestMatchers("/users/**").permitAll()
                         .requestMatchers("/users/me/**").permitAll()
-                        //.requestMatchers("/clientes/**").permitAll()
-                        // Otras rutas de la API podemos permitiras o no....
-                        //.requestMatchers("/" + apiVersion + "/**").permitAll()
-                        // Podríamos jugar con permismos por ejemplo para una ruta concreta
-                        //.requestMatchers("/" + apiVersion + "/auth/me").hasRole("ADMIN")
-                        // O con un acción HTTP, POST, PUT, DELETE, etc.
-                        //.requestMatchers(GET, "/" + apiVersion + "/auth/me").hasRole("ADMIN")
-                        // O con un patrón de ruta
-                        //.regexMatchers("/" + apiVersion + "/auth/me").hasRole("ADMIN")
-                        // El resto de peticiones tienen que estar autenticadas
                         .anyRequest().authenticated())
 
                 // Añadimos el filtro de autenticación

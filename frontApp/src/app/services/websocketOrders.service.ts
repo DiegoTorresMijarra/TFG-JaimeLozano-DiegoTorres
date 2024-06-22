@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core'
 import { Observable, Subject } from 'rxjs'
 import { AuthService } from './auth.service'
 import { Notification } from '../models/notification.entity'
+import { environment } from '../../environments/environment'
+import { environment as envProd } from '../../environments/environment.prod'
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +14,10 @@ export class WebSocketService {
   private notifications: Notification[] = []
 
   constructor() {
-    const url = 'wss://localhost:3000/v1/ws/orders'
+    const url =
+      'wss://' +
+      (environment.production ? envProd.apiUrl : environment.apiUrl) +
+      '/ws/orders'
     this.socket = new WebSocket(url)
   }
 
