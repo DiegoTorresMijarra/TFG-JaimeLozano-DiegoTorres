@@ -7,12 +7,16 @@ import {
   EvaluationDto,
   EvaluationResponseDto,
 } from '../models/evaluation.entity'
+import { environment } from '../../environments/environment'
+import { environment as envProd } from '../../environments/environment.prod'
 
 @Injectable({
   providedIn: 'root',
 })
 export class EvaluationService {
-  private apiUrl = 'https://localhost:3000/v1/evaluations'
+  private apiUrl =
+    (environment.production ? envProd.apiUrl : environment.apiUrl) +
+    'evaluations'
 
   constructor(
     private http: HttpClient,
