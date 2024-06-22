@@ -27,4 +27,6 @@ ENV POSTGRES_SSL=${POSTGRES_SSL}
 ENV JWT_TOKEN=${JWT_TOKEN}
 ENV SSL_KEYSTORE_PASSWORD=${SSL_KEYSTORE_PASSWORD}
 ENV PROFILE=${PROFILE}
-ENTRYPOINT ["java","-jar","-Dspring.profiles.active=prod-server","/app/my-app.jar"]
+
+# Entrypoint con variables de entorno
+ENTRYPOINT ["java", "-jar", "-Dspring.profiles.active=${PROFILE}", "-Dapi.port=${API_PORT}", "-Dapi.name=${API_NAME}", "-Dapi.version=${API_VERSION}", "-Dmongo.host=${MONGO_HOST}", "-Dmongo.database=${MONGO_DATABASE}", "-Dmongo.user=${MONGO_USER}", "-Dmongo.pass=${MONGO_PASS}", "-Dpostgres.host=${POSTGRES_HOST}", "-Dpostgres.host.prod=${POSTGRES_HOST_PROD}", "-Dpostgres.port=${POSTGRES_PORT}", "-Dpostgres.database=${POSTGRES_DATABASE}", "-Dpostgres.user=${POSTGRES_USER}", "-Dpostgres.cont=${POSTGRES_CONT}", "-Dpostgres.ssl=${POSTGRES_SSL}", "-Djwt.token=${JWT_TOKEN}", "-Dssl.keystore.password=${SSL_KEYSTORE_PASSWORD}", "/app/my-app.jar"]
