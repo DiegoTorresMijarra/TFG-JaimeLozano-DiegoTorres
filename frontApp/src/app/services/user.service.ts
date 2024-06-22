@@ -1,15 +1,18 @@
 import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { AuthService } from './auth.service'
-import {catchError, Observable, throwError} from 'rxjs'
-import {User, UserResponseDto} from '../models/user.entity'
-import {Order} from "../models/order.entity";
+import { catchError, Observable, throwError } from 'rxjs'
+import { User, UserResponseDto } from '../models/user.entity'
+import { Order } from '../models/order.entity'
+import { environment } from '../../environments/environment'
+import { environment as envProd } from '../../environments/environment.prod'
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  private apiUrl = 'https://localhost:3000/v1/users'
+  private apiUrl =
+    (environment.production ? envProd.apiUrl : environment.apiUrl) + 'users'
 
   constructor(
     private http: HttpClient,

@@ -3,13 +3,16 @@ import { HttpClient } from '@angular/common/http'
 import { catchError, Observable, throwError } from 'rxjs'
 import { AuthService } from './auth.service'
 import { Category, CategoryDto } from '../models/category.entity'
-import {Offer, OfferDto} from "../models/offer.entity";
+import { Offer, OfferDto } from '../models/offer.entity'
+import { environment } from '../../environments/environment'
+import { environment as envProd } from '../../environments/environment.prod'
 
 @Injectable({
   providedIn: 'root',
 })
 export class OfferService {
-  private apiUrl = 'https://localhost:3000/v1/offers'
+  private apiUrl =
+    (environment.production ? envProd.apiUrl : environment.apiUrl) + 'offers'
 
   constructor(
     private http: HttpClient,
