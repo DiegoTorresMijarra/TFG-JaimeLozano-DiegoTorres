@@ -9,11 +9,25 @@
 
 ## Introducción
 
-La API MacJava es una solución integral para la administración segura y eficiente de bases de datos, especialmente diseñada para tiendas online. Este proyecto se basa en un enfoque robusto y moderno, utilizando SpringBoot para la capa de back-end y Angular junto con Ionic para la capa de front-end. La combinación de estas tecnologías permite una configuración sencilla y un desarrollo ágil, facilitando la creación y gestión de aplicaciones web y móviles de alto rendimiento.
+La API MacJava es una solución integral para la administración segura y eficiente de bases de datos, especialmente
+diseñada para tiendas online. Este proyecto se basa en un enfoque robusto y moderno, utilizando SpringBoot para la capa
+de back-end y Angular junto con Ionic para la capa de front-end. La combinación de estas tecnologías permite una
+configuración sencilla y un desarrollo ágil, facilitando la creación y gestión de aplicaciones web y móviles de alto
+rendimiento.
 
-Para asegurar un flujo de trabajo ordenado y colaborativo, se adopta la metodología GitFlow para la gestión de ramas. Este enfoque organiza las ramas de características en una rama de desarrollo, la cual, tras pasar por un riguroso proceso de pruebas, se fusiona en la rama principal. Esta estructura no solo optimiza la integración y el despliegue continuo, sino que también minimiza los riesgos y mejora la calidad del software.
+Para asegurar un flujo de trabajo ordenado y colaborativo, se adopta la metodología GitFlow para la gestión de ramas.
+Este enfoque organiza las ramas de características en una rama de desarrollo, la cual, tras pasar por un riguroso
+proceso de pruebas, se fusiona en la rama principal. Esta estructura no solo optimiza la integración y el despliegue
+continuo, sino que también minimiza los riesgos y mejora la calidad del software.
 
-Con la API MacJava, las tiendas online pueden beneficiarse de una plataforma confiable y escalable, diseñada para manejar grandes volúmenes de datos y proporcionar una experiencia de usuario excepcional.
+Con la API MacJava, las tiendas online pueden beneficiarse de una plataforma confiable y escalable, diseñada para
+manejar grandes volúmenes de datos y proporcionar una experiencia de usuario excepcional.
+
+## Pruebame en Línea:
+
+### Estado:
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/53d07aa7-afbd-4d39-babd-ebe75d44ff2f/deploy-status)](https://bio-online.netlify.app)
 
 ## Instalación:
 
@@ -29,12 +43,14 @@ Con la API MacJava, las tiendas online pueden beneficiarse de una plataforma con
 - [Ionic CLI](https://ionicframework.com/docs/cli)
 - [Docker](https://www.docker.com/products/docker-desktop)
 
-
 Descargar repositorio:
+
 ```
 git clone https://github.com/DiegoTorresMijarra/TFG-JaimeLozano-DiegoTorres.git
 ```
+
 Front:
+
 ```
 cd TFG-JaimeLozano-DiegoTorres/frontApp 
 
@@ -42,7 +58,9 @@ npm install
 
 npm start
 ```
+
 Back:
+
 ``` 
 cd TFG-JaimeLozano-DiegoTorres/backApp
 
@@ -52,6 +70,7 @@ mvn clean install
 
 mvn spring-boot:run
 ```
+
 ### Despliegue-Produccion:
 
 #### Requisitos:
@@ -60,24 +79,29 @@ mvn spring-boot:run
 - [Docker](https://www.docker.com/products/docker-desktop)
 
 Descargar repositorio:
+
 ```
 git clone https://github.com/DiegoTorresMijarra/TFG-JaimeLozano-DiegoTorres.git
 ```
+
 Despliegue Dockers:
+
 ```
 cd TFG-JaimeLozano-DiegoTorres
 
 docker-compose -f docker-compose.yaml up
 ```
+
 #### Usuarios de prueba:
 
-| Username | Contrasena | Roles               | 
-|    :---:  |    :---:  |    :---:  |
-| user     | user       | USER                |
-| admin    | admin      | USER, ADMIN, WORKER |
-| worker   | worker     | WORKER              |
+| Username | Contrasena |        Roles        | 
+|:--------:|:----------:|:-------------------:|
+|   user   |    user    |        USER         |
+|  admin   |   admin    | USER, ADMIN, WORKER |
+|  worker  |   worker   |       WORKER        |
 
 ## Galeria
+
 <div style="display: flex; flex-wrap: wrap; justify-content: center;">
     <img src="/documentacion/Imagenes/actualizarProducto.png" width="150" height="150" alt="actualizarProducto">
     <img src="/documentacion/Imagenes/carrito.png" width="150" height="150" alt="carrito">
@@ -116,7 +140,8 @@ docker-compose -f docker-compose.yaml up
 
 ## Objetivo
 
-El objetivo principal de este proyecto es diseñar, desarrollar y documentar una aplicación web y móvil utilizando la API MacJava, basada en las tecnologías SpringBoot, Angular e Ionic. Los objetivos específicos son:
+El objetivo principal de este proyecto es diseñar, desarrollar y documentar una aplicación web y móvil utilizando la API
+MacJava, basada en las tecnologías SpringBoot, Angular e Ionic. Los objetivos específicos son:
 
 1. Diseñar la arquitectura del sistema.
 2. Desarrollar la aplicación.
@@ -125,7 +150,8 @@ El objetivo principal de este proyecto es diseñar, desarrollar y documentar una
 
 ## Alcance
 
-El proyecto abarca el diseño, desarrollo, pruebas y documentación de una aplicación web y móvil para la gestión de una tienda online. Incluye:
+El proyecto abarca el diseño, desarrollo, pruebas y documentación de una aplicación web y móvil para la gestión de una
+tienda online. Incluye:
 
 1. Diseño de la arquitectura.
 2. Desarrollo de funcionalidades.
@@ -133,7 +159,8 @@ El proyecto abarca el diseño, desarrollo, pruebas y documentación de una aplic
 4. Pruebas exhaustivas.
 5. Documentación técnica y de usuario.
 
-El proyecto no incluirá la integración con sistemas externos o de terceros, ni el desarrollo de funcionalidades avanzadas que no sean directamente relevantes para una tienda online básica.
+El proyecto no incluirá la integración con sistemas externos o de terceros, ni el desarrollo de funcionalidades
+avanzadas que no sean directamente relevantes para una tienda online básica.
 
 ## Justificación
 
@@ -149,7 +176,8 @@ Este proyecto se justifica por:
 
 ### Análisis de la Aplicación
 
-La aplicación sigue una arquitectura de tres capas, compuesta por el back-end, el front-end y las bases de datos PostgreSQL y MongoDB, desplegadas en contenedores Docker.
+La aplicación sigue una arquitectura de tres capas, compuesta por el back-end, el front-end y las bases de datos
+PostgreSQL y MongoDB, desplegadas en contenedores Docker.
 
 - **Back-end**: Desarrollado con Spring Boot, gestiona los endpoints y servicios que manipulan los datos.
 - **Front-end**: Desarrollado con Angular e Ionic, consume los endpoints proporcionados por el back-end.
@@ -162,12 +190,12 @@ Consulte el [Manual de Usuario](documentacion/ManualUsuario.pdf).
 
 ### Implementación
 
-El back-end, se organiza en modelos, DTOs, mappers, repositorios, servicios y controladores. En el front-end, se organiza en un header, footer y body con vistas y servicios que se conectan al back-end mediante HTTP.
+El back-end, se organiza en modelos, DTOs, mappers, repositorios, servicios y controladores. En el front-end, se
+organiza en un header, footer y body con vistas y servicios que se conectan al back-end mediante HTTP.
 
 ### Documentación
 
 Consulte el [Manual de Tecnico](documentacion/ManualTecnico.pdf).
-
 
 ## Resultados y Discusión
 
@@ -203,7 +231,10 @@ Consulte el [Manual de Tecnico](documentacion/ManualTecnico.pdf).
 
 ## Conclusiones
 
-El desarrollo de este proyecto ha permitido alcanzar importantes logros y superar diversos desafíos. La aplicación desarrollada proporciona una experiencia completa para los usuarios, con un énfasis especial en la seguridad, la escalabilidad y el rendimiento. El proyecto ha sido una experiencia valiosa, proporcionando una base sólida para futuras iteraciones y mejoras.
+El desarrollo de este proyecto ha permitido alcanzar importantes logros y superar diversos desafíos. La aplicación
+desarrollada proporciona una experiencia completa para los usuarios, con un énfasis especial en la seguridad, la
+escalabilidad y el rendimiento. El proyecto ha sido una experiencia valiosa, proporcionando una base sólida para futuras
+iteraciones y mejoras.
 
 ---
 

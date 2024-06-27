@@ -40,16 +40,16 @@ export class WebSocketService {
       }
     }
 
-    this.socket.onclose = (event) => {
-      console.error('WebSocket connection closed', event)
-      // Intenta reconectar después de 5 segundos
-      setTimeout(() => this.connect(), 5000)
-    }
-
     this.socket.onerror = (error) => {
       console.error('WebSocket error', error)
       // Cierra el socket para desencadenar el evento onclose y reconectar
-      // this.socket.close();
+      this.socket.close()
+    }
+
+    this.socket.onclose = (event) => {
+      console.error('WebSocket connection closed', event)
+      // Intenta reconectar después de 5 segundos
+      setTimeout(() => this.connect(), 15000)
     }
   }
 
