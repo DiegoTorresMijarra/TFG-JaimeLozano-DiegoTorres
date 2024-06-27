@@ -9,19 +9,28 @@ import { environment as envProd } from '../../environments/environment.prod'
   providedIn: 'root',
 })
 export class WebSocketService {
-  private socket: WebSocket
+  private socket!: WebSocket
   private messages: Subject<Notification> = new Subject<Notification>()
   private notifications: Notification[] = []
+  private url =
+    'wss://' +
+    (environment.production ? envProd.apiUrl : environment.apiUrl) +
+    '/ws/orders'
 
-  constructor() {
-    const url =
-      'wss://' +
-      (environment.production ? envProd.apiUrl : environment.apiUrl) +
-      '/ws/orders'
-    this.socket = new WebSocket(url)
+  constructor(private authService: AuthService) {
+    this.connect()
   }
 
   connect() {
+    const headers = this.authService.getAuthHeaders() // TODO: no se le puede pasar los headers con esta libreria.
+
+    console.info('existe un problema con el ws, estamos solucionandolo')
+    this.socket = new WebSocket(this.url)
+
+    this.eventsHandler()
+  }
+
+  eventsHandler() {
     this.socket.onopen = () => {
       console.log('WebSocket connection opened')
     }
@@ -41,15 +50,15 @@ export class WebSocketService {
     }
 
     this.socket.onerror = (error) => {
-      console.error('WebSocket error', error)
+      // console.error('WebSocket error', error)
       // Cierra el socket para desencadenar el evento onclose y reconectar
       this.socket.close()
     }
 
     this.socket.onclose = (event) => {
-      console.error('WebSocket connection closed', event)
-      // Intenta reconectar después de 5 segundos
-      setTimeout(() => this.connect(), 15000)
+      // console.error('WebSocket connection closed', event)
+      // Intenta reconectar después de 15 segundos
+      //  setTimeout(() => this.connect(), 15000)
     }
   }
 
