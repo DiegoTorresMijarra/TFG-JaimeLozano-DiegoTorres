@@ -59,8 +59,6 @@ public class SecurityConfig {
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                         // Websockets para notificaciones
                         .requestMatchers("/ws/**").hasAnyRole("ADMIN", "WORKER")
-                        // Storage
-                        .requestMatchers("/storage/**").permitAll()
                         // Endpoints
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/evaluations/**").permitAll()

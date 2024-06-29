@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { WebSocketService } from './services/websocketOrders.service'
+import { catchError, throwError } from 'rxjs'
 
 @Component({
   selector: 'app-root',

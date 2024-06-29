@@ -15,7 +15,7 @@ export class WebSocketService {
   private url =
     'wss://' +
     (environment.production ? envProd.apiUrl : environment.apiUrl) +
-    '/ws/orders'
+    'ws/orders'
 
   constructor(private authService: AuthService) {
     this.connect()

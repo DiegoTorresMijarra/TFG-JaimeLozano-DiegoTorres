@@ -25,9 +25,14 @@ manejar grandes volúmenes de datos y proporcionar una experiencia de usuario ex
 
 ## Pruebame en Línea:
 
-### Estado:
+#### FrontApp:
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/53d07aa7-afbd-4d39-babd-ebe75d44ff2f/deploy-status)](https://bio-online.netlify.app)
+
+---
+#### BackApp:
+
+[![Render Status](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Frender-deploy-status-diego-torres.onrender.com%2Fsrv-cpraumcs1f4s73b9ohsg&query=%24.status&style=for-the-badge&logo=Render&label=Render)](https://dashboard.render.com/web/srv-cpraumcs1f4s73b9ohsg)
 
 ## Instalación:
 
