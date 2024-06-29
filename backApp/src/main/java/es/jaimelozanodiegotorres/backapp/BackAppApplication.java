@@ -25,9 +25,10 @@ public class BackAppApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		log.info("Aplicacion escuchando en puerto: {}, Perfil: {}", port, profile);
+		log.info("Aplicacion desplegada con el Perfil: {}", profile);
 		if (profile.contains("dev")) {
-			log.info("Swagger activo: https://localhost:3000/v1/swagger-ui/index.html");
+			log.info("Aplicacion escuchando en puerto: {}", port);
+			log.info("Swagger activo: /v1/swagger-ui/index.html");
 		}
 	}
 }

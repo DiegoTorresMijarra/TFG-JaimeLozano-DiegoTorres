@@ -1,4 +1,4 @@
-package es.jaimelozanodiegotorres.backapp.config.auth;
+package es.jaimelozanodiegotorres.backapp.interceptors;
 import es.jaimelozanodiegotorres.backapp.rest.auth.service.jwt.JwtService;
 import es.jaimelozanodiegotorres.backapp.rest.auth.service.users.AuthUsersService;
 import jakarta.servlet.FilterChain;

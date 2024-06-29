@@ -5,12 +5,15 @@ import { AuthService } from './auth.service'
 import { Product, ProductSaveDto } from '../models/product.entity'
 import { PageResponse } from '../models/pageResponse.entity'
 import { ProductFiltersDto } from '../models/productFiltersDto.entity'
+import { environment } from '../../environments/environment'
+import { environment as envProd } from '../../environments/environment.prod'
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductService {
-  private apiUrl = 'https://localhost:3000/v1/products'
+  private apiUrl =
+    (environment.production ? envProd.apiUrl : environment.apiUrl) + 'products'
 
   constructor(
     private http: HttpClient,

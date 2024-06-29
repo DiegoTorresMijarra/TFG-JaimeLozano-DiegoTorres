@@ -3,12 +3,15 @@ import { catchError, Observable, throwError } from 'rxjs'
 import { Address, AddressDto } from '../models/address.entity'
 import { HttpClient } from '@angular/common/http'
 import { AuthService } from './auth.service'
+import { environment } from '../../environments/environment'
+import { environment as envProd } from '../../environments/environment.prod'
 
 @Injectable({
   providedIn: 'root',
 })
 export class AddressesService {
-  private apiUrl = 'https://localhost:3000/v1/addresses'
+  private apiUrl =
+    (environment.production ? envProd.apiUrl : environment.apiUrl) + 'addresses'
 
   constructor(
     private http: HttpClient,
