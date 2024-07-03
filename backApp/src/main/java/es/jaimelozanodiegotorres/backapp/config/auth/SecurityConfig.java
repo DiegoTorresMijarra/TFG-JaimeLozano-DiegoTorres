@@ -70,6 +70,7 @@ public class SecurityConfig {
                         .requestMatchers("/addresses/**").permitAll()
                         .requestMatchers("/users/**").permitAll()
                         .requestMatchers("/users/me/**").permitAll()
+                        .requestMatchers("/app-status/**").permitAll()
                         .anyRequest().authenticated())
 
                 // Añadimos el filtro de autenticación

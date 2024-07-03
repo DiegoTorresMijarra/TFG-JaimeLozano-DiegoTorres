@@ -19,6 +19,9 @@ public class BackAppApplication implements CommandLineRunner {
 	@Value("${server.port}")
 	private String port;
 
+	@Value("${api.url}")
+	private String publicUrl;
+
 	public static void main(String[] args) {
 		SpringApplication.run(BackAppApplication.class, args);
 	}
@@ -28,7 +31,7 @@ public class BackAppApplication implements CommandLineRunner {
 		log.info("Aplicacion desplegada con el Perfil: {}", profile);
 		if (profile.contains("dev")) {
 			log.info("Aplicacion escuchando en puerto: {}", port);
-			log.info("Swagger activo: /v1/swagger-ui/index.html");
+			log.info("Swagger activo: {}swagger-ui/index.html", publicUrl);
 		}
 	}
 }
