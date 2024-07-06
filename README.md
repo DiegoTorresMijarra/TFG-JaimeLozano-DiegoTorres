@@ -1,6 +1,6 @@
 # TFG-JaimeLozano-DiegoTorres
 
-# MacJava Project:
+# Bio-Online Project:
 
 **Autor/es del Proyecto:**
 
@@ -9,7 +9,7 @@
 
 ## Introducción
 
-La API MacJava es una solución integral para la administración segura y eficiente de bases de datos, especialmente
+La API Bio-Online es una solución integral para la administración segura y eficiente de bases de datos, especialmente
 diseñada para tiendas online. Este proyecto se basa en un enfoque robusto y moderno, utilizando SpringBoot para la capa
 de back-end y Angular junto con Ionic para la capa de front-end. La combinación de estas tecnologías permite una
 configuración sencilla y un desarrollo ágil, facilitando la creación y gestión de aplicaciones web y móviles de alto
@@ -20,7 +20,7 @@ Este enfoque organiza las ramas de características en una rama de desarrollo, l
 proceso de pruebas, se fusiona en la rama principal. Esta estructura no solo optimiza la integración y el despliegue
 continuo, sino que también minimiza los riesgos y mejora la calidad del software.
 
-Con la API MacJava, las tiendas online pueden beneficiarse de una plataforma confiable y escalable, diseñada para
+Con la API Bio-Online, las tiendas online pueden beneficiarse de una plataforma confiable y escalable, diseñada para
 manejar grandes volúmenes de datos y proporcionar una experiencia de usuario excepcional.
 
 ## Pruebame en Línea:
@@ -37,8 +37,8 @@ El servidor es gratuito y tarda un poco en iniciarse, estamos buscando otra solu
 
 <a href="https://tfg-jaimelozano-diegotorres-pr-1.onrender.com/v1/restaurants/listAll">
 <picture>
-  <source srcset="https://img.shields.io/endpoint?url=https%3A%2F%2Ftfg-jaimelozano-diegotorres-pr-1.onrender.com%2Fv1%2Fapp-status%2Fbadge-status&style=flat&logo=render&label=Render" type="image/svg+xml">
-  <img src="https://img.shields.io/badge/Render-pending-orange?logo=render" alt="RenderStatus">
+  <source srcset="https://img.shields.io/endpoint?url=https%3A%2F%2Ftfg-jaimelozano-diegotorres-pr-1.onrender.com%2Fv1%2Fapp-status%2Fbadge-status&style=flat&logo=render&label=Render 1x, https://img.shields.io/badge/Render-pending-orange?logo=render 1x" type="image/svg+xml">
+  <img src="https://img.shields.io/badge/Render-pending-orange?logo=render" alt="Pending">
 </picture>
 </a>
 
@@ -116,13 +116,13 @@ docker-compose -f docker-compose.yaml up
 ## Galeria
 
 <div style="display: flex; flex-wrap: wrap; justify-content: center;">
-    <img src="/documentacion/Imagenes/actualizarProducto.png" width="150" height="150" alt="actualizarProducto">
-    <img src="/documentacion/Imagenes/carrito.png" width="150" height="150" alt="carrito">
-    <img src="/documentacion/Imagenes/direccion.png" width="150" height="150" alt="direccion">
     <img src="/documentacion/Imagenes/Esquema-Common-Controller-Repo-Service.PNG" width="150" height="150" alt="Esquema-Common-Controller-Repo-Service">
     <img src="/documentacion/Imagenes/Esquema-Common-Controller-Repo-Service-module.PNG" width="150" height="150" alt="Esquema-Common-Controller-Repo-Service-module">
     <img src="/documentacion/Imagenes/Esquema-filters.PNG" width="150" height="150" alt="Esquema-filters">
     <img src="/documentacion/Imagenes/Esquema-Mappers.PNG" width="150" height="150" alt="Esquema-Mappers">
+    <img src="/documentacion/Imagenes/mainClaro.PNG" width="150" height="150" alt="actualizarProducto">
+    <img src="/documentacion/Imagenes/Carrito.PNG" width="150" height="150" alt="carrito">
+    <img src="/documentacion/Imagenes/direccion.png" width="150" height="150" alt="direccion">
     <img src="/documentacion/Imagenes/estadoPedido.png" width="150" height="150" alt="estadoPedido">
     <img src="/documentacion/Imagenes/factura.png" width="150" height="150" alt="factura">
     <img src="/documentacion/Imagenes/imagenProd.png" width="150" height="150" alt="imagenProd">
@@ -154,7 +154,7 @@ docker-compose -f docker-compose.yaml up
 ## Objetivo
 
 El objetivo principal de este proyecto es diseñar, desarrollar y documentar una aplicación web y móvil utilizando la API
-MacJava, basada en las tecnologías SpringBoot, Angular e Ionic. Los objetivos específicos son:
+Bio-Online, basada en las tecnologías SpringBoot, Angular e Ionic. Los objetivos específicos son:
 
 1. Diseñar la arquitectura del sistema.
 2. Desarrollar la aplicación.

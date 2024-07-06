@@ -57,6 +57,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                     .email(request.getEmail())
                     .name(request.getName())
                     .surname(request.getSurname())
+                    .roles(Stream.of(Role.USER).collect(Collectors.toSet()))
                     .build();
             try {
                 // Salvamos y devolvemos el token

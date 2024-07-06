@@ -119,6 +119,7 @@ ion-button[fill="clear"]:hover {
     overflow-x: auto;
   }
   .product-data::part(native) {
+    cursor: pointer;
     max-height: 200px;
   }
 
