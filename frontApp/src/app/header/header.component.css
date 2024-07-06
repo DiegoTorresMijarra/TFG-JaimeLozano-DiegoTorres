@@ -16,7 +16,7 @@ ion-img::part(image) {
 }
 
 @media (max-width: 768px) {
-  .title {
+  .desktop-title {
     display: none;
   }
 

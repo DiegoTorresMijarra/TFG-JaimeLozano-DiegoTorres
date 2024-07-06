@@ -5,7 +5,27 @@
   </ion-header>
 
   <ion-content>
-    <app-body></app-body>
+    <app-body *ngIf="backStatus.message!=='success'; else noBack"></app-body>
+
+    <ng-template #noBack>
+      <ion-card *ngIf="backStatus.message == 'pending'">
+        <ion-card-header>
+          <ion-card-title>Esperando Respuesta del Servidor</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <p>Es un servidor gratuito y puede tardar un poco en arrancar. Estamos buscando otras opciones</p>
+          <ion-spinner name="bubbles"></ion-spinner>
+        </ion-card-content>
+      </ion-card>
+      <ion-card *ngIf="backStatus.message !== 'pending'">
+        <ion-card-header>
+          <ion-card-title>Error en la Respuesta del Servidor</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <p>Es un servidor gratuito y puede dar algun problema. Back status: {{backStatus.message}}</p>
+        </ion-card-content>
+      </ion-card>
+    </ng-template>
   </ion-content>
 
   <ion-footer>
