@@ -5,7 +5,7 @@
   </ion-header>
 
   <ion-content>
-    <app-body *ngIf="backStatus.message!=='success'; else noBack"></app-body>
+    <app-body *ngIf="backStatus.message == 'success'; else noBack"></app-body>
 
     <ng-template #noBack>
       <ion-card *ngIf="backStatus.message == 'pending'">
