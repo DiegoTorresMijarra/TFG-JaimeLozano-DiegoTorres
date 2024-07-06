@@ -9,17 +9,23 @@ import {
 import { Observable, throwError } from 'rxjs'
 import { catchError } from 'rxjs/operators'
 import { Router } from '@angular/router'
+import {environment} from "../../environments/environment";
+import {environment as envProd} from "../../environments/environment.prod";
 
 @Injectable()
 export class HttpErrorService implements HttpInterceptor {
+  private apiUrl =
+    (environment.production ? envProd.apiUrl : environment.apiUrl)
+
   constructor(private router: Router) {}
 
   intercept(
     req: HttpRequest<any>,
     next: HttpHandler,
   ): Observable<HttpEvent<any>> {
-    const excludedUrl = 'https://localhost:3000/v1/auth/signin'
-    if (req.url === excludedUrl) {
+
+    const excludedUrls : Set<string> = new Set<string>([this.apiUrl + 'auth/signin', this.apiUrl +'app-status/badge-status'])
+    if (excludedUrls.has(req.url)) {
       return next.handle(req)
     }
 

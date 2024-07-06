@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import {Observable, of, throwError} from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { environment as envProd } from '../../environments/environment.prod';
@@ -18,7 +18,23 @@ export class BackStatusService {
     return this.http.get<StatusResponseEntity>(this.apiUrl).pipe(
       catchError((error) => {
         console.error('Error obteniendo estado de la aplicación:', error);
-        return throwError(error);
+        let errorMessage = 'unknown error';
+        if (error.status) {
+          switch (error.status) {
+            case 404:
+              errorMessage = '404 Not Found';
+              break;
+            case 500:
+              errorMessage = '500 Internal Server Error';
+              break;
+            case 503:
+              errorMessage = '503 Service Unavailable';
+              break;
+            default:
+              errorMessage = `${error.status} ${error.statusText}`;
+          }
+        }
+        return of(new StatusResponseEntity(1, 'Status', errorMessage))
       })
     );
   }
