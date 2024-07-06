@@ -6,7 +6,7 @@
   </ion-button>
   <ion-card  class="personal">
     <ion-toolbar>
-      <ion-title>Bienvenido a MacJava: {{ user.name }} {{ user.surname }}</ion-title>
+      <ion-title>Bienvenido a Bio-Online: {{ user.name }} {{ user.surname }}</ion-title>
     </ion-toolbar>
 
     <ion-card-content>
@@ -20,7 +20,7 @@
     <ion-toolbar>
       <ion-title>Pedidos</ion-title>
     </ion-toolbar>
-    <ion-card-content>
+    <ion-card-content *ngIf="user.orders.length>0; else noPedidos">
       <ion-list>
         <ion-grid>
           <ion-row>
@@ -43,7 +43,8 @@
                   <ion-icon name="star-sharp" class="golden-star"></ion-icon>
                 </ion-button>
                 <ion-button fill="clear" (click)="downloadExcel(order.id)">
-                  <ion-icon name="download-outline"></ion-icon>                </ion-button>
+                  <ion-icon name="download-outline"></ion-icon>
+                </ion-button>
               </ion-buttons>
             </ion-col>
           </ion-row>
@@ -51,7 +52,7 @@
       </ion-list>
 
     </ion-card-content>
-    <ion-footer>
+    <ion-footer *ngIf="user.orders.length>0">
       <ion-toolbar>
         <ion-title class="ion-align-items-start" slot="start">Pagina: {{ currentOrderPage }} de {{ Math.ceil(user.orders.length / pageOrderSize) }}</ion-title>
         <ion-buttons slot="end">
@@ -78,7 +79,7 @@
       </ion-toolbar>
     </ion-card-header>
     <ion-card-content>
-      <ion-list class="ion-margin-top muestrario">
+      <ion-list class="ion-margin-top muestrario"  *ngIf="user.addresses.length>0; else noDirecciones">
         <ion-item class="muestra ion-align-items-center" lines="full" *ngFor="let address of user.addresses | paginate:currentAddressesPage:pageAddressesSize">
           <ion-label class="descripcion">
             <h2 class="titulo">{{address.name}}</h2>
@@ -99,7 +100,7 @@
         </ion-item>
       </ion-list>
     </ion-card-content>
-    <ion-footer>
+    <ion-footer *ngIf="user.addresses.length>0">
       <ion-toolbar>
         <ion-title class="ion-align-items-start" slot="start">Página: {{ currentAddressesPage }} de {{ Math.ceil(user.addresses.length / pageAddressesSize) }}</ion-title>
         <ion-buttons slot="end">
@@ -124,5 +125,20 @@
     <ion-card-content>
     </ion-card-content>
   </ion-card>
+
+  <ng-template #noPedidos>
+    <ion-list >
+      <ion-item>
+        No hay pedidos.
+      </ion-item>
+    </ion-list>
+  </ng-template>
+  <ng-template #noDirecciones>
+    <ion-list>
+      <ion-item>
+        No hay Direcciones.
+      </ion-item>
+    </ion-list>
+  </ng-template>
 
 </ion-content>

@@ -5,12 +5,15 @@ import { Router } from '@angular/router'
 import { jwtDecode } from 'jwt-decode'
 import { UserSignUpRequest } from '../models/user.entity'
 import { CartService } from './cart.service'
+import { environment } from '../../environments/environment'
+import { environment as envProd } from '../../environments/environment.prod'
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'https://localhost:3000/v1/auth'
+  private apiUrl =
+    (environment.production ? envProd.apiUrl : environment.apiUrl) + 'auth'
   private tokenKey = 'authToken'
 
   constructor(

@@ -3,17 +3,20 @@
   flex-direction: column-reverse;
 }
 
-h3 {
-  margin-left: 10px;
+ion-text {
+  margin: 0 0 0 10px;
+  font-family: 'Brush Script MT', cursive;
+  font-size: 2.5rem;
 }
 
 ion-img::part(image) {
   height: 50px;
-  border-radius: 50%;
+  object-fit: contain;
+  /*border-radius: 50%;*/
 }
 
 @media (max-width: 768px) {
-  ion-title {
+  .desktop-title {
     display: none;
   }
 
@@ -21,6 +24,11 @@ ion-img::part(image) {
     display: flex;
     justify-content: center;
     align-items: center;
+
+    ion-text {
+      font-size: 1.2rem;
+      font-family: 'Brush Script MT', serif;
+    }
   }
 
   ion-item {
@@ -29,7 +37,7 @@ ion-img::part(image) {
     padding: 0 !important;
   }
 
-  ion-item::part(native) h3 {
+  ion-item::part(native) ion-text {
     margin: 0 auto !important;
     padding: 0 !important;
   }

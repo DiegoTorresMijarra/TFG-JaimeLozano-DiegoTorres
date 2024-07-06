@@ -14,10 +14,8 @@
     <ion-item *ngFor="let restaurant of restaurants" class="product-item">
       <ion-label (click)="openDetailsModal(restaurant)">
         <h2>{{ restaurant.name }}</h2>
-        <p>Telefono: ${{ restaurant.phone }}</p>
+        <p>Telefono: {{ restaurant.phone }}</p>
         <p>Direccion: {{ restaurant.address }}</p>
-        <p>Created At: {{ restaurant.createdAt | date: 'short' }}</p>
-        <p>Updated At: {{ restaurant.updatedAt | date: 'short' }}</p>
       </ion-label>
       <ion-buttons class="actions">
           <ion-button color="secondary" fill="clear" (click)="openGoogleMaps(restaurant.address)">Ir a Google Maps</ion-button>

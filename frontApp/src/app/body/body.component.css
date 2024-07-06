@@ -4,6 +4,13 @@ ion-list {
   background-image: linear-gradient(to bottom right, #002f4b, #dc4225);
   opacity: .6;
 }
+
+ion-spinner {
+  align-self: center;
+  width: 100px;
+  height: 100px;
+}
+
 /* styles.scss or a specific scss file for your component */
 .custom-menu {
   ion-item {
