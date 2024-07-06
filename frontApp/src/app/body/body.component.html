@@ -29,9 +29,14 @@
       <ion-card-header>
         <ion-card-title>Esperando Respuesta del Servidor</ion-card-title>
       </ion-card-header>
-      <ion-card-content style="display: flex">
+      <ion-card-content>
         <p>Es un servidor gratuito y puede tardar un poco en arrancar. Estamos buscando otras opciones</p>
-        <ion-spinner style="align-self: center" name="bubbles"></ion-spinner>
+        <ion-list class="ion-padding">
+          <ion-item>
+            <ion-label>Esperando respuesta:</ion-label>
+            <ion-spinner name="bubbles"></ion-spinner>
+          </ion-item>
+        </ion-list>
       </ion-card-content>
     </ion-card>
     <ion-card *ngIf="backStatus.message !== 'pending' && backStatus.message !== 'success'">
