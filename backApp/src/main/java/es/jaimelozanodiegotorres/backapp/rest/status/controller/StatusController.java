@@ -45,9 +45,9 @@ public class StatusController {
 
             if (externalResponse.getStatusCode() == HttpStatus.OK) {
                 response.put("message", "success");
-                response.put("color", "brightgreen");
+                response.put("color", "#BEF9C6");
             } else {
-                response.put("message", "waiting");
+                response.put("message", "pending");
                 response.put("color", "orange");
             }
         } catch (Exception e) {

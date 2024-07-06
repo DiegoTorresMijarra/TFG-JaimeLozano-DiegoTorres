@@ -27,12 +27,20 @@ manejar grandes volúmenes de datos y proporcionar una experiencia de usuario ex
 
 #### FrontApp:
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/53d07aa7-afbd-4d39-babd-ebe75d44ff2f/deploy-status)](https://bio-online.netlify.app)
+[![NetlifyStatus](https://api.netlify.com/api/v1/badges/53d07aa7-afbd-4d39-babd-ebe75d44ff2f/deploy-status)](https://bio-online.netlify.app)
 
 ---
+
 #### BackApp:
 
-[![Render Status](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Frender-deploy-status-diego-torres.onrender.com%2Fsrv-cpraumcs1f4s73b9ohsg&query=%24.status&style=for-the-badge&logo=Render&label=Render)](https://dashboard.render.com/web/srv-cpraumcs1f4s73b9ohsg)
+El servidor es gratuito y tarda un poco en iniciarse, estamos buscando otra solucion.
+
+<a href="https://tfg-jaimelozano-diegotorres-pr-1.onrender.com/v1/restaurants/listAll">
+<picture>
+  <source srcset="https://img.shields.io/endpoint?url=https%3A%2F%2Ftfg-jaimelozano-diegotorres-pr-1.onrender.com%2Fv1%2Fapp-status%2Fbadge-status&style=flat&logo=render&label=Render" type="image/svg+xml">
+  <img src="https://img.shields.io/badge/Render-pending-orange?logo=render" alt="RenderStatus">
+</picture>
+</a>
 
 ## Instalación:
 
