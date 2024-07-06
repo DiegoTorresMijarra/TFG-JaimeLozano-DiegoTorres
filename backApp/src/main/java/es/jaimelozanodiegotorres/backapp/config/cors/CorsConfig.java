@@ -8,27 +8,34 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class CorsConfig {
-    /**
-     * CORS: Configuración más ajustada.
-     */
+    @Value("${spring.profiles.active}")
+    String profile;
+
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
-
             @Override
-            // Ajustamos una configuración específica para cada serie de métodos
-            // Así por cada fuente podemos permitir lo que queremos
-            // Por ejemplo ene esta configuración solo permitirmos el dominio producto
-            // Permitimos solo un dominio
-            // e indicamos los verbos que queremos usar
-            // Debes probar con uncliente desde ese puerto
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:4200")
-                        .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH")
-                        .maxAge(3600);
-            }
+                if (profile == null)
+                    throw new RuntimeException("No profile set up");
 
+                // Development and production profiles
+                if (profile.contains("dev") || profile.equals("prod")) {
+                    registry.addMapping("/**")
+                            .allowedOrigins("http://localhost:4200")
+                            .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS")
+                            .maxAge(3600);
+                }
+
+                // Production server profiles
+                if (profile.equals("prod-server")) {
+                    registry.addMapping("/**")
+                            .allowedOrigins("https://tfg-jaime-lozano-diego-torres-git-master-jaime9lozanos-projects.vercel.app",
+                                    "https://bio-online.netlify.app")
+                            .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS")
+                            .maxAge(3600);
+                }
+            }
         };
     }
 }

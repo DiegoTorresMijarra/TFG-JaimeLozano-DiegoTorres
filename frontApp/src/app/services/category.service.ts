@@ -3,12 +3,16 @@ import { HttpClient } from '@angular/common/http'
 import { catchError, Observable, throwError } from 'rxjs'
 import { AuthService } from './auth.service'
 import { Category, CategoryDto } from '../models/category.entity'
+import { environment } from '../../environments/environment'
+import { environment as envProd } from '../../environments/environment.prod'
 
 @Injectable({
   providedIn: 'root',
 })
 export class CategoryService {
-  private apiUrl = 'https://localhost:3000/v1/categories'
+  private apiUrl =
+    (environment.production ? envProd.apiUrl : environment.apiUrl) +
+    'categories'
 
   constructor(
     private http: HttpClient,

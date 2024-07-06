@@ -1,7 +1,7 @@
 package es.jaimelozanodiegotorres.backapp.config.auth;
 
+import es.jaimelozanodiegotorres.backapp.interceptors.JwtAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -58,9 +58,7 @@ public class SecurityConfig {
                         // Abrimos a Swagger -- Quitar en produccion
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                         // Websockets para notificaciones
-                        .requestMatchers("/ws/**").permitAll()
-                        // Storage
-                        .requestMatchers("/storage/**").permitAll()
+                        .requestMatchers("/ws/**").hasAnyRole("ADMIN", "WORKER")
                         // Endpoints
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/evaluations/**").permitAll()
@@ -72,16 +70,7 @@ public class SecurityConfig {
                         .requestMatchers("/addresses/**").permitAll()
                         .requestMatchers("/users/**").permitAll()
                         .requestMatchers("/users/me/**").permitAll()
-                        //.requestMatchers("/clientes/**").permitAll()
-                        // Otras rutas de la API podemos permitiras o no....
-                        //.requestMatchers("/" + apiVersion + "/**").permitAll()
-                        // Podríamos jugar con permismos por ejemplo para una ruta concreta
-                        //.requestMatchers("/" + apiVersion + "/auth/me").hasRole("ADMIN")
-                        // O con un acción HTTP, POST, PUT, DELETE, etc.
-                        //.requestMatchers(GET, "/" + apiVersion + "/auth/me").hasRole("ADMIN")
-                        // O con un patrón de ruta
-                        //.regexMatchers("/" + apiVersion + "/auth/me").hasRole("ADMIN")
-                        // El resto de peticiones tienen que estar autenticadas
+                        .requestMatchers("/app-status/**").permitAll()
                         .anyRequest().authenticated())
 
                 // Añadimos el filtro de autenticación

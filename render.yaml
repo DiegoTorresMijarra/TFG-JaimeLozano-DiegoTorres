@@ -1,0 +1,44 @@
+services:
+  - type: web
+    name: my-app
+    env: docker
+    repo: https://github.com/DiegoTorresMijarra/TFG-JaimeLozano-DiegoTorres
+    branch: feature/despliegue
+    buildCommand: ./mvnw clean package -DskipTests
+    dockerfilePath: backApp/Dockerfile
+    plan: free
+    envVars:
+      - key: API_PORT
+        value: 3000
+      - key: API_NAME
+        value: backApp
+      - key: API_VERSION
+        value: v1
+      - key: MONGO_HOST
+        sync: false
+      - key: MONGO_DATABASE
+        sync: false
+      - key: MONGO_USER
+        sync: false
+      - key: MONGO_PASS
+        sync: false
+      - key: POSTGRES_HOST
+        sync: false
+      - key: POSTGRES_HOST_PROD
+        sync: false
+      - key: POSTGRES_PORT
+        sync: false
+      - key: POSTGRES_DATABASE
+        sync: false
+      - key: POSTGRES_USER
+        sync: false
+      - key: POSTGRES_CONT
+        sync: false
+      - key: POSTGRES_SSL
+        value: require
+      - key: JWT_TOKEN
+        sync: false
+      - key: SSL_KEYSTORE_PASSWORD
+        sync: false
+      - key: PROFILE
+        value: prod-server
