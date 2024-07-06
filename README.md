@@ -35,7 +35,7 @@ manejar grandes volúmenes de datos y proporcionar una experiencia de usuario ex
 
 El servidor es gratuito y tarda un poco en iniciarse, estamos buscando otra solucion.
 
-<a href="https://tfg-jaimelozano-diegotorres-pr-1.onrender.com/v1/restaurants/listAll">
+<a href="https://tfg-jaimelozano-diegotorres.onrender.com/v1/restaurants/listAll">
 <picture>
   <source srcset="https://img.shields.io/endpoint?url=https%3A%2F%2Ftfg-jaimelozano-diegotorres-pr-1.onrender.com%2Fv1%2Fapp-status%2Fbadge-status&style=flat&logo=render&label=Render 1x, https://img.shields.io/badge/Render-pending-orange?logo=render 1x" type="image/svg+xml">
   <img src="https://img.shields.io/badge/Render-pending-orange?logo=render" alt="Pending">
