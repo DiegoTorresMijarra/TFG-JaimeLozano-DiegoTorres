@@ -89,6 +89,12 @@ ion-button[fill="clear"]:hover {
   --background: rgba(0, 0, 0, 0.1); /* Color de fondo al pasar el ratón */
 }
 
+ion-searchbar {
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+
 .product-item ion-thumbnail {
   width: 50%;
   height: 80%;
@@ -120,14 +126,19 @@ ion-button[fill="clear"]:hover {
   }
   .product-data::part(native) {
     cursor: pointer;
-    max-height: 200px;
+    //max-height: 200px;
   }
 
 }
 
-@media (min-width: 768px) {
+@media (min-width: 769px) {
   .product-item {
     width: 45%;
+  }
+}
+@media (max-width: 768px) {
+  ion-buttons {
+    width: 100%;
   }
 }
 

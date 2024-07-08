@@ -10,7 +10,7 @@ ion-text {
 }
 
 ion-img::part(image) {
-  height: 50px;
+  height: 100%;
   object-fit: contain;
   /*border-radius: 50%;*/
 }
@@ -24,6 +24,7 @@ ion-img::part(image) {
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 100%;
 
     ion-text {
       font-size: 1.2rem;
@@ -40,6 +41,14 @@ ion-img::part(image) {
   ion-item::part(native) ion-text {
     margin: 0 auto !important;
     padding: 0 !important;
+  }
+}
+
+@media (max-width: 450px) {
+  .mobile-icon {
+    ion-text {
+      display: none;
+    }
   }
 }
 

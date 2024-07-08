@@ -4,7 +4,7 @@
   </ion-buttons>
 
   <ion-title class="desktop-title">
-    <ion-item button [routerLink]="['/']">
+    <ion-item button [routerLink]="['/']" detail="false" lines="none">
       <ion-thumbnail>
         <ion-img
           src="assets/icon/IconoBioOnline.webp"
@@ -15,7 +15,7 @@
     </ion-item>
   </ion-title>
 
-  <div class="ion-padding-end mobile-icon" slot="start">
+  <ion-item class="ion-padding-end mobile-icon" slot="start" button [routerLink]="['/']" detail="false" lines="none">
     <ion-thumbnail>
       <ion-img
         src="assets/icon/IconoBioOnline.webp"
@@ -23,7 +23,7 @@
       ></ion-img>
     </ion-thumbnail>
     <ion-text class="title">Bio-Online</ion-text>
-  </div>
+  </ion-item>
 
   <div class="ion-padding-end" slot="end" style="display: flex;">
     <ion-button

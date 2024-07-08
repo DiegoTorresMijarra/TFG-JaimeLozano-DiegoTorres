@@ -98,7 +98,7 @@ export class NewAddressPage implements OnInit {
       this.addressService.saveAddress(newAddress).subscribe({
         next: (response: Address) => {
           console.log('Nueva Dirección guardada:', response)
-          this.router.navigate(['/addresses'])
+          this.router.navigate(['/me'])
         },
         error: (error: any) => {
           console.error('Error guardando dirección:', error)

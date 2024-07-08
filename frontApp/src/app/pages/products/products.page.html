@@ -1,7 +1,7 @@
 <ion-content [fullscreen]="true">
   <ion-header>
     <ion-toolbar>
-      <ion-title size="large" color="primary">Productos</ion-title>
+      <ion-title slot="start" size="large" color="primary">Productos</ion-title>
       <ion-buttons slot="end">
         <ion-searchbar class="buscador" [(ngModel)]="searchName" (ionInput)="applyFilters()" placeholder="Buscar por nombre"></ion-searchbar>
         <ion-button *ngIf="isWorker" [routerLink]="['/products/new']" color="success" fill="solid">
